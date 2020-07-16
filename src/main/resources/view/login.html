@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<h1 align="center">欢迎登陆瓦尔哈拉-众神管理系统</h1>
+<hr>
+<div align="center">
+    <form th:action="@{/login/loginIn}" method="post">
+        用户名:<input name="username"/><br>
+        口令:<input name="password" ><br/>
+        <input type="submit" value="登陆">
+    </form>
+</div>
+</body>
+</html>
+
+login.html

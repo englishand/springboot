@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GB18030"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ResponseHeader/>
+        <ResponseBody>
+            <CODE>CODE_re</CODE>
+            <MESSAGE>MESSAGE_re</MESSAGE>
+            <DATA>
+                <OWNREF>OWNREF_re</OWNREF>
+                <RLEVEL>RLEVEL_re</RLEVEL>
+            </DATA>
+        </ResponseBody>
+        <Fault>
+            <Detail>
+                <TxnStat>SUCCESS</TxnStat>
+            </Detail>
+        </Fault>
+    </soapenv:Body>
+</soapenv:Envelope>

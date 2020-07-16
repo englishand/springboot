@@ -1,0 +1,18 @@
+<MSG>
+    <MSGID>MSGID_re</MSGID>
+    <DESC>DESC_re</DESC>
+    <TYPE>TYPE_re</TYPE>
+    <DATA>
+        <GENDER></GENDER>
+        <NAME></NAME>
+        <ROLE></ROLE>
+        <DATE>DATE_re</DATE>
+        <ADDRESS></ADDRESS>
+        <COUNTRY></COUNTRY>
+        <IDS>IDS_re</IDS>
+    </DATA>
+    <VALUETYPE></VALUETYPE>
+    <VALUE></VALUE>
+    <TARGET>TARGET_re</TARGET>
+    <CONFIG>CONFIG_re</CONFIG>
+</MSG>
