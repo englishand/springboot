@@ -1,5 +1,7 @@
 package com.zhy.test.authenticationHandler;
 
+import com.zhy.test.token.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -11,31 +13,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service("authenticationSuccuessHandler")
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
+    @Autowired
+    private JwtTokenProvider tokenProvider;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         RequestCache requestCache = new HttpSessionRequestCache();
         SavedRequest savedRequest = requestCache.getRequest(request,response);
         if (savedRequest != null) {
-            logger.info("测试登录已经失败"+savedRequest);
         }else {
-            logger.info("测试登录已经成功");
             getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
         }
         super.onAuthenticationSuccess(request,response,authentication);
-        logger.info("User: "+request.getParameter("username")+ "login successfully");
-//        this.returnJson(response);
+        logger.info("User: "+request.getParameter("username")+ ":login successfully");
     }
 
-    private void returnJson(HttpServletResponse response) throws IOException{
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("application/json");
-        response.getWriter().println("{\"exceptionId\":\"null\",\"messageCode\":\"200\"," +
-
-                "\"message\": \"Login successfully.\",\"serverTime\": " + System.currentTimeMillis() +"}");
-    }
 }
