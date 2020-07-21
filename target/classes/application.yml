@@ -29,7 +29,7 @@ spring:
     servlet:
       load-on-startup: 1
   resources:
-    static-locations: classpath:/static/
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
   devtools:
     restart:
       enabled: true #开启热部署
@@ -68,3 +68,6 @@ soap:
   inJar: true
 logging:
   config: classpath:logback.xml
+
+jwtTokenSecret: englishand
+tokenExpiredMs: 600000
