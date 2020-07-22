@@ -64,7 +64,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
@@ -82,7 +81,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username").passwordParameter("password")
                 .failureHandler(failureHandler)
                 .successHandler(successHandler)
-//                .successForwardUrl("/login/loginWelcome")
                 .and()
                 .logout().logoutUrl("/login/loginOut")
                 .permitAll()
@@ -90,12 +88,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .exceptionHandling()
                 .accessDeniedHandler(deniedHandler)
+                .authenticationEntryPoint(entryPoint)
 //                .and()
 //                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
 //                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
-//                .authenticationEntryPoint(entryPoint);
+                ;
     }
 
 
