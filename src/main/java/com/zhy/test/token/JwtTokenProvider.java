@@ -6,12 +6,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -39,7 +38,13 @@ public class JwtTokenProvider {
     public String generateJsonWebToken(UserDetails userDetails) {
 
         Map<String,Object> map = new HashMap<>();
-        map.put("rol", "rol");
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        Iterator iterator = authorities.iterator();
+        String role = "";
+        if(iterator.hasNext()){
+            role = iterator.next().toString();
+        }
+        map.put("rol", role);
         String token = Jwts
                 .builder()
                 .setSubject(userDetails.getUsername())

@@ -28,9 +28,9 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         SavedRequest savedRequest = requestCache.getRequest(request,response);
         if (savedRequest != null) {
         }else {
-            getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
+            getRedirectStrategy().sendRedirect(request,response,"/login/loginWelcome");
         }
-        super.onAuthenticationSuccess(request,response,authentication);
+//        super.onAuthenticationSuccess(request,response,authentication);
         logger.info("User: "+request.getParameter("username")+ ":login successfully");
     }
 

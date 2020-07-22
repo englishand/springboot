@@ -31,9 +31,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        logger.info(request.getRequestURL());
         String tokenHeader = request.getHeader(JwtTokenProvider.TOKEN_HEADER);
+        String resTokenHeader = response.getHeader(JwtTokenProvider.TOKEN_HEADER);
         //如果请求头中没有Authorization信息则直接放行
-        if (tokenHeader==null || !tokenHeader.startsWith(JwtTokenProvider.TOKEN_PERFIX)){
+        if ((tokenHeader==null || !tokenHeader.startsWith(JwtTokenProvider.TOKEN_PERFIX))){
             chain.doFilter(request,response);
             return;
         }

@@ -7,6 +7,7 @@ import com.zhy.test.filter.JwtAuthorizationFilter;
 import com.zhy.test.intercepor.security.MyAccessDecisionManager;
 import com.zhy.test.intercepor.security.MyFilterInvocationSecurityMetadataSource;
 import com.zhy.test.service.DatabaseUserDetailsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.util.ArrayList;
 import java.util.List;
-
+//@Slf4j
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
@@ -65,10 +66,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-//                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-//                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
                 .authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
@@ -85,7 +82,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username").passwordParameter("password")
                 .failureHandler(failureHandler)
                 .successHandler(successHandler)
-
+//                .successForwardUrl("/login/loginWelcome")
                 .and()
                 .logout().logoutUrl("/login/loginOut")
                 .permitAll()
@@ -93,7 +90,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .exceptionHandling()
                 .accessDeniedHandler(deniedHandler)
-                    ;
+//                .and()
+//                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+//                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and();
 //                .authenticationEntryPoint(entryPoint);
     }
 
@@ -120,7 +121,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private List<String> getUrlList(){
         List<String> urls = new ArrayList<>();
         urls.add("/login/in");
-        urls.add("/js/jquery/**");
+        urls.add("/**/*.js");
+//        urls.add("/login/loginIn");
         return urls;
     }
 }

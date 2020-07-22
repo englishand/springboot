@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -38,9 +40,12 @@ public class LoginController {
         return "welcome";
     }
 
-//    @RequestMapping("/loginIn")
+
+
+//    @RequestMapping("loginIn")
 //    @ResponseBody
-//    public ResponseResult loginIn(String username, String password){
+//    public ResponseResult loginIn(String username, String password,
+//                                  HttpServletRequest request, HttpServletResponse response){
 //        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 //        final String token = tokenProvider.generateJsonWebToken(userDetails);
 //        ResponseResult result = ResponseResult.successWithData(token);
