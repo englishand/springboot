@@ -23,8 +23,17 @@ import java.io.IOException;
 @Service("authenticationEntryPointImpl")
 class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
-            throws IOException, ServletException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        if(isAjaxRequest(request)){
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,authException.getMessage());
+        }else{
+            response.sendRedirect("/projectone/login/error");
+        }
+
+    }
+
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        String ajaxFlag = request.getHeader("X-Requested-With");
+        return ajaxFlag != null && "XMLHttpRequest".equals(ajaxFlag);
     }
 }

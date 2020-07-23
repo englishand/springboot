@@ -120,7 +120,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         List<String> urls = new ArrayList<>();
         urls.add("/login/in");
         urls.add("/**/*.js");
-//        urls.add("/login/loginIn");
+        urls.add("/login/error");
         return urls;
     }
 }

@@ -40,6 +40,10 @@ public class LoginController {
         return "welcome";
     }
 
+    @RequestMapping("/error")
+    public String error(){
+        return "error";
+    }
 
 
 //    @RequestMapping("loginIn")
