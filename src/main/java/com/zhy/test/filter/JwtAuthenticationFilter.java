@@ -16,8 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -39,16 +37,26 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         super.setFilterProcessesUrl("/login/loginIn");
     }
     private String username;
-
+    private String password;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        username = request.getParameter("username");
-        String password = request.getParameter("password");
-        return authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
-        );
+        try {
+            request.setCharacterEncoding("UTF-8");
+            username = request.getParameter("username");
+            password = request.getParameter("password");
+            return authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password)
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
 
+//        String token = getJwtFromRequest(request);
+//        if(token==null){
+//            return null;
+//        }
 //        String username = getUsernameFromJwt(token,authParameters.getJwtTokenSecret());
 //        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 //        Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -80,18 +88,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setContentType("application/json;charset=utf-8");
         String tokenstr = "Bearer "+token;
         response.setHeader(JwtTokenProvider.TOKEN_HEADER,tokenstr);
-        log.info(tokenstr);
-//        PrintWriter out;
-//        try {
-//            out = response.getWriter();
-//            out.print(tokenstr);
-//            out.flush();
-//            out.close();
-//        }catch (Exception e){
-//            log.info(e.getMessage());
-//        }
-
-
     }
 
     @Override

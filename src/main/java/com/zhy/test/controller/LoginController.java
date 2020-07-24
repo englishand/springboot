@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,8 @@ public class LoginController {
     }
 
     @RequestMapping("/loginIn")
-    public String loginIn(){
+    public String loginIn(String username,String password,HttpServletRequest request){
+        loginService.loginIn(username,password,request);
         return "welcome";
     }
 
@@ -57,7 +59,7 @@ public class LoginController {
 //    }
 
     @RequestMapping("/loginWelcome")
-    public String loginWelcome(){
+    public String loginWelcome(String username,String password,HttpServletRequest request){
         return "welcome";
     }
 

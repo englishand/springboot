@@ -76,7 +76,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 })
                 .and()
                 .formLogin()
-                .loginPage("/login/in")
+                .loginPage("/login/in")//也可以用接口地址 /login/in
                 .loginProcessingUrl("/login/loginIn")
                 .usernameParameter("username").passwordParameter("password")
                 .failureHandler(failureHandler)
@@ -121,6 +121,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         urls.add("/login/in");
         urls.add("/**/*.js");
         urls.add("/login/error");
+        urls.add("/login/loginOut");
         return urls;
     }
 }

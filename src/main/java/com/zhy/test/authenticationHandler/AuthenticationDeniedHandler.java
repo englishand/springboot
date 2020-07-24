@@ -23,7 +23,7 @@ public class AuthenticationDeniedHandler implements AccessDeniedHandler {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json;charset=utf-8");
         PrintWriter out = response.getWriter();
-        ResponseResult error = ResponseResult.errorWithMessage("权限不足");
+        ResponseResult error = ResponseResult.errorWithMessage("权限验证不足");
         out.write(new ObjectMapper().writeValueAsString(error));
         out.flush();
         out.close();

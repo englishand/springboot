@@ -14,11 +14,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public ResponseResult loginIn(String username, String password, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = new User();
         if (ObjectUtils.isEmpty(username)){
+            session.setAttribute("user",user);
             return ResponseResult.errorWithMessage("用户名为空！");
         }else {
-            HttpSession session = request.getSession();
-            User user = new User();
             user.setUsername(username);
             user.setPassword(password);
             session.setAttribute("user",user);

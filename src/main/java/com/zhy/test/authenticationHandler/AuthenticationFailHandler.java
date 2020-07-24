@@ -20,7 +20,6 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         this.returnJson(response,exception);
-//        request.getRequestDispatcher("/login/").forward(request,response);
     }
 
     public void returnJson(HttpServletResponse response,AuthenticationException exception)
@@ -30,7 +29,7 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
         ResponseResult result;
         if (exception instanceof BadCredentialsException ||
                 exception instanceof UsernameNotFoundException){
-            result = ResponseResult.errorWithMessage("账户名或者密码输入错误，啦啦啦!");
+            result = ResponseResult.errorWithMessage("账户名或者密码输入错误!");
         }else if (exception instanceof LockedException){
             result = ResponseResult.errorWithMessage("账户被锁定，请联系管理员!");
         }else if (exception instanceof CredentialsExpiredException){
