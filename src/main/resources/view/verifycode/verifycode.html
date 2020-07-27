@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <input id="code" placeholder="验证码" name="code" type="text" class=""
+           style="width:170px">
+    <!-- 验证码 显示 -->
+    <img onclick="javascript:getvCode()" id="verifyimg" style="margin-left: 20px;"/>
+    <input type="button" id="check" onclick="checkverify()" value="验证">
+</div>
+<script type="text/javascript" th:src="@{/js/jquery/min/jquery-3.4.1.min.js}"></script>
+<script type="text/javascript">
+    getvCode();
+
+    /**
+     * 获取验证码
+     * 将验证码写到login.html页面的id = verifyimg 的地方
+     */
+    function getvCode() {
+        document.getElementById("verifyimg").src = timestamp("/projectone/verify/verifyCode");
+    }
+    //为url添加时间戳
+    function timestamp(url) {
+        var getTimestamp = new Date().getTime();
+        if (url.indexOf("?") > -1) {
+            url = url + "&timestamp=" + getTimestamp
+        } else {
+            url = url + "?timestamp=" + getTimestamp
+        }
+        return url;
+    };
+
+    function checkverify() {
+        var inputcode = $("#code").val();
+        $.ajax({
+            url:'/projectone/verify/checkVerify',
+            data:{"inputCode":inputcode},
+            async:false,
+            success:function (res) {
+                if (res.code==0){
+                    alert("比对成功")
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -81,6 +81,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username").passwordParameter("password")
                 .failureHandler(failureHandler)
                 .successHandler(successHandler)
+                .defaultSuccessUrl("/login/loginIn")
                 .and()
                 .logout().logoutUrl("/login/loginOut")
                 .permitAll()
@@ -122,6 +123,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         urls.add("/**/*.js");
         urls.add("/login/error");
         urls.add("/login/loginOut");
+        urls.add("/verify/**");
         return urls;
     }
 }
