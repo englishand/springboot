@@ -121,9 +121,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         List<String> urls = new ArrayList<>();
         urls.add("/login/in");
         urls.add("/**/*.js");
+        urls.add("/**/*.css");
         urls.add("/login/error");
         urls.add("/login/loginOut");
         urls.add("/verify/**");
+        urls.add("/qr/**");
         return urls;
     }
 }

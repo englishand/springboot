@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/js/bootstrap/css/bootstrap.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery/min/jquery-3.4.1.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <div class="starter-template">
+        <h1>QrCodeImage</h1>
+    </div>
+</div>
+<div class="container">
+    <input name="username" id="username">
+    <input name="password" id="password">
+    <input name="userDescript" id="userDescript">
+    <input type="button" id="create_btn" value="生成二维码" onclick="qrcode()">
+    <img id="qrcodeImage"  />
+    <footer>
+        <p>
+            © <a >ThinkingInGIS</a> 2019
+        </p>
+    </footer>
+</div>
+</body>
+<script type="text/javascript">
+    function qrcode() {
+        var usernmae = $("#username").val();
+        var password = $("#password").val();
+        var userDescript = $("#userDescript").val();
+        var user = "'username':'"+usernmae+"','password':'"+password+"','userDescript':'"+userDescript+"'";
+        var url = "/projectone/qr/qrImage2?content="+user+"&size=90";
+        document.getElementById("qrcodeImage").src=url;
+    }
+</script>
+</html>
