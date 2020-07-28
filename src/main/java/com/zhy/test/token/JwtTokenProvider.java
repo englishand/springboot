@@ -87,13 +87,13 @@ public class JwtTokenProvider {
         }
     }
 
-    public  String getUsername(String token){
+    public static String getUsername(String token){
         Claims claims = Jwts.parser().setSigningKey(jwtTokenSecret)
                 .parseClaimsJws(token).getBody();
         return claims.get("username").toString();
     }
 
-    public  String getUserRole(String token){
+    public static String getUserRole(String token){
         Claims claims = Jwts.parser().setSigningKey(jwtTokenSecret)
                 .parseClaimsJws(token).getBody();
         return claims.get("rol").toString();

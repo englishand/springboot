@@ -82,7 +82,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username").passwordParameter("password")
                 .failureHandler(failureHandler)
                 .successHandler(successHandler)
-                .defaultSuccessUrl("/login/loginIn")
                 .and()
                 .logout().logoutUrl("/login/loginOut")
                 .permitAll()
@@ -95,8 +94,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
 //                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//        .addFilterBefore(new JwtAuthenticationFilter2(),UsernamePasswordAuthenticationFilter.class)
+                .and()
+        .addFilterBefore(new JwtAuthenticationFilter2(),UsernamePasswordAuthenticationFilter.class)
                 ;
     }
 
