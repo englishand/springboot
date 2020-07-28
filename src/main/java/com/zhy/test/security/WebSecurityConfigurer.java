@@ -2,17 +2,12 @@ package com.zhy.test.security;
 
 import com.zhy.test.authenticationHandler.AuthenticationDeniedHandler;
 import com.zhy.test.authenticationHandler.AuthenticationLogoutHandler;
-import com.zhy.test.filter.JwtAuthenticationFilter;
-import com.zhy.test.filter.JwtAuthenticationFilter2;
-import com.zhy.test.filter.JwtAuthorizationFilter;
 import com.zhy.test.intercepor.security.MyAccessDecisionManager;
 import com.zhy.test.intercepor.security.MyFilterInvocationSecurityMetadataSource;
 import com.zhy.test.service.DatabaseUserDetailsService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,14 +15,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,8 +86,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
 //                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-        .addFilterBefore(new JwtAuthenticationFilter2(),UsernamePasswordAuthenticationFilter.class)
                 ;
     }
 
