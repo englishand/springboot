@@ -71,3 +71,4 @@ logging:
 
 jwtTokenSecret: englishand
 tokenExpiredMs: 600000
+base_url: /projectone

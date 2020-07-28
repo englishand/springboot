@@ -3,6 +3,7 @@ package com.zhy.test.security;
 import com.zhy.test.authenticationHandler.AuthenticationDeniedHandler;
 import com.zhy.test.authenticationHandler.AuthenticationLogoutHandler;
 import com.zhy.test.filter.JwtAuthenticationFilter;
+import com.zhy.test.filter.JwtAuthenticationFilter2;
 import com.zhy.test.filter.JwtAuthorizationFilter;
 import com.zhy.test.intercepor.security.MyAccessDecisionManager;
 import com.zhy.test.intercepor.security.MyFilterInvocationSecurityMetadataSource;
@@ -94,6 +95,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
 //                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//        .addFilterBefore(new JwtAuthenticationFilter2(),UsernamePasswordAuthenticationFilter.class)
                 ;
     }
 
