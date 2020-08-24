@@ -11,7 +11,6 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;
@@ -58,8 +57,9 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     }
 
     /**
-     *@Description: 此处方法如果做了实现，返回了定义的权限资源列表，
-     * Spring Security会在启动时校验每个ConfigAttribute是否配置正确，
+     *@Description: 获取该SecurityMetadataSource对象中保存的针对所有安全对象的权限信息的集合。
+     * 此处方法如果做了实现，返回了定义的权限资源列表，
+     * Spring Security会在启动时校验每个ConfigAttribute对象
      * 如果不需要校验，这里实现方法，方法体直接返回null即可。
      * @return
      */
@@ -69,9 +69,9 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     }
 
     /**
-     * @Description: 方法返回类对象是否支持校验，
+     * @Description: 该方法用于告知调用者当前SecurityMetadataSource是否支持此安全对象，只有支持的时候，才能对这类安全对象调用getAttributes方法。
      * web项目一般使用FilterInvocation来判断，或者直接返回true
-     * @param clazz
+     * @param clazz：表示安全对象的类型。
      * @return
      */
     @Override

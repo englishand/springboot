@@ -1,6 +1,7 @@
-package com.zhy.test.service;
+package com.zhy.test.service.Impl;
 
 import com.zhy.test.entity.User;
+import com.zhy.test.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,10 +10,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.beans.SimpleBeanInfo;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 跟踪UserDetailsService,身份认证的调用流程
+ *  AbstractAuthenticationProcessingFilter的doFilter方法，调用->
+ *  UsernamePasswordAuthenticationFilter的attemptAuthenticatoin方法，调用->
+ *  ProviderManager的authenticate方法，调用->
+ *  AbstractUserDetailsAuthenticationProvider的authenticate方法，调用->
+ *  当前对象的loadUserByUsername方法。
+ *  通过以上过滤器
+ */
 @Service
 public class DatabaseUserDetailsService implements UserDetailsService {
 

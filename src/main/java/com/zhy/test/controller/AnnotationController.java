@@ -1,7 +1,7 @@
 package com.zhy.test.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhy.test.annotation.Student;
+import com.zhy.test.entity.Student;
 import com.zhy.test.service.Impl.TestServiceImpl;
 import com.zhy.test.utils.AsyncPostUtil;
 import com.zhy.test.utils.AsyncPostUtil2;

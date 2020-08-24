@@ -10,6 +10,7 @@ import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,12 +27,18 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         RequestCache requestCache = new HttpSessionRequestCache();
         SavedRequest savedRequest = requestCache.getRequest(request,response);
+        logger.info("User: "+request.getParameter("username")+ ":login successfully");
         if (savedRequest != null) {
+            String redirectUrl = savedRequest.getRedirectUrl();
+            if (redirectUrl!=null && !redirectUrl.contains("logOut")){
+                getRedirectStrategy().sendRedirect(request,response,redirectUrl);
+            }else {
+                getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
+            }
         }else {
             getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
         }
-//        super.onAuthenticationSuccess(request,response,authentication);
-        logger.info("User: "+request.getParameter("username")+ ":login successfully");
+        return;
     }
 
 }

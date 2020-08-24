@@ -1,21 +1,17 @@
 package com.zhy.test.controller;
 
-import com.zhy.test.service.DatabaseUserDetailsService;
+import com.zhy.test.service.Impl.DatabaseUserDetailsService;
 import com.zhy.test.service.LoginService;
 import com.zhy.test.token.JwtTokenProvider;
 import com.zhy.test.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -37,7 +33,9 @@ public class LoginController {
     }
 
     @RequestMapping("/loginIn")
-    public String loginIn(String username,String password,HttpServletRequest request){
+    public String loginIn(HttpServletRequest request){
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         loginService.loginIn(username,password,request);
         return "welcome";
     }
@@ -48,25 +46,14 @@ public class LoginController {
     }
 
 
-//    @RequestMapping("loginIn")
-//    @ResponseBody
-//    public ResponseResult loginIn(String username, String password,
-//                                  HttpServletRequest request, HttpServletResponse response){
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//        final String token = tokenProvider.generateJsonWebToken(userDetails);
-//        ResponseResult result = ResponseResult.successWithData(token);
-//        return result;
-//    }
-
     @RequestMapping("/loginWelcome")
     public String loginWelcome(String username,String password,HttpServletRequest request){
         return "welcome";
     }
 
-    @RequestMapping("/loginOut")
+    @RequestMapping("/logOut")
     public String loginOut(HttpServletRequest request){
         HttpSession session = request.getSession();
-        log.info(session.getAttribute("user").toString());
         session.removeAttribute("user");
         return "login";
     }

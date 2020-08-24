@@ -7,6 +7,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,11 +17,7 @@ import java.io.PrintWriter;
 public class AuthenticationLogoutHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
-        ResponseResult result = ResponseResult.successWithMessage("注销成功");
-        PrintWriter out = response.getWriter();
-        out.write(new ObjectMapper().writeValueAsString(result));
-        out.flush();
-        out.close();
+        String contextPath = request.getContextPath();
+        response.sendRedirect(contextPath+"/login/logOut");
     }
 }

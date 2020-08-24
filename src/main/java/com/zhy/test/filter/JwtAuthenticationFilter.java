@@ -1,6 +1,6 @@
 package com.zhy.test.filter;
 
-import com.zhy.test.service.DatabaseUserDetailsService;
+import com.zhy.test.service.Impl.DatabaseUserDetailsService;
 import com.zhy.test.token.JwtTokenProvider;
 import com.zhy.test.utils.SpringBeanUtil;
 import io.jsonwebtoken.Jwts;
@@ -19,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Collection;
 
 @Slf4j

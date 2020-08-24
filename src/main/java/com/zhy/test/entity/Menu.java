@@ -26,10 +26,17 @@ public class Menu implements Serializable {
     private String menuCode;
     @Column(name = "url")
     private String url;
+
+    /**
+     * fetch = FetchType.EAGER：加载树形结构，使用关闭懒加载。否则取出一层数据后，会关闭session,再取下一层时报错：session is closed
+     * @JoinColumn声明的关联关系中：name当前字段。referencedColumnName引用表对应的字段，如果不注明，默认就是引用表的主键。
+     *  joinColumns是主操作表的中间列表
+     *  inverJoinColumns是从操作表的中间列表。
+     */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "role_menu",joinColumns =
-    @JoinColumn(name = "menu_code",referencedColumnName = "menu_code",updatable = false,insertable = false),
-    inverseJoinColumns = @JoinColumn(name = "role_code",updatable = false,insertable = false))
+    @JoinTable(name = "role_menu",
+            joinColumns = @JoinColumn(name = "menu_code",referencedColumnName = "menu_code",updatable = false,insertable = false),
+            inverseJoinColumns = @JoinColumn(name = "role_code",updatable = false,insertable = false))
     private List<Role> roleList;
 
     public String getId() {
