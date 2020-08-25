@@ -22,18 +22,6 @@ public class JwtTokenProvider {
     public static final String TOKEN_PERFIX="Bearer ";
 
 
-    public void setJwtTokenSecret(String jwtTokenSecret) {
-        JwtTokenProvider.jwtTokenSecret = jwtTokenSecret;
-    }
-
-    public static Long getTokenExpiredMs() {
-        return tokenExpiredMs;
-    }
-
-    public void setTokenExpiredMs(Long tokenExpiredMs) {
-        JwtTokenProvider.tokenExpiredMs = tokenExpiredMs;
-    }
-
     public static String generateJsonWebToken(UserDetails userDetails) {
 
         Map<String,Object> map = new HashMap<>();
@@ -42,8 +30,9 @@ public class JwtTokenProvider {
         String role = "";
         if(iterator.hasNext()){
             role = iterator.next().toString();
+            map.put("rol", role);
         }
-        map.put("rol", role);
+
         String token = Jwts
                 .builder()
                 .setSubject(SUBJECT)
