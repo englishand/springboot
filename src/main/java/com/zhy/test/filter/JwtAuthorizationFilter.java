@@ -1,8 +1,6 @@
 package com.zhy.test.filter;
 
 import com.zhy.test.token.JwtTokenProvider;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +15,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * 登录成功之后进行鉴权操作
+ * 登录成功之后对token进行校验操作
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -53,20 +51,5 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         return null;
     }
-
-    private String getJwtFromRequest(HttpServletRequest request){
-        String token = request.getHeader("Authorization");
-        if (token!=null && token.startsWith("Bearer")){
-            return token.replace("Bearer","");
-        }
-        return null;
-    }
-
-    private String getUsernameFromJwt(String token,String signkey){
-        return Jwts.parser().setSigningKey(signkey)
-                .parseClaimsJws(token)
-                .getBody().getSubject();
-    }
-
 
 }

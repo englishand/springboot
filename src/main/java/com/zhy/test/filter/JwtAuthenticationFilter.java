@@ -75,7 +75,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 按照jwt的规定，最后请求的时候应该是 `Bearer token`
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json;charset=utf-8");
-        String tokenstr = "Bearer "+token;
+        String tokenstr = JwtTokenProvider.TOKEN_PERFIX+token;
         response.setHeader(JwtTokenProvider.TOKEN_HEADER,tokenstr);
     }
 
@@ -84,35 +84,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.getWriter().write("authentication failed,reson: "+failed.getMessage());
     }
 
-    /**
-     * @Description:1.从每个请求header获取token
-     * 2.调用前面写的validateToken方法对token进行合法性验证
-     * 3.解析得到username,并从database取出用户相关信息权限
-     * 4.把用户信息（role等)以UserDetail形式放进SecurityContext以备整个请求过程使用。
-     */
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-//        String tokenHeader = httpServletRequest.getHeader(JwtTokenProvider.TOKEN_HEADER);
-//        //如果请求头中没有Authorization信息则直接放行
-//        if (tokenHeader==null || !tokenHeader.startsWith(JwtTokenProvider.TOKEN_PERFIX)){
-//            filterChain.doFilter(httpServletRequest,httpServletResponse);
-//            return;
-//        }
-//        String token = getJwtFromRequest(httpServletRequest);
-//        this.initFilterBean();
-//        initAutoWired();
-//        if (token!=null && jwtTokenProvider.validateToken(token)){
-//            String username = getUsernameFromJwt(token,authParameters.getJwtTokenSecret());
-//            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//            Authentication authentication = new UsernamePasswordAuthenticationToken(
-//                    userDetails,null,userDetails.getAuthorities());
-//            SecurityContextHolder.getContext().setAuthentication(authentication);
-//        }else {
-//            log.error(httpServletRequest.getParameter("username")+ ":token is null");
-//        }
-//        super.doFilter(httpServletRequest,httpServletResponse,filterChain);
-//    }
-//
     private String getJwtFromRequest(HttpServletRequest request){
         String token = request.getHeader("Authorization");
         if (token!=null && token.startsWith("Bearer")){
