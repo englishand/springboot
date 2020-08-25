@@ -69,6 +69,4 @@ soap:
 logging:
   config: classpath:logback.xml
 
-jwtTokenSecret: englishand
-tokenExpiredMs: 600000
 base_url: /projectone

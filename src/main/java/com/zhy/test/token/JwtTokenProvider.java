@@ -1,41 +1,40 @@
 package com.zhy.test.token;
 
-import com.zhy.test.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+import static io.jsonwebtoken.Claims.SUBJECT;
+
 @Slf4j
 @Component
 public class JwtTokenProvider {
 
-    private static String jwtTokenSecret;
-    private static Long tokenExpiredMs;
+    public static String jwtTokenSecret="englishand";
+    public static long tokenExpiredMs=3*60*1000;
     public static final String TOKEN_HEADER="Authorization";
     public static final String TOKEN_PERFIX="Bearer ";
 
-    @Value("${jwtTokenSecret}")
+
     public void setJwtTokenSecret(String jwtTokenSecret) {
-        this.jwtTokenSecret = jwtTokenSecret;
+        JwtTokenProvider.jwtTokenSecret = jwtTokenSecret;
     }
 
-    public Long getTokenExpiredMs() {
+    public static Long getTokenExpiredMs() {
         return tokenExpiredMs;
     }
 
-    @Value("${tokenExpiredMs}")
     public void setTokenExpiredMs(Long tokenExpiredMs) {
-        this.tokenExpiredMs = tokenExpiredMs;
+        JwtTokenProvider.tokenExpiredMs = tokenExpiredMs;
     }
 
-    public String generateJsonWebToken(UserDetails userDetails) {
+    public static String generateJsonWebToken(UserDetails userDetails) {
 
         Map<String,Object> map = new HashMap<>();
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
@@ -47,7 +46,7 @@ public class JwtTokenProvider {
         map.put("rol", role);
         String token = Jwts
                 .builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(SUBJECT)
                 .setClaims(map)
                 .claim("username", userDetails.getUsername())
                 .setIssuedAt(new Date())
@@ -56,17 +55,13 @@ public class JwtTokenProvider {
         return token;
     }
 
-    public String createJwtToken(String username,String role ){
-        log.info("********************************************");
-        log.info(tokenExpiredMs.toString());
-        log.info(jwtTokenSecret);
-        log.info("********************************************");
+    public static String createJwtToken(String username,String role ){
         Map<String,Object> map = new HashMap<>();
         map.put("rol",role);
 
         String token =
                 Jwts.builder()
-                .setSubject(username)
+                .setSubject(SUBJECT)
                 .setClaims(map)
                 .claim("username",username)
                 .setIssuedAt(new Date())
@@ -75,7 +70,7 @@ public class JwtTokenProvider {
         return token;
     }
 
-    public boolean validateToken(String token){
+    public static boolean validateToken(String token){
         String VALIDATE_FAILED="validate_failed: ";
         try{
             Jwts.parser().setSigningKey(jwtTokenSecret)
@@ -99,7 +94,7 @@ public class JwtTokenProvider {
         return claims.get("rol").toString();
     }
 
-    public boolean isExpiration(String token){
+    public static boolean isExpiration(String token){
         Claims claims = Jwts.parser().setSigningKey(jwtTokenSecret)
                 .parseClaimsJws(token).getBody();
         return claims.getExpiration().before(new Date());

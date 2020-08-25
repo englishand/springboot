@@ -1,9 +1,8 @@
 package com.zhy.test.filter;
 
-import com.zhy.test.service.Impl.DatabaseUserDetailsService;
 import com.zhy.test.token.JwtTokenProvider;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,10 +21,6 @@ import java.util.Collections;
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-
-    @Autowired
-    private DatabaseUserDetailsService userDetailsService;
-
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
@@ -39,17 +34,17 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
         //如果请求头中有token，则进行解析，并且设置认证信息
-//        String token = getJwtFromRequest(request);
-//        String username = getUsernameFromJwt(token,authParameters.getJwtTokenSecret());
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//        Authentication authentication = new UsernamePasswordAuthenticationToken(
-//                userDetails,null,userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
         super.doFilterInternal(request,response,chain);
     }
 
+    //从token中获取用户信息并新建一个token
     private UsernamePasswordAuthenticationToken getAuthentication(String tokenHeader){
         String token = tokenHeader.replace(JwtTokenProvider.TOKEN_PERFIX,"");
+        boolean isValid = JwtTokenProvider.validateToken(token);
+        if (!isValid){
+            return null;
+        }
         String username = JwtTokenProvider.getUsername(token);
         String role = JwtTokenProvider.getUserRole(token);
         if (username!=null){

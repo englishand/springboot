@@ -2,6 +2,8 @@ package com.zhy.test.security;
 
 import com.zhy.test.authenticationHandler.AuthenticationDeniedHandler;
 import com.zhy.test.authenticationHandler.AuthenticationLogoutHandler;
+import com.zhy.test.filter.JwtAuthenticationFilter;
+import com.zhy.test.filter.JwtAuthorizationFilter;
 import com.zhy.test.intercepor.security.MyAccessDecisionManager;
 import com.zhy.test.intercepor.security.MyFilterInvocationSecurityMetadataSource;
 import com.zhy.test.service.Impl.DatabaseUserDetailsService;
@@ -16,7 +18,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -95,6 +97,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                         return o;
                     }
                 })
+//                .and()
+//                    .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+//                    .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+//                    //不需要session
+//                    .sessionManagement()
+//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin()
                     .loginPage("/login/in")//指定自定义登录页面，也可以用页面地址 /login.html

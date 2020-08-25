@@ -1,17 +1,15 @@
 package com.zhy.test.filter;
 
-import com.zhy.test.service.Impl.DatabaseUserDetailsService;
+import com.zhy.test.entity.JwtUser;
 import com.zhy.test.token.JwtTokenProvider;
-import com.zhy.test.utils.SpringBeanUtil;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -24,26 +22,19 @@ import java.util.Collection;
 @Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-    @Autowired
-    private DatabaseUserDetailsService userDetailsService;
-
     private AuthenticationManager authenticationManager;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager){
         this.authenticationManager = authenticationManager;
-        super.setFilterProcessesUrl("/login/loginIn");
+        super.setFilterProcessesUrl("/login/logIn");
     }
-    private String username;
-    private String password;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             request.setCharacterEncoding("UTF-8");
-            username = request.getParameter("username");
-            password = request.getParameter("password");
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
@@ -70,16 +61,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        initAutoWired();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
+//        JwtUser jwtUser = (JwtUser) authResult.getPrincipal();
+        User user = (User) authResult.getPrincipal();
         String role = "";
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         for (GrantedAuthority authority:authorities){
             role = authority.getAuthority();
         }
 
-        String token = jwtTokenProvider.createJwtToken(userDetails.getUsername(),role);
+        String token = JwtTokenProvider.createJwtToken(user.getUsername(),role);
         // 返回创建成功的token
         // 但是这里创建的token只是单纯的token
         // 按照jwt的规定，最后请求的时候应该是 `Bearer token`
@@ -135,14 +125,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         return Jwts.parser().setSigningKey(signkey)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
-    }
-
-    public void initAutoWired(){
-        if (jwtTokenProvider==null){
-            jwtTokenProvider = SpringBeanUtil.getBean(JwtTokenProvider.class);
-        }if (userDetailsService==null){
-            userDetailsService = SpringBeanUtil.getBean(DatabaseUserDetailsService.class);
-        }
     }
 
 }

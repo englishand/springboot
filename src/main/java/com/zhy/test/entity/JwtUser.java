@@ -1,6 +1,5 @@
 package com.zhy.test.entity;
 
-import org.springframework.data.querydsl.SimpleEntityPathResolver;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +16,9 @@ public class JwtUser implements UserDetails {
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+
+    public JwtUser(){
+    }
 
     /**
      * 用User生成JwtUser
