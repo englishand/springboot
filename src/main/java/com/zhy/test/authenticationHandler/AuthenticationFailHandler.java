@@ -5,6 +5,7 @@ import com.zhy.test.utils.ResponseResult;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,10 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        this.returnJson(response,exception);
+        this.returnJson(request,response,exception);
     }
 
-    public void returnJson(HttpServletResponse response,AuthenticationException exception)
+    public void returnJson(HttpServletRequest request,HttpServletResponse response,AuthenticationException exception)
         throws IOException{
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
@@ -42,9 +43,10 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             result = ResponseResult.errorWithMessage("登录失败!");
         }
 
-        PrintWriter out = response.getWriter();
-        out.write(new ObjectMapper().writeValueAsString(result));
-        out.flush();
-        out.close();
+        saveException(request,exception);
+//        PrintWriter out = response.getWriter();
+//        out.write(new ObjectMapper().writeValueAsString(result));
+//        out.flush();
+//        out.close();
     }
 }
