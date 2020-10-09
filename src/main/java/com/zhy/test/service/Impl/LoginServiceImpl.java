@@ -1,7 +1,9 @@
 package com.zhy.test.service.Impl;
 
+import com.zhy.test.entity.Role;
 import com.zhy.test.entity.User;
 import com.zhy.test.service.LoginService;
+import com.zhy.test.service.RoleService;
 import com.zhy.test.service.UserService;
 import com.zhy.test.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -21,15 +23,18 @@ public class LoginServiceImpl implements LoginService {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public ResponseResult loginIn(String username, String password, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = new User();
-        String uuid = UUID.randomUUID().toString();
-        if (StringUtils.isEmpty(user.getId())){
-            user.setId(uuid.replaceAll("-",""));
-        }
+        Role role = new Role();
+//        String uuid = UUID.randomUUID().toString();
+//        if (StringUtils.isEmpty(user.getId())){
+//            user.setId(uuid.replaceAll("-",""));
+//        }
 //        try{
 //            userService.insert(user);
 //            user.setUserDescript("测试事务");
@@ -40,7 +45,7 @@ public class LoginServiceImpl implements LoginService {
 //            throw new RuntimeException(e.getMessage());
 //        }
         try{
-            this.transactionalExample(user);
+            this.transactionalExample(user,role);
         }catch (Exception e){
             log.error(e.getMessage());
             throw new RuntimeException(e.getMessage());
@@ -58,7 +63,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Transactional
-    public void transactionalExample(User user){
+    public void transactionalExample(User user,Role role){
         String uuid = UUID.randomUUID().toString();
         if (StringUtils.isEmpty(user.getId())){
             user.setId(uuid.replaceAll("-",""));

@@ -7,14 +7,21 @@ import com.zhy.test.mapping.UserMapper;
 import com.zhy.test.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
     @Autowired
     private UserMapper userDao;
+
+    @Override
+    public int insert(User user) {
+        return userDao.insert(user);
+    }
 
     @Override
     public List<Role> selectByUserId(String userId) {

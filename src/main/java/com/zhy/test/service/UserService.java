@@ -10,4 +10,6 @@ public interface UserService extends BaseService<User>{
     List<Role> selectByUserId(String userId);
 
     int update(User user);
+
+    int insert(User user);
 }
