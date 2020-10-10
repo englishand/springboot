@@ -53,6 +53,8 @@ spring:
 #  security:
 #    enabled: false
 
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
 
 config:
   username: zhy

@@ -33,6 +33,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
             if (redirectUrl!=null && !redirectUrl.contains("logOut")){
                 getRedirectStrategy().sendRedirect(request,response,redirectUrl);
             }else {
+                request.setAttribute("username",request.getParameter("username"));
                 getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
             }
         }else {

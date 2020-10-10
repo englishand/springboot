@@ -36,7 +36,11 @@ public class LoginController {
     public String loginIn(HttpServletRequest request){
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        loginService.loginIn(username,password,request);
+        try{
+            loginService.loginIn(username,password,request);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
         return "welcome";
     }
 

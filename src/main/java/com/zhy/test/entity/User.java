@@ -23,7 +23,7 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",joinColumns =
     @JoinColumn(name = "user_name",referencedColumnName = "user_name",updatable = false,insertable = false),
-    inverseJoinColumns = @JoinColumn(name = "role_code",referencedColumnName = "role_code",updatable = false,insertable = false))
+            inverseJoinColumns = @JoinColumn(name = "role_code",referencedColumnName = "role_code",updatable = false,insertable = false))
     private List<Role> roles;
 
     public String getId() {

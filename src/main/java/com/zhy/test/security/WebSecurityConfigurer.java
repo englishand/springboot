@@ -97,12 +97,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                         return o;
                     }
                 })
-                .and()
-                    .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                    .addFilter(new JwtAuthorizationFilter(authenticationManager()))
-                    //不需要session
-                    .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                    .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+//                    .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+//                    //不需要session
+//                    .sessionManagement()
+//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin()
                     .loginPage("/login/in")//指定自定义登录页面，也可以用页面地址 /login.html
@@ -116,6 +116,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/login/logIn")//设置登录时的请求地址
                     .usernameParameter("username").passwordParameter("password")
                     .failureHandler(failureHandler)
+                    .failureForwardUrl("/login/in")
                     .successHandler(successHandler)
                 .and()
                 .logout()

@@ -3,6 +3,7 @@ package com.zhy.test.test;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Test {
@@ -39,5 +40,18 @@ public class Test {
         String acc = "2345678.123456789";
         BigDecimal decimal = new BigDecimal(acc).setScale(4,BigDecimal.ROUND_HALF_UP);
         System.out.println(decimal);
+
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MONTH,1);
+        cal.set(Calendar.DATE,1);
+        cal.add(Calendar.DAY_OF_YEAR,-1);
+        System.out.println(cal.getTime());
+
+
+        String substr = "123456";
+        System.out.println(substr.substring(4));
     }
 }
