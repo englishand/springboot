@@ -39,6 +39,7 @@ public class Student {
     @Email
     private String url;
 
+
     /**
      * fluent = true,getter方法
      * @return
@@ -77,9 +78,11 @@ public class Student {
      * 执行顺序：Constructor(构造方法)->@Autowired(依赖注入)->@PostConstruct(注释的方法)
      */
     @PostConstruct
-    public void testPostConstruct(){
+    public void init(){
         System.out.println("111111111111111111");
+        Student student = this;
     }
+
 
     /**
      * 修饰非静态的void方法

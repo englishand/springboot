@@ -25,7 +25,7 @@ public class Test {
             }else {
                 System.out.println("*****************");
             }
-            System.out.println("a="+a);
+            System.out.println("i="+i);
         }
 
         Date date1 = new Date();

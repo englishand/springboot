@@ -2,6 +2,8 @@ package com.zhy.test.entity;
 
 import org.springframework.cglib.beans.BeanMap;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Test {
@@ -39,8 +41,14 @@ public class Test {
         }
 
         BeanMap beanMap = BeanMap.create(test);
-        System.out.println(beanMap.get("age"));
-        System.out.println(beanMap.keySet());
-        System.out.println(beanMap.values());
+//        System.out.println(beanMap.get("age"));
+//        System.out.println(beanMap.keySet());
+//        System.out.println(beanMap.values());
+        Map map = new HashMap();
+        map.put("name","111");
+        map.put("aaa","2222");
+        System.out.println(map.keySet());
+        map.remove("name");
+        System.out.println(map.keySet());
     }
 }
