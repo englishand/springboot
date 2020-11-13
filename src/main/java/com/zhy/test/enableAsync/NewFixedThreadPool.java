@@ -3,7 +3,7 @@ package com.zhy.test.enableAsync;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CommonThread {
+public class NewFixedThreadPool {
 
     private static ExecutorService threadpool;
 
@@ -25,7 +25,7 @@ public class CommonThread {
     }
 
     public static void main(String[] args){
-        CommonThread commonThread = new CommonThread();
+        NewFixedThreadPool commonThread = new NewFixedThreadPool();
         commonThread.sendMsg();
         commonThread.sendMsg();
     }

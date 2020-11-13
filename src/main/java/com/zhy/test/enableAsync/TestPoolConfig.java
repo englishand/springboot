@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class TestP {
+public class TestPoolConfig {
 
     @Autowired
     private PoolThread poolThread;

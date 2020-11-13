@@ -37,6 +37,11 @@ public class SystemPropertiesUtil {
     public final static String USER_HOME = "user.home"; // 用户的主目录
     public final static String USER_DIR = "user.dir"; // 用户的当前工作目录
 
+    public final static String WINDOWS_OS = "windows";//window系统
+    public final static String UNIX_OS = "unix";//unix系统
+    public final static String LINUX_OS = "linux";//linux系统
+    public final static String AIX_OS = "aix";//aix系统
+
     public static String getPropertyInfo(String property){
         if (!StringUtils.isEmpty(property)){
             return System.getProperty(property);

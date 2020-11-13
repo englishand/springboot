@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class PoolConfig {
 
     @Bean("poolexecutor")
-    public Executor executor(){
+    public ThreadPoolTaskExecutor executor(){
 
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -34,12 +34,12 @@ public class PoolConfig {
         //线程池对拒绝任务的处理策略：这里采用了CallerRunsPolicy策略，
         //线程池没有处理能力的时候，该策略会直接在 execute 方法的调用线程中运行被拒绝的任务；如果执行程序已关闭，则会丢弃该任务
         hte.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-//        hte.initialize();
+        hte.initialize();
         return hte;
     }
 
     @Bean("poolexecutor2")
-    public Executor executor2(){
+    public ThreadPoolTaskExecutor executor2(){
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(10);
         executor.setMaxPoolSize(20);

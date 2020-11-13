@@ -3,6 +3,8 @@ package com.zhy.test.getObject;
 import lombok.Setter;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class User implements Serializable,Cloneable{
@@ -25,15 +27,14 @@ public class User implements Serializable,Cloneable{
         return u.clone();
     }
 
-    public User getUserByClass() throws Exception{
+    public static User getUserByClass() throws Exception{
         Class aClass = Class.forName("com.zhy.test.getObject.User");
         return (User)aClass.newInstance();
     }
 
-
     public static void main(String[] args){
-        User user = new User();
         File file = new File("aa.obj");
+//        User user = new User();
         try
         {
 //            FileOutputStream fos = new FileOutputStream(file);
@@ -45,11 +46,12 @@ public class User implements Serializable,Cloneable{
 
 //            User u = user.clone();
 
-            User u = user.getUserByClass();
+            User u = getUserByClass();
 
             System.out.println(u.getName());
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
 }
