@@ -13,16 +13,19 @@ import java.io.InputStreamReader;
 
 /**
  * 进程控制器
- * 应用：通过程序启动bat文件
+ * 应用：通过程序启动bat文件、exe程序等。
  */
 @Slf4j
-public class ProcessController implements Runnable{
+public class ProcessController{
 
     /**
      * 新建进程
      * @param pid
      */
     public void process(String pid) {
+        PoolConfig poolConfig = new PoolConfig();
+        ThreadPoolTaskExecutor executor = poolConfig.executor();
+
         ProcessCommandArg processCommandArg = resolveCommands(pid);
         Runtime runtime = Runtime.getRuntime();
         Process process = null;
@@ -32,7 +35,7 @@ public class ProcessController implements Runnable{
 //            process = runtime.exec("D:/batch.bat");
             log.info("process begin:"+processCommandArg.getPid()+":"+processCommandArg.getProcessName());
             //子进程输出
-            this.resolveStream(process);
+            this.resolveOutput(process,executor);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
@@ -95,36 +98,109 @@ public class ProcessController implements Runnable{
         return command;
     }
 
-    private void resolveStream(Process process) throws Exception {
+    /**
+     * 处理子进程输出流
+     * @param process
+     * @throws Exception
+     */
+    private void resolveInputStream(Process process) throws Exception {
 //        String line ;
-        InputStream inputStream = process.getInputStream();
-//        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-        byte[] by = new byte[1024];
         try {
+            //获取进程的标准输入流
+            InputStream inputStream = process.getInputStream();
+//        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            byte[] by = new byte[1024];
+
 //            while ((line=br.readLine())!=null){       //出现乱码问题，用read方法解决
 //                System.out.println(line);
 //            }
-            while (inputStream.read(by) != -1){
-                System.out.println(new String(by,"gbk"));
+            while (inputStream.read(by) != -1) {
+                System.out.println(new String(by, "gbk"));
             }
             inputStream.close();
-            process.waitFor();
             log.info("执行成功");
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("执行失败");
             throw e;
         }
     }
 
+    /**
+     * 处理子进程错误流
+     * @param process
+     * @throws Exception
+     */
+    private void resolveErrorStream(Process process) throws Exception{
+        try {
+            //获取进程的标准错误流
+            InputStream errorStream = process.getErrorStream();
+            byte[] bytes = new byte[1024];
+            while (errorStream.read(bytes)!=-1){
+                System.out.println(new String(bytes,"gbk"));
+            }
+            errorStream.close();
+            log.info("执行成功");
+        }catch (Exception e){
+            log.error("执行失败");
+            throw e;
+        }
 
-    @Override
-    public void run() {
-        this.process("1");
+    }
+
+    /**
+     * 子进程输出
+     * @param process
+     * @param executor
+     */
+    public void resolveOutput(Process process,ThreadPoolTaskExecutor executor){
+        try {
+            //处理子进程错误流
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        resolveErrorStream(process);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            //处理子进程输出流
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        resolveInputStream(process);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            //主进程调用proces.waitfor()等待子进程完成。这里我们使用了ThreadPoolTaskExecutor执行的子进程故不会在主进程中。
+            int ret = process.waitFor();
+            System.out.println("return value:"+ret);
+            System.out.println(process.exitValue());
+            log.info("event:{}","RunExeForWindows",process.exitValue());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args){
-        PoolConfig poolConfig = new PoolConfig();
-        ThreadPoolTaskExecutor executor = poolConfig.executor();
-        executor.execute(new ProcessController());
+        ProcessController pc = new ProcessController();
+        pc.process("1");
     }
+
+    /**
+     *  waitfor 问题描述分析
+     * 1.主进程中调用pb.start/pb.exec会创建一个子进程，用于执行shell /exe 脚本。子进程创建后会和主进程分别独立运行。
+     * 2. 因为主进程需要等待脚本执行完成，然后对脚本返回值或输出进行处理，所以这里主进程调用Process.waitfor等待子进程完成。
+     * 3. 子进程执行过程就是不断的打印信息。主进程中可以通过Process.getInputStream和Process.getErrorStream获取并处理。
+     * 4. 这时候子进程不断向主进程发生数据，而主进程调用Process.waitfor后已挂起。当前子进程和主进程之间的缓冲区塞满后，子进程不能继续写数据，然后也会挂起。
+     * 5. 这样子进程等待主进程读取数据，主进程等待子进程结束，两个进程相互等待，最终导致死锁。
+     *
+     * 解决方法：在waitfor之前，单独启动两个额外的线程，分别用于处理InputStream和ErrorStream
+     */
 }
