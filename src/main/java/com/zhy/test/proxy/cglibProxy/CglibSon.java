@@ -1,22 +1,12 @@
 package com.zhy.test.proxy.cglibProxy;
 
+/**
+ * 目标类
+ */
 public class CglibSon {
 
-    public CglibSon(){
-
-    }
     public void gotoHome(){
-        System.out.println("--------gotoHome---------");
+        System.out.println("--------我要回家哈---------");
     }
-    public void gotoSchool(){
-        System.out.println("--------gotoSchool----------");
-    }
-    public void onday(){
-        gotoHome();
-        gotoSchool();
-    }
-    public final void onedayFinal(){
-        gotoHome();
-        gotoSchool();
-    }
+
 }

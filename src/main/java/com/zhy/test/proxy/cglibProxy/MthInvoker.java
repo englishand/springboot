@@ -1,31 +1,25 @@
 package com.zhy.test.proxy.cglibProxy;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
-import org.springframework.cglib.proxy.Callback;
-import org.springframework.cglib.proxy.MethodProxy;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
 
+/**
+ * 拦截器
+ */
 public class MthInvoker implements MethodInterceptor {
 
-    private CglibSon cglibSon;
-    public MthInvoker(CglibSon son){
-        this.cglibSon = son;
-    }
-    private void aopMethod(){
-        System.out.println("in aopmethod---------");
-    }
-
-    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy)
-    throws Throwable{
-        aopMethod();
-        Object a = method.invoke(cglibSon,args);
-        return a;
-    }
-
     @Override
-    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-        return null;
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+        //这里用的不是反射。
+        //代理对象o:com.zhy.test.proxy.cglibProxy.CglibSon$$EnhancerByCGLIB$$6ff65d77@646007f4
+        //目标类方法method:public void com.zhy.test.proxy.cglibProxy.CglibSon.gotoHome()
+        //args:方法参数
+        //methodProxy:sig1:gotoHome()V
+        //            sig2:CGLIB$gotoHome$0()V
+        Object intercept = methodProxy.invokeSuper(o,objects);
+        System.out.println("对目标类进行增强：你可以回家了");
+        return intercept;
     }
 }
