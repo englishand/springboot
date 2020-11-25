@@ -2,5 +2,5 @@ package com.zhy.test.proxy.JavaProxy.interf;
 
 public interface JavaProxy {
 
-    void gotoSchool();
+    void gotoSchool(String name);
 }

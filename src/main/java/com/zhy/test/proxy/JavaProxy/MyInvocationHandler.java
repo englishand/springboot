@@ -22,6 +22,7 @@ public class MyInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         aopMethod();
+        args = new String[]{"张家辉"};
         return method.invoke(post,args);
     }
 }

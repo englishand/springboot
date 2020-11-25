@@ -17,7 +17,7 @@ public class JavaProxyTest {
                 javaProxy.getClass().getInterfaces(),
                 new MyInvocationHandler(javaProxy));
 
-        newJavaProxy.gotoSchool();
+        newJavaProxy.gotoSchool("渣渣辉");
     }
     /**
      * 1.ClassLoader作用：java程序写好以后是以.java（文本文件）的文件存在磁盘上，然后，我们通过(bin/javac.exe)编译命令把.java文件编译成.class文件（字节码文件），

@@ -15,7 +15,7 @@ public class MthInvoker implements MethodInterceptor {
         //这里用的不是反射。
         //代理对象o:com.zhy.test.proxy.cglibProxy.CglibSon$$EnhancerByCGLIB$$6ff65d77@646007f4
         //目标类方法method:public void com.zhy.test.proxy.cglibProxy.CglibSon.gotoHome()
-        //args:方法参数
+        //objects:方法参数
         //methodProxy:sig1:gotoHome()V
         //            sig2:CGLIB$gotoHome$0()V
         Object intercept = methodProxy.invokeSuper(o,objects);
