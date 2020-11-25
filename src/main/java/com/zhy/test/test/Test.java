@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class Test {
 
@@ -53,5 +54,13 @@ public class Test {
 
         String substr = "123456";
         System.out.println(substr.substring(4));
+
+        StringBuilder sb = new StringBuilder();
+        for (int i=0;i<6;i++){
+            Random r = new Random();
+            char c = (char) (r.nextInt(10)+'0');
+            sb.append(c);
+        }
+        System.out.println(sb);
     }
 }
