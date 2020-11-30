@@ -5,7 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 
 
@@ -44,6 +48,36 @@ public class VerifySign {
         return publicKey;
     }
 
+    /**
+     * 从证书中获取公钥对象和私钥对象
+     * @throws Exception
+     */
+    public static void getPublicOrPrivateKey() throws Exception{
+        InputStream resourceAsStream = VerifySign.class.getClassLoader().getResourceAsStream("zhy20201130.pfx");
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        //生成证书时设置的密钥库口令
+        String storePass = "123456";
+        //别名密码
+        String aliasPass = "123456";
+        //从文件输入流中获取keystore
+        keyStore.load(resourceAsStream,aliasPass.toCharArray());
+        resourceAsStream.close();
+        //从keystore中读取证书和私钥、公钥
+        Certificate certificate = keyStore.getCertificate("projectone");//生成证书时设置的alias
+        publicKey = certificate.getPublicKey();
+        log.info("公钥：{}",Base64.encodeBase64String(publicKey.getEncoded()));
+        PrivateKey privateKey = (PrivateKey) keyStore.getKey("projectone",storePass.toCharArray());
+        log.info("私钥：{}",Base64.encodeBase64String(privateKey.getEncoded()));
+    }
+
+    public static void main(String[] args){
+        try {
+            VerifySign.getPublicOrPrivateKey();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //正确的公钥
     //正常应从数据库取，表：core_cert; 或从配置文件中获取
     private static String pubKey = //"-----BEGIN CERTIFICATE-----" +
@@ -72,7 +106,7 @@ public class VerifySign {
             "T1BpkiAPqRFFCJVOF/RLBe6YLqZl/cQ4/4Ejk4dsbt+L\n";// +
           //  "-----END CERTIFICATE-----";
 
-    //错误公钥
+    //错误公钥，仅用来测试验签是否能通过
     private static String pubKey2 = "MIIB/TCCAWagAwIBAgIETBRPczANBgkqhkiG9w0BAQUFADBDMQswCQYDVQQGEwJD\n" +
             "TjEQMA4GA1UEChMHVGVuY2VudDEPMA0GA1UECxMGVGVucGF5MREwDwYDVQQDEwhv\n" +
             "bmVjbGljazAeFw0xMDA2MTMwMzI0MzVaFw0yMDA2MTAwMzI0MzVaMEMxCzAJBgNV\n" +
