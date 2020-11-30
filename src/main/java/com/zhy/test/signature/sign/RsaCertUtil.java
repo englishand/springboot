@@ -1,9 +1,11 @@
 package com.zhy.test.signature.sign;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Security;
@@ -42,6 +44,7 @@ public class RsaCertUtil {
      * @return  证书对象
      */
     private static KeyStore getKeyStore(String keyFile,String keypwd,String type){
+        InputStream fis = null;
         try {
             KeyStore keyStore = null;
             if ("JKS".equals(type)){
@@ -51,7 +54,13 @@ public class RsaCertUtil {
                 Security.addProvider(new BouncyCastleProvider());
                 keyStore = KeyStore.getInstance(type);
             }
-            FileInputStream fis = new FileInputStream(keyFile);
+
+            if (!StringUtils.isEmpty(keyFile)){
+                fis = new FileInputStream(keyFile);
+            }else {
+                fis = RsaCertUtil.class.getClassLoader().getResourceAsStream("jks/4002486073.pfx");
+            }
+
             char[] nPassword = null;
             nPassword = null==keypwd||"".equals(keypwd.trim())?null:keypwd.toCharArray();
             //npassword：用来解锁密码库或者检查密码库数据的完整性

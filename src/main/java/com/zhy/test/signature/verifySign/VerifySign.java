@@ -3,6 +3,7 @@ package com.zhy.test.signature.verifySign;
 import com.zhy.test.signature.CupSec;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -24,7 +25,7 @@ public class VerifySign {
     public static boolean verifySign(String rootStr, String signValue){
         log.info("signstr:"+signValue);
         try {
-            publicKey = getPublicKey(pubKey2);
+            publicKey = getPublicKey(pubKey);
             return CupSec.rsaVerifyWithSha256(publicKey,rootStr.getBytes(),signValue);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,13 +46,13 @@ public class VerifySign {
     public static PublicKey getPublicKey(String pubKey) throws Exception{
         byte[] keyBytes;
         keyBytes =  Base64.decodeBase64(pubKey.replaceAll("\n",""));
-        X509EncodedKeySpec keySpec =  new X509EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        publicKey = keyFactory.generatePublic(keySpec);
+//        X509EncodedKeySpec keySpec =  new X509EncodedKeySpec(keyBytes);
+//        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+//        publicKey = keyFactory.generatePublic(keySpec);
 
-//        publicKey = CertificateFactory.getInstance("X.509")
-//                .generateCertificate(new ByteArrayInputStream(keyBytes))
-//                .getPublicKey();
+        publicKey = CertificateFactory.getInstance("X.509")
+                .generateCertificate(new ByteArrayInputStream(keyBytes))
+                .getPublicKey();
         return publicKey;
     }
 
@@ -69,10 +70,10 @@ public class VerifySign {
         resourceAsStream.close();
 
         //从keystore中读取证书和私钥、公钥
-        X509Certificate certificate = (X509Certificate) keyStore.getCertificate("projectone");//生成证书时设置的alias
+        X509Certificate certificate = (X509Certificate) keyStore.getCertificate("unionpay");//生成证书时设置的alias
         publicKey = certificate.getPublicKey();
         log.info("公钥：{}",Base64.encodeBase64String(publicKey.getEncoded()));
-        PrivateKey privateKey = (PrivateKey) keyStore.getKey("projectone",storePass.toCharArray());
+        PrivateKey privateKey = (PrivateKey) keyStore.getKey("unionpay",storePass.toCharArray());
         log.info("私钥：{}",Base64.encodeBase64String(privateKey.getEncoded()));
     }
 
@@ -114,11 +115,5 @@ public class VerifySign {
 
     //错误公钥，仅用来测试验签是否能通过
     private static String pubKey2 =
-            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhxqQ/aef3Pk/IL00l/Ch" +
-            "LgbndLPv19LEM++ufCbICNmcMnJ9KH6T8MUd491Zw6f9U1mViE3vTbuNitCaESBa" +
-            "Kc/FILWR0w6Va647Or6KHeEcTiBeGMpuqMZ+ausIFNPMhfwsQe0uipm5MwSSMDjK" +
-            "JLqX9w7n9cs9HdzcapY76paBMBmdAxbT7MFMn2uTo8z6fyXoo38SQZwojs+btxbi" +
-            "AyUWQjU+B9I2LkfmCC44HR8+v9cN0LGH43glZPT75/OWQGLbtsQXq0P56s8tx5/R" +
-            "UtaBl4q2IounPTqO/RLC4OXTHk58jxSHm5lCw9ugKnY73dT1Fyc4a4XQU+R743Ir" +
-            "FQIDAQAB";
+            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArAAQnsm8VKAzAw6ts3Sd9R8VBSBZm4wg42Erv2ffTh4gn+NdL+xQDlCzUl+NrnO+dKipEZf/v+R0Loztc4grT00dgplGOoCSa7eNwUl7L/+UHjjGY5RBIderFgHRFlpEhZZvDfiJavlyzdp76QdY/J+/OOgadDJH4KTqCSX+uNRwL0eYGXIDa8IjQP9811Ss4tA9e18iawQK6NbrMqAoIxGwhQN8R9Xe+Up45KF+EtExb5Xq09ZyXUcFXx3g1AjsqPu9WLyGnN0Ey2GEpi1OplNatnmW/WBdNDLm2HBJpnHWNeJqt4nNxKu8EU4g7GJa6MvKdtLLR/vva+U68/iIjQIDAQAB";
 }
