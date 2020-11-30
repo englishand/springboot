@@ -6,11 +6,14 @@ import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.security.KeyFactory;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.spec.X509EncodedKeySpec;
 
 
 @Slf4j
@@ -32,6 +35,9 @@ public class VerifySign {
 
     /**
      * 根据公钥字符串生成公钥对象
+     * @desciption PKCS12常用的后缀是： .p12/.pfx;
+     * X.509 DER编码（ASCⅡ）的后缀是：.der/.cer/.crt
+     * X.509 PAM编码（Base64)的后缀是：.PEM/.cer/.crt
      * @param pubKey
      * @return
      * @throws Exception
@@ -39,12 +45,13 @@ public class VerifySign {
     public static PublicKey getPublicKey(String pubKey) throws Exception{
         byte[] keyBytes;
         keyBytes =  Base64.decodeBase64(pubKey.replaceAll("\n",""));
-//        X509EncodedKeySpec keySpec =  new X509EncodedKeySpec(keyBytes);
-//        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-//        PublicKey publicKey = keyFactory.generatePublic(keySpec);
-        publicKey = CertificateFactory.getInstance("X.509")
-                .generateCertificate(new ByteArrayInputStream(keyBytes))
-                .getPublicKey();
+        X509EncodedKeySpec keySpec =  new X509EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        publicKey = keyFactory.generatePublic(keySpec);
+
+//        publicKey = CertificateFactory.getInstance("X.509")
+//                .generateCertificate(new ByteArrayInputStream(keyBytes))
+//                .getPublicKey();
         return publicKey;
     }
 
@@ -53,17 +60,16 @@ public class VerifySign {
      * @throws Exception
      */
     public static void getPublicOrPrivateKey() throws Exception{
-        InputStream resourceAsStream = VerifySign.class.getClassLoader().getResourceAsStream("zhy20201130.pfx");
+        InputStream resourceAsStream = VerifySign.class.getClassLoader().getResourceAsStream("jks/zhy20201130.pfx");
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
         //生成证书时设置的密钥库口令
         String storePass = "123456";
-        //别名密码
-        String aliasPass = "123456";
         //从文件输入流中获取keystore
-        keyStore.load(resourceAsStream,aliasPass.toCharArray());
+        keyStore.load(resourceAsStream,storePass.toCharArray());
         resourceAsStream.close();
+
         //从keystore中读取证书和私钥、公钥
-        Certificate certificate = keyStore.getCertificate("projectone");//生成证书时设置的alias
+        X509Certificate certificate = (X509Certificate) keyStore.getCertificate("projectone");//生成证书时设置的alias
         publicKey = certificate.getPublicKey();
         log.info("公钥：{}",Base64.encodeBase64String(publicKey.getEncoded()));
         PrivateKey privateKey = (PrivateKey) keyStore.getKey("projectone",storePass.toCharArray());
@@ -107,15 +113,12 @@ public class VerifySign {
           //  "-----END CERTIFICATE-----";
 
     //错误公钥，仅用来测试验签是否能通过
-    private static String pubKey2 = "MIIB/TCCAWagAwIBAgIETBRPczANBgkqhkiG9w0BAQUFADBDMQswCQYDVQQGEwJD\n" +
-            "TjEQMA4GA1UEChMHVGVuY2VudDEPMA0GA1UECxMGVGVucGF5MREwDwYDVQQDEwhv\n" +
-            "bmVjbGljazAeFw0xMDA2MTMwMzI0MzVaFw0yMDA2MTAwMzI0MzVaMEMxCzAJBgNV\n" +
-            "BAYTAkNOMRAwDgYDVQQKEwdUZW5jZW50MQ8wDQYDVQQLEwZUZW5wYXkxETAPBgNV\n" +
-            "BAMTCG9uZWNsaWNrMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCpMz1a8sKu\n" +
-            "k6gf2hCNvm0xfyfzSd5xOWL9PimhK99tNk0p0A35p/5K5aGcmKVwgHFTLxZzvy9e\n" +
-            "DxK9Hf/BabTyqzThG3xNrCyFZHse2EbSZUVApwd4dwXy9U5AHHS/KUJ5QeV9V8d+\n" +
-            "RuGZaQc65siVuYl8et41aTMK/kvkRSXkmQIDAQABMA0GCSqGSIb3DQEBBQUAA4GB\n" +
-            "AJXZO3WQmhz7UjpbKRPJMSn5rWXY3/gjre62rkpEx4a13lfDAB9eSKUOmE0kTsls\n" +
-            "NOKcVgf5GrnVrIQDKJczf8NRQ3nLR9OODE2MwNz7yl/CjJTuEjxBEClP43zTfssx\n" +
-            "W//ZWtjwG8xrgMVoD3uJ+VeJxCw+cpirtWpXDfuq42fR";
+    private static String pubKey2 =
+            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhxqQ/aef3Pk/IL00l/Ch" +
+            "LgbndLPv19LEM++ufCbICNmcMnJ9KH6T8MUd491Zw6f9U1mViE3vTbuNitCaESBa" +
+            "Kc/FILWR0w6Va647Or6KHeEcTiBeGMpuqMZ+ausIFNPMhfwsQe0uipm5MwSSMDjK" +
+            "JLqX9w7n9cs9HdzcapY76paBMBmdAxbT7MFMn2uTo8z6fyXoo38SQZwojs+btxbi" +
+            "AyUWQjU+B9I2LkfmCC44HR8+v9cN0LGH43glZPT75/OWQGLbtsQXq0P56s8tx5/R" +
+            "UtaBl4q2IounPTqO/RLC4OXTHk58jxSHm5lCw9ugKnY73dT1Fyc4a4XQU+R743Ir" +
+            "FQIDAQAB";
 }

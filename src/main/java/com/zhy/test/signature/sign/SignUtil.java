@@ -26,7 +26,7 @@ public class SignUtil {
      */
     public static String sign(byte[] rootBytes) throws IOException{
         if (CERT_SWITCH){
-            privateKey = RsaCertUtil.getPriKeyPkcs12(keyFile,keyAlias,keypwd,"PKCS12");
+            privateKey = RsaCertUtil.getPriKeyPkcs12("D:/java/zhy20201130.pfx","projectone","123456","PKCS12");
             return CupSec.rsaSignWithSha256(privateKey,rootBytes);
         }else {
             return Arrays.toString(rootBytes);
