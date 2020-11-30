@@ -60,7 +60,7 @@ public class VerifySign {
      * @throws Exception
      */
     public static void getPublicOrPrivateKey() throws Exception{
-        InputStream resourceAsStream = VerifySign.class.getClassLoader().getResourceAsStream("jks/zhy20201130.pfx");
+        InputStream resourceAsStream = VerifySign.class.getClassLoader().getResourceAsStream("jks/4002486073.pfx");
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
         //生成证书时设置的密钥库口令
         String storePass = "123456";
