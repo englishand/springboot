@@ -65,9 +65,8 @@ public class Test {
         }
         System.out.println(sb);
 
-        //这里是获取不到的，因为跟spring容器里的factory不是同一个对象
-        String name = new CacheManagerFactory().getUserManager().getFromCache("username").toString();
-        System.out.println("缓存的名称："+name);
+        String transactionIdWithNameSpace = String.format("%s%s", new String[] { "UN", "0001" });
+        System.out.println(transactionIdWithNameSpace);
     }
 
 
