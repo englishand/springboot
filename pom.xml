@@ -205,6 +205,13 @@
             <artifactId>jsch</artifactId>
             <version>0.1.49</version>
         </dependency>
+
+        <!--schedule triggerfactorybean引用jar包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+            <version> 2.3.6.RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>

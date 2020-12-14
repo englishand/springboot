@@ -19,12 +19,12 @@ public class Test {
 
         System.out.println(pattern.endsWith(seprator));
         System.out.println(path.endsWith(seprator));
-        System.out.println(pattern.startsWith(seprator,7));
+        System.out.println(pattern.startsWith(seprator,6));
         System.out.println(path.startsWith(seprator,5));
         int a=1;
         for (int i=0;i<10;i++){
             if(a==i) {
-                continue;
+                return;
             }else {
                 System.out.println("*****************");
             }
