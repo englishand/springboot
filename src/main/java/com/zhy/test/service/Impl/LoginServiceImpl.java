@@ -4,18 +4,13 @@ import com.zhy.test.cache.CacheManagerFactory;
 import com.zhy.test.entity.Role;
 import com.zhy.test.entity.User;
 import com.zhy.test.service.LoginService;
-import com.zhy.test.service.RoleService;
-import com.zhy.test.service.UserService;
 import com.zhy.test.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 @Slf4j
 @Service

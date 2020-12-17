@@ -18,6 +18,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Autowired
     private UserMapper userDao;
 
+
     @Override
     public int insert(User user) {
         return userDao.insert(user);
@@ -29,8 +30,18 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
+    public List<User> selectByUser(User user) {
+        return null;
+    }
+
+    @Override
     public int update(User user) {
         return userDao.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public int updateById(String userId) {
+        return 0;
     }
 
 
@@ -38,7 +49,5 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     protected BaseDao getBaseDao() {
         return this.userDao;
     }
-
-
 
 }

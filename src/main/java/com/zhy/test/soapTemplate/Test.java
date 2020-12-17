@@ -1,21 +1,19 @@
 package com.zhy.test.soapTemplate;
 
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
+/**
+ * @RunWith：用于指定junit运行环境，是junit提供给其他框架测试环境接口扩展，为了便于使用spring的依赖注入，
+ * spring提供了org.springframework.test.context.junit4.SpringJUnit4ClassRunner作为Junit测试环境
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class Test {
 
     @org.junit.Test
     public void mains(){
-
-        StringBuilder sb = new StringBuilder();
         System.out.println(SoapTemplateInit.blackList);
     }
 }

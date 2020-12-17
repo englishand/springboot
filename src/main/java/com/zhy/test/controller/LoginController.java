@@ -1,8 +1,6 @@
 package com.zhy.test.controller;
 
-import com.zhy.test.service.Impl.DatabaseUserDetailsService;
 import com.zhy.test.service.LoginService;
-import com.zhy.test.token.JwtTokenProvider;
 import com.zhy.test.utils.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +19,6 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-    @Autowired
-    private DatabaseUserDetailsService userDetailsService;
-    @Autowired
-    private JwtTokenProvider tokenProvider;
 
 
     @RequestMapping(value = "in")
