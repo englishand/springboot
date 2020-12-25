@@ -20,14 +20,15 @@ public class TextVoiceTransfer {
      * 将text转语音
      * @param text
      */
-    public static void TextToSpeech(String text){
+    public static String TextToSpeech(String text){
         ActiveXComponent axc = null;
+        String fileName = null;
         try {
             axc = new ActiveXComponent("Sapi.SpVoice");
 
-            //运行时输出语音内容
+            //获取执行语音对象
             Dispatch spVoice = axc.getObject();
-            //音量 0-100
+            //音量 0-100%（按照系统的音量）
             axc.setProperty("Volume",new Variant(100));
             //语音朗读速度 -10 到 10
             axc.setProperty("Rate",new Variant(0));
@@ -47,15 +48,16 @@ public class TextVoiceTransfer {
             Dispatch.putRef(spFileStream,"Format",spAudioFormat);
             //调用输出文件流打开方法，创建一个.wav文件
             String date = System.currentTimeMillis()+"";
-            Dispatch.call(spFileStream,"Open",new Variant("./"+date+".wav"),new Variant(3),new Variant(true));
-            //设置声音对象的音频输出流 为 输出文件对象
-            Dispatch.putRef(spVoice,"AudioOutputStream",spFileStream);
+            fileName = "./"+date+".wav";
+            Dispatch.call(spFileStream,"Open",new Variant(fileName),new Variant(3),new Variant(true));
             //设置音量
             Dispatch.put(spVoice,"Volume",new Variant(100));
             //设置朗读速度
-            Dispatch.put(spVoice,"Rate",new Variant(-2));
+            Dispatch.put(spVoice,"Rate",new Variant(0));
             //开始朗读
             Dispatch.call(spVoice,"Speak",new Variant(text));
+            //设置声音对象的音频输出流 为 输出文件对象
+            Dispatch.putRef(spVoice,"AudioOutputStream",spFileStream);
 
             //关闭输出文件
             Dispatch.call(spFileStream,"Close");
@@ -68,6 +70,7 @@ public class TextVoiceTransfer {
         }catch (Exception e){
             log.error(e.getMessage(),e);
         }
+        return fileName;
     }
 
     /**
@@ -78,7 +81,7 @@ public class TextVoiceTransfer {
         AudioInputStream as;
         SourceDataLine sdl = null;
         try {
-            as = AudioSystem.getAudioInputStream(new File("./zhy20201217.wav"));
+            as = AudioSystem.getAudioInputStream(new File(fileName));
             AudioFormat format = as.getFormat();
             DataLine.Info info = new DataLine.Info(SourceDataLine.class,format);
             sdl = (SourceDataLine) AudioSystem.getLine(info);
@@ -103,9 +106,9 @@ public class TextVoiceTransfer {
 
     public static void main(String[] args){
         TextVoiceTransfer transfer = new TextVoiceTransfer();
-        transfer.TextToSpeech("应急公益短信：蠕动易来山东不利于空气质量的气象条件多发。国家航天局副局长、探月工程副总指挥吴艳华在12月17日下午的国新办发布会上表示，嫦娥五号任务是我国复杂度最高、技术跨度最大的航天系统工程，首次实现了我国地外天体采样返回。");
+        String fileName = transfer.TextToSpeech("应急公益短信：蠕动易来山东不利于空气质量的气象条件多发。国家航天局副局长、探月工程副总指挥吴艳华在12月17日下午的国新办发布会上表示，嫦娥五号任务是我国复杂度最高、技术跨度最大的航天系统工程，首次实现了我国地外天体采样返回。");
 
-        transfer.FileWithSpeech("./zhy20201217.wav");
+        transfer.FileWithSpeech(fileName);
     }
 
 }

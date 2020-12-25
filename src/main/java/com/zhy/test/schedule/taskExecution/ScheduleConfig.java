@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 /**
  * 配置多线程运行
- * 可以是任务分配给不同的线程执行，例：StaticsTask
+ * 可以使任务分配给不同的线程执行，例：StaticsTask
  */
 @Configuration
 public class ScheduleConfig implements SchedulingConfigurer {

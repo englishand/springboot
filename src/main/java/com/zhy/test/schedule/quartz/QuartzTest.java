@@ -13,6 +13,9 @@ import java.util.Date;
 @Slf4j
 public class QuartzTest extends QuartzJobBean {
 
+    /**
+     * 该属性值通过继承QuartzJobBean，JobDetailFactoryBean使用JobDataMap传递参数，任务类使用set方法注入。
+     */
     private String name;
 
     @Override
