@@ -15,7 +15,7 @@ import java.security.interfaces.RSAPrivateKey;
 public class RsaUtil {
 
     /**
-     * 算法常量
+     * 签名算法名称
      */
     private static final String SIGN_ALGORITHM_SHA256RSA = "SHA256withRSA";
 
