@@ -123,7 +123,7 @@ public class ProcessController{
             inputStream.close();
             log.info("子进程输入流处理完成");
         } catch (Exception e) {
-            log.error("执行失败");
+            log.error("执行失败",e);
             throw e;
         }
     }
@@ -144,7 +144,7 @@ public class ProcessController{
             errorStream.close();
             log.info("子进程错误流处理完成");
         }catch (Exception e){
-            log.error("执行失败");
+            log.error("执行失败",e);
             throw e;
         }
 
@@ -205,7 +205,7 @@ public class ProcessController{
      *
      * 解决方法：在waitfor之前，单独启动两个额外的线程，分别用于处理InputStream和ErrorStream
      *
-     * 如何使用ProcessBuilder方法,如下：
+     * 如何使用ProcessBuilder方法,如下(使用解压工具将myjar.jar解压到new文件下)：
      * ProcessBuilder pb = new ProcessBuilder(
      *      "C:Program Files/WinRAR/winrar",
      *      "x",
