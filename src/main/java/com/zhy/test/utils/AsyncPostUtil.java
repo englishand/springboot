@@ -40,4 +40,11 @@ public class AsyncPostUtil {
         returnMessage = httpResponse.body();
         return returnMessage;
     }
+
+    /**
+     * Future用来代表异步的结果，并且提供了检查计算完成，等待完成，检索结果完成等方法。简而言之就是提供一个异步运算结果的一个建模。
+     * 它可以让我们把耗时的操作从我们本身的调用线程中释放出来，只需要完成后再进行回调。
+     *
+     * CompletableFuture是JDK8提出的一个支持非阻塞的多功能的Future，同样也是实现了Future接口。
+     */
 }

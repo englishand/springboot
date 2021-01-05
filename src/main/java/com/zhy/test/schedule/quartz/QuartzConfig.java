@@ -62,19 +62,19 @@ public class QuartzConfig {
     CronTriggerFactoryBean cronTriggerFactoryBean(){
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(jobDetailFactoryBean().getObject());
-        bean.setCronExpression("0/2 * 17 * * ?");
+        bean.setCronExpression("0/2 * 13 * * ?");
         return bean;
     }
 
     /**
-     * 将trigger配置到ScheduleFactory,用于启动定时器
+     * 将trigger配置到ScheduleFactory,用于启动定时器（容器启动即触发）
      * @return
      */
     @Bean
     SchedulerFactoryBean schedulerFactoryBean(){
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
-        bean.setTriggers(simpleTriggerFactoryBean().getObject()
-        ,cronTriggerFactoryBean().getObject());
+//        bean.setTriggers(simpleTriggerFactoryBean().getObject()
+//        ,cronTriggerFactoryBean().getObject());
         return bean;
     }
 }

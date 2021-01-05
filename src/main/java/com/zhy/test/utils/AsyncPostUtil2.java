@@ -86,38 +86,4 @@ public class AsyncPostUtil2 {
         return s;
     }
 
-    public String send(){
-        CloseableHttpAsyncClient client = HttpAsyncClients.createDefault();
-        client.start();
-        Future<HttpResponse> future=client.execute(post, new FutureCallback<HttpResponse>() {
-            @Override
-            public void completed(HttpResponse httpResponse) {
-
-            }
-
-            @Override
-            public void failed(Exception e) {
-
-            }
-
-            @Override
-            public void cancelled() {
-
-            }
-        });
-        String result="";
-        try {
-            HttpResponse response = future.get();
-            result = EntityUtils.toString(response.getEntity(),"UTF-8");
-            System.out.println("result: "+result);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
 }

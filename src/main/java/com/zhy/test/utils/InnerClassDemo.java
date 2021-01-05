@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * 内部类修改类的属性值
+ */
 public class InnerClassDemo {
 
     String city = "shanghai";

@@ -91,4 +91,15 @@ public class InvokeMethodUtil {
         System.out.println(aaa.toString());
     }
 
+    /**
+     * getFields();获取某个类的公共（pubLic）的字段，包括父类的字段。
+     * getDeclaredFields();获取某个类的所有声明的字段，即包括public、private、protected,但不包括父类声明的字段。
+     *
+     * getMethod();获取当前类和父类的所有pubLic的方法。这里的父类，指的时继承层次中的所有父类。A继承B,B继承C,则这里B和C都为A的父类。
+     * getDeclaredMethod();获取当前类的所有声明的方法。
+     *
+     * getConstructors();只返回public修饰的构造器。
+     * getDeclaredConstructors();返回所有类型的构造器。
+     */
+
 }

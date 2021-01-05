@@ -14,7 +14,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update #如果启动时表格式不一致则更新表，原有数据保留
-    show-sql: true
+#    show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
   http:
     encoding:
@@ -70,5 +70,10 @@ soap:
   inJar: true
 logging:
   config: classpath:logback.xml
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.engine.QueryParameters: debug
+    org.hibernate.engine.query.HQLQueryPlan: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 base_url: /projectone

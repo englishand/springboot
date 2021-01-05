@@ -91,10 +91,10 @@ public class AnnotationController {
     @RequestMapping("testAsyncPostUtil")
     public JSONObject testAsyncPostUtil(){
         String result = new HttpPostUtil().post();
-        String result2 = new AsyncPostUtil2().send();
+        String result2 = new AsyncPostUtil2().sendRequest();
         String result3 = "";
         try {
-            result3 = new AsyncPostUtil().sendPostRequest(100,"UTF-8");
+            result3 = new AsyncPostUtil().sendPostRequest(400,"UTF-8");
         } catch (ExecutionException e) {
             logg.info(e.getMessage());
             result3 = e.getMessage();

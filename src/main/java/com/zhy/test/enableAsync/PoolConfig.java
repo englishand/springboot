@@ -14,7 +14,7 @@ import java.util.concurrent.*;
 
 @Slf4j
 @Configuration
-@EnableAsync(proxyTargetClass = true)
+@EnableAsync(proxyTargetClass = true)//基于类的代理被创建即cglib代理
 public class PoolConfig {
 
     /**

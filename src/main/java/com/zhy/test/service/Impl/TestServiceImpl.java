@@ -11,7 +11,7 @@ public class TestServiceImpl implements TestService {
     @Transactional
     public String getMsg() throws Exception {
         String msg = "您好！欢迎使用xx系统";
-        if (true){
+        if (false){
             throw new Exception("系统异常");
         }
         System.out.println("是否还执行-------------------xx系统");
