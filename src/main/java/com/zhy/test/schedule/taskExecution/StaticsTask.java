@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class StaticsTask {
 
-    @Scheduled(cron = "0/2 * 15 * * ?")
+    @Scheduled(cron = "0/2 * 11 * * ?")
     public static void test(){
         log.info(Thread.currentThread().getName());
         log.info("测试"+ DateFormatUtils.format(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));

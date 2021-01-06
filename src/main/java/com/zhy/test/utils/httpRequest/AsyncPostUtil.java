@@ -1,4 +1,4 @@
-package com.zhy.test.utils;
+package com.zhy.test.utils.httpRequest;
 
 import org.springframework.util.StringUtils;
 

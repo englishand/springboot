@@ -72,7 +72,6 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        String[] aa = getUrls();
         web.ignoring().antMatchers(getUrls());
     }
 
@@ -171,4 +170,18 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         urls.add("/qr/**");
         return urls;
     }
+
+    /**
+     * 注解使用：@EnableWebSecurity
+     *      1.组合注解，该注解中引入了WebSecurityConfiguration.class配置类，该配置类中注入了bean:springSecurityFilterChain,
+     *          这是Spring Security的核心过滤器，这是请求的认证入口。
+     *      2.使用了@EnableGlobalAuthentication注解，该注解引入了AuthenticationConfiguration配置类，该类是配置认证相关的核心类，
+     *          主要作用:向spring容器中注入AuthenticationManagerBuilder（使用了创造者模式），它能创造AuthenticationManager(身份认证接口).
+     *
+     * @EnableGlobalMethodSecurity
+     *  开启spring方法级安全。该注解提供：prePostEnabled、securedEnabled、jsr250Enabled三种不同机制来实现同一种功能。
+     *  prePostEnabled=true:解锁 @PreAuthorize和 @PostAuthorize两个注解。
+     *  secured:注解用来定义业务方法的安全配置。在需要安全【角色/权限等】的方法上指定。并且只有那些角色/权限的用户才可以调用该方法。
+     *  jsr250e:JSR-250安全控制注解，这属于Java-EE级别的安全防范。
+     */
 }

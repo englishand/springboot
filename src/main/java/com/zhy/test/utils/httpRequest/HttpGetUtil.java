@@ -1,4 +1,4 @@
-package com.zhy.test.utils;
+package com.zhy.test.utils.httpRequest;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
