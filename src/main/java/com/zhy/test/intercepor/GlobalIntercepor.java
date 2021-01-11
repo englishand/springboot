@@ -2,13 +2,11 @@ package com.zhy.test.intercepor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 //拦截器HandlerInterceptorAdapter
 @Component
@@ -34,6 +32,7 @@ public class GlobalIntercepor extends HandlerInterceptorAdapter {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         log.info("拦截器后处理开始。。。。。。。。。。");
         if (modelAndView!=null){
+            modelAndView.addObject("testCode","这是测试Interceptor拦截器");
             System.out.println("可以对modelAndView进行设置。。。。。。。。。。。。。。。");
         }
         log.info("拦截器后处理结束。。。。。。。。。。");
