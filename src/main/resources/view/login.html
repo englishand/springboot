@@ -28,8 +28,8 @@
                     </div>
                 </div>
             </div>
-            <p style="color: red" th:if="${param.error}"
-               th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}">
+            <p style="color: red" id="security-message" th:if="${param.error}"
+               th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
             </p>
             <div style="padding:30px;">
                 <input type="submit" id="button" class="button button-block bg-main text-big input-big" th:value="登录" />

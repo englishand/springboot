@@ -1,4 +1,4 @@
-package com.zhy.test.interrupedException;
+package com.zhy.test.exception.interrupedException;
 
 public class InterrupTest implements Runnable{
 

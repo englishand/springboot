@@ -44,9 +44,9 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
         }
 
         saveException(request,exception);
-//        PrintWriter out = response.getWriter();
-//        out.write(new ObjectMapper().writeValueAsString(result));
-//        out.flush();
-//        out.close();
+        PrintWriter out = response.getWriter();
+        out.write(new ObjectMapper().writeValueAsString(result));
+        out.flush();
+        out.close();
     }
 }

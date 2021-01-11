@@ -115,7 +115,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                     .loginProcessingUrl("/login/logIn")//设置登录时的请求地址
                     .usernameParameter("username").passwordParameter("password")
                     .failureHandler(failureHandler)
-                    .failureForwardUrl("/login/in")
+                    .failureUrl("/login/in?error")
                     .successHandler(successHandler)
                 .and()
                 .logout()
@@ -168,6 +168,9 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         urls.add("/login/error");
         urls.add("/verify/**");
         urls.add("/qr/**");
+        urls.add("/annotation/testAsyncPostUtil");
+        urls.add("/annotation/testRequestBodyWithXml");
+        urls.add("/annotation/getValueString/**");
         return urls;
     }
 
