@@ -1,4 +1,4 @@
-package com.zhy.test.utils;
+package com.zhy.test.utils.ftpUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;

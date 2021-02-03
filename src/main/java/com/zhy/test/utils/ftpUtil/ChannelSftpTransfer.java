@@ -1,4 +1,4 @@
-package com.zhy.test.utils;
+package com.zhy.test.utils.ftpUtil;
 
 import com.jcraft.jsch.*;
 import lombok.extern.slf4j.Slf4j;

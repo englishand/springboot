@@ -74,8 +74,38 @@ public class Test {
         String length = new DecimalFormat("00000000").format(reqXml.length());
         reqXml = length + reqXml;
         System.out.println(reqXml);
+
+        Test test = new Test();
+        try {
+            test.TE();
+        } catch (RuntimeException e) {
+            System.out.println(e);
+            System.out.println(e.getMessage());
+        }
+
+        String sf = String.format("[%tT] [%s] %s ",new Date(),"info","测试");
+        String sf2 = String.format("[%tT] [%s] %s ",new Object[]{new Date(),"info","测试"});
+        System.out.println(sf);
+        System.out.println(sf2);
+
+
+        String ab = "2021-02-03";
+        System.out.println(ab.replaceAll("-","/"));
     }
 
+    public void TE() throws RuntimeException{
+        try{
+            int i = 1/0;
+        }catch (Exception e){
+            throw new RuntimeException("这是测试i捕获的异常。");
+        }finally {
+            try {
+                int j = 1/0;
+            }catch (Exception e){
+                throw new RuntimeException("这是测试j捕获的异常。");
+            }
+        }
+    }
 
 
 }

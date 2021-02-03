@@ -10,8 +10,8 @@ import java.io.*;
 import java.net.Socket;
 
 @Slf4j
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class SocketClient {
 
     public void sendRequest(String xml,String ip,int port){
@@ -72,10 +72,10 @@ public class SocketClient {
         }
     }
 
-    @Test
-    public void main(){
-        String ip = "192.168.103.143";
-        int port = 8188;
+//    @Test
+    public static void main(String[] args){
+        String ip = "127.0.0.1";
+        int port = 9999;
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">    <soapenv:Header/>    <soapenv:Body>        <S05800101BMS1001>            <RequestHeader>                <ReqTm>160427</ReqTm>                <ReqDt>20200623</ReqDt>            </RequestHeader>            <RequestBody>                <ORGID>1000</ORGID>                <OWNTASKDESC>登陆</OWNTASKDESC>                <OWN>CEBP</OWN>                <EMAILFLAG></EMAILFLAG>                <OWNREF>172020062342076879</OWNREF>                <BESREF></BESREF>                <ICODE>REQ1001</ICODE>                <MSGS>                    <MSG>    <MSGID>Person01</MSGID>    <DESC>申请人</DESC>    <TYPE>Person</TYPE>    <DATA>        <GENDER></GENDER>        <NAME></NAME>        <ROLE></ROLE>        <DATE>2020-06-23</DATE>        <ADDRESS></ADDRESS>        <COUNTRY></COUNTRY>        <IDS>110101198401010036</IDS>    </DATA>    <VALUETYPE></VALUETYPE>    <VALUE></VALUE>    <TARGET>CEBP-TARGET</TARGET>    <CONFIG>CEBP-config91</CONFIG></MSG>                </MSGS>                <USERID>0000</USERID>                <AUTHFLAG>N</AUTHFLAG>                <SMSFLAG></SMSFLAG>                <TRXREF>172020062342076879</TRXREF>                <AUTHORG>SELF</AUTHORG>                <BRANCHID>1000</BRANCHID>            </RequestBody>        </S05800101BMS1001>    </soapenv:Body></soapenv:Envelope>";
         SocketClient socketClient = new SocketClient();
         socketClient.sendRequest(xml,ip,port);

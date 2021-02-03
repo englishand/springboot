@@ -1,6 +1,6 @@
 package com.zhy.test.verifycode.service.impl;
 
-import com.zhy.test.utils.RandomUtils;
+import com.zhy.test.utils.RandomUtil;
 import com.zhy.test.verifycode.entity.VerifyCode;
 import com.zhy.test.verifycode.service.IVerifyCodeGen;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class SimpleCharVerifyCodeGenImpl implements IVerifyCodeGen {
         //加入干扰线
         for(int i=0;i<8;i++){
             //设置随机颜色算法参数
-            graphics.setColor(RandomUtils.randomColor(40, 150));
+            graphics.setColor(RandomUtil.randomColor(40, 150));
             Random random = new Random();
             int x = random.nextInt(width);
             int y = random.nextInt(height);
@@ -55,7 +55,7 @@ public class SimpleCharVerifyCodeGenImpl implements IVerifyCodeGen {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics graphics = image.getGraphics();
         fillBackground(graphics, width, height);
-        String randomStr = RandomUtils.randomString(VALICATE_CODE_LENGTH);
+        String randomStr = RandomUtil.randomString(VALICATE_CODE_LENGTH);
         createCharacter(graphics, randomStr);
         graphics.dispose();
         //设置JPEG格式
@@ -98,12 +98,12 @@ public class SimpleCharVerifyCodeGenImpl implements IVerifyCodeGen {
         char[] charArray = randomStr.toCharArray();
         for (int i = 0; i < charArray.length; i++) {
             //设置RGB颜色算法参数
-            g.setColor(new Color(50 + RandomUtils.nextInt(100),
-                    50 + RandomUtils.nextInt(100), 50 + RandomUtils.nextInt(100)));
+            g.setColor(new Color(50 + RandomUtil.nextInt(100),
+                    50 + RandomUtil.nextInt(100), 50 + RandomUtil.nextInt(100)));
             //设置字体大小，类型
-            g.setFont(new Font(FONT_TYPES[RandomUtils.nextInt(FONT_TYPES.length)], Font.BOLD, 26));
+            g.setFont(new Font(FONT_TYPES[RandomUtil.nextInt(FONT_TYPES.length)], Font.BOLD, 26));
             //设置x y 坐标
-            g.drawString(String.valueOf(charArray[i]), 15 * i + 5, 19 + RandomUtils.nextInt(8));
+            g.drawString(String.valueOf(charArray[i]), 15 * i + 5, 19 + RandomUtil.nextInt(8));
         }
     }
 }

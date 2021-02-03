@@ -3,7 +3,7 @@ package com.zhy.test.utils;
 import java.awt.*;
 import java.util.Random;
 
-public class RandomUtils extends org.apache.commons.lang3.RandomUtils {
+public class RandomUtil extends org.apache.commons.lang3.RandomUtils {
 
     private static final char[] CODE_SEQ = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
             'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',

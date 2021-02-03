@@ -13,14 +13,14 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class SocketServer implements Runnable{
 
     private static Socket socket = null;//主机与客户机的通信套接字
 
-    @Test
-    public void rcvRequest() {
+//    @Test
+    public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(8188);
             while (true){
