@@ -2,6 +2,7 @@ package com.zhy.test.test;
 
 import com.zhy.test.cache.CacheManagerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -89,8 +90,23 @@ public class Test {
         System.out.println(sf2);
 
 
-        String ab = "2021-02-03";
+        String ab = "测试字节2021-02-03";
         System.out.println(ab.replaceAll("-","/"));
+
+        byte[] b  = ab.getBytes();
+        String c = "";
+        byte[] d = new byte[1];
+        for (int i=0;i<b.length;i++){
+
+            if (i==2) {
+                try {
+                    c = new String(b, "GBK");
+                    System.out.println(c);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void TE() throws RuntimeException{

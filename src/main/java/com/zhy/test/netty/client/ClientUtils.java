@@ -1,11 +1,16 @@
 package com.zhy.test.netty.client;
 
+import com.zhy.test.netty.server.ServerChannelHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.AttributeKey;
+
+import java.nio.charset.Charset;
 
 public class ClientUtils {
 
@@ -19,8 +24,10 @@ public class ClientUtils {
             //第3.设置socketchannel的处理器，处理读写事件
             b.handler(new ChannelInitializer<NioSocketChannel>() {
                 @Override
-                protected void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
-                    nioSocketChannel.pipeline().addLast(handlers);//找到管道，增加handler
+                protected void initChannel(NioSocketChannel nsc) throws Exception {
+                    nsc.pipeline().addLast(new StringDecoder(Charset.forName("GB18030")));
+                    nsc.pipeline().addLast(new StringEncoder(Charset.forName("GB18030")));
+                    nsc.pipeline().addLast(new ClientHandler());//找到管道，增加handler
                 }
             });
             //连接服务器

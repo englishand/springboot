@@ -6,6 +6,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+
+import java.nio.charset.Charset;
 
 public class ServerUtils {
 
@@ -24,7 +28,9 @@ public class ServerUtils {
                 .childHandler(new ChannelInitializer<SocketChannel>() {//第3.设置子通道即SocketChannel的处理器。处理读写事件。ChannelInitializer是给通道初始化
                     @Override
                     protected void initChannel(SocketChannel sc) throws Exception {
-                        sc.pipeline().addLast(handlers);//添加处理器
+                        sc.pipeline().addLast(new StringDecoder(Charset.forName("GB18030")));
+                        sc.pipeline().addLast(new StringEncoder(Charset.forName("GB18030")));
+                        sc.pipeline().addLast(new ServerChannelHandler());//添加处理器
                     }
                 })
                 .option(ChannelOption.SO_BACKLOG,128)//配置ServerSocketChannel的选项

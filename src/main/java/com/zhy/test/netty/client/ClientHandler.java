@@ -11,10 +11,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        String value = "";
         if (msg instanceof ByteBuf){
-            String value = ((ByteBuf)msg).toString(Charset.forName("GBK"));
-            System.out.println("服务器端返回的数据："+value);
+            value = ((ByteBuf)msg).toString(Charset.forName("GBK"));
+        }else if (msg instanceof String){
+            value = (String) msg;
         }
+        System.out.println("服务器端返回的数据："+value);
 
         AttributeKey<String> key = AttributeKey.valueOf("ServerData");
         ctx.channel().attr(key).set("客户端处理完毕");
