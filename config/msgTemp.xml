@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mt>
+	<temp id="temp_1">您账户{accno}于{trantime}{tradscene}{currency}{tranamt}元{balance}[{accsummary}] {tailinfo}</temp>
+        <!-- <temp id="temp_1">您尾号{accno}{cdpbflag}于{trantime}{tradscene}{currency}{tranamt}元{balance}[{accsummary}] {tailinfo}</temp> -->
+        <temp id="temp_2">贵企业尾号{accno}的账户于{trantime}{tradscene}{currency}{tranamt}元{balance}[{accsummary}] {tailinfo}</temp>
+        <temp id="temp_1536_1">您尾号{accno}{cdpbflag}于{trantime}{tradscene}{currency}{tranamt}元{balance},当前交易满足银联免密免签业务条件.[{accsummary}] {tailinfo}</temp>
+        <temp id="temp_1536_2">贵企业尾号{accno}的账户于{trantime}{tradscene}{currency}{tranamt}元{balance},当前交易满足银联免密免签业务条件.[{accsummary}] {tailinfo}</temp>
+    <temp id="temp_1537_1">您尾号{accno}{cdpbflag}于{trantime}{tradscene}{currency}{tranamt}元{balance},当前交易满足银联免密免签业务条件.[{accsummary}] {tailinfo}</temp>
+    <temp id="temp_1538_1">您尾号{accno}{cdpbflag}于{trantime}{tradscene}{currency}{tranamt}元{balance},当前交易满足银联免密免签业务条件.[{accsummary}] {tailinfo}</temp>
+    <temp id="temp_1539_1">您尾号{accno}{cdpbflag}于{trantime}{tradscene}{currency}{tranamt}元{balance},当前交易满足银联免密免签业务条件.[{accsummary}] {tailinfo}</temp>
+    <temp id="temp_1540_1">您尾号{accno}{cdpbflag}于{trantime}{tradscene}{currency}{tranamt}元{balance},当前交易满足银联免密免签业务条件.[{accsummary}] {tailinfo}</temp>
+        <temp id="5012_1">哈尔滨银行成功代扣医保{tranamt}元,属期本期,{kzts}尾号[{accno}],余额{balance}元,医保咨询电话87383555</temp>
+        <temp id="5012_2">哈尔滨银行成功代扣医保{tranamt}元,属期本期,{kzts}尾号[{accno}],余额{balance}元,医保咨询电话87383555</temp>
+    <temp id="1085_2">贵企业尾号{accno}的添财账户于{trantime}转出{currency}{tranamt}元,余额{balance}元[{accsummary}]</temp>
+    <temp id="temp_8804_1">您尾号为{accno}{cdpbflag}于{trantime}银联入账({filter}){currency}{tranamt}元{balance},详见交易明细.[{accsummary}]</temp>
+    <temp id="temp_kz_2">您卡{cardno}折{accno}账户{trantime}{tradscene}{currency}{tranamt}元{balance}[{accsummary}] {tailinfo}</temp>
+       <!--  <temp id="temp_kz_2">您的卡尾号为{cardno},存折号码尾号为{accno}的账户,于{trantime}{tradscene}{currency}{tranamt}元{balance}[{accsummary}] {tailinfo}</temp> -->
+	
+</mt>

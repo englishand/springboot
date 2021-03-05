@@ -107,6 +107,47 @@ public class Test {
                 }
             }
         }
+
+        String regex = "[^0-9]+";
+        String contentNum = reqXml.replaceAll(regex, "").trim();
+        System.out.println(contentNum);
+
+        String txt = "账户有未解冻的冻结记录。                                                       1168010027878406                                    |";
+        System.out.println(txt.length());
+        System.out.println(txt.trim().length());
+        int number = txt.length() - txt.trim().length() - 36;
+        System.out.println(number);
+        contentNum = txt.replaceAll(regex,"").trim();
+        System.out.println(contentNum+"/"+contentNum.length());
+
+        System.out.println(System.getProperty("user.dir"));
+
+        String name = "                              ";
+
+        try {
+            name = new String("短信平台".getBytes(),"utf-8") + name.substring("短信平台".getBytes("utf-8").length + "短信平台".length());
+            System.out.println(name);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("///"+System.getProperty("line.separator")+"///");;
+
+        System.out.println("XASDF".toLowerCase());
+        String version = "1.0";
+        System.out.println(String.format("%-9s",version));
+
+        String content = "0000000001123456789012345678900816321000000000000000zhangsan                                1130613165945163 1106151203030025200.67           CNY81588.69          011008001045                            6217520018882876889                                  ";
+        byte[] bytes = content.getBytes();
+        System.out.println(bytes.length);
+
+        DecimalFormat df = new DecimalFormat("#0.00");
+        String transamt = "01238.23";
+        System.out.println(df.format(Double.parseDouble(transamt)));
+
+        String tranDate = "0615120303";
+        tranDate =tranDate.substring(0, 2).replaceFirst("^0*", "")+"月"+ tranDate.substring(2, 4).replaceFirst("^0*", "")+"日 "+tranDate.substring(4, 6)+":"+tranDate.substring(6, 8)+":"+tranDate.substring(8, 10);
+        System.out.println(tranDate);
     }
 
     public void TE() throws RuntimeException{
