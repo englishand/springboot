@@ -2,14 +2,15 @@ package com.zhy.test.test;
 
 import com.zhy.test.cache.CacheManagerFactory;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Test {
 
@@ -148,6 +149,35 @@ public class Test {
         String tranDate = "0615120303";
         tranDate =tranDate.substring(0, 2).replaceFirst("^0*", "")+"月"+ tranDate.substring(2, 4).replaceFirst("^0*", "")+"日 "+tranDate.substring(4, 6)+":"+tranDate.substring(6, 8)+":"+tranDate.substring(8, 10);
         System.out.println(tranDate);
+
+        String rspFileName = test.getRspFileName("RM0020170330000001.txt");
+        System.out.println(rspFileName);
+
+        test.readFile();
+
+        File file1 = new File("D:/test.txt");
+        if (file1==null || !file1.exists()){
+            try {
+                file1.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        File file2 = new File("D:/test.txt");
+        if (file2==null || !file2.exists()){
+            try {
+                file2.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Map map = new HashMap();
+        map.put("c",3);
+        map.put("a","1");
+        map.put("b","2");
+        System.out.println(map.toString());
     }
 
     public void TE() throws RuntimeException{
@@ -162,6 +192,82 @@ public class Test {
                 throw new RuntimeException("这是测试j捕获的异常。");
             }
         }
+    }
+
+    private String getRspFileName(String fileName){
+        String rspFileName = "" ;
+        // 发送方系统代码
+        String senderCode = "00" ;
+        // 接收方系统代码
+        String receiverCode = fileName.substring(0, 2);
+        // 文件生成日期
+//		String date = new SimpleDateFormat("yyyyMMdd").format(new Date());
+//		// 响应文件
+//		String freePart = "200" ;
+
+        // 流水号
+        String serialno = fileName.substring(4, 18);
+
+//		rspFileName = senderCode + receiverCode + date + freePart + serialno + ".txt" ;
+        rspFileName = senderCode + receiverCode + serialno + ".txt";
+
+
+
+        return rspFileName ;
+    }
+
+    private void readFile(){
+        String path = "D:/010020201012000802.txt";
+        FileInputStream fileInputStream = null;
+        InputStreamReader inputStreamReader = null;
+        BufferedReader reader = null;
+        String msg = "";
+
+        String files = "123|zhy";
+        BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
+        try {
+            // 待发文件
+            File file = new File(path);
+            fileInputStream = new FileInputStream(file);
+            inputStreamReader = new InputStreamReader(fileInputStream,"gbk");
+            reader = new BufferedReader(inputStreamReader);
+
+            while (null != (msg = reader.readLine())){
+
+                if (msg.isEmpty()){
+                    continue;
+                }
+                queue.add(files + "|" + msg) ;
+            }
+        } catch (IOException e) {
+
+        }finally {
+            if (reader!=null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (inputStreamReader!=null){
+                try {
+                    inputStreamReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fileInputStream!=null){
+                try {
+                    fileInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("----------------------------------\n"+queue.size());
+        String sendMsg = queue.poll();
+        System.out.println(queue.size());
+        System.out.println(sendMsg+"\n ---------------------------------------");
     }
 
 

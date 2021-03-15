@@ -75,8 +75,57 @@ public class SocketClient {
 //    @Test
     public static void main(String[] args){
         String ip = "127.0.0.1";
-        int port = 9999;
-        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">    <soapenv:Header/>    <soapenv:Body>        <S05800101BMS1001>            <RequestHeader>                <ReqTm>160427</ReqTm>                <ReqDt>20200623</ReqDt>            </RequestHeader>            <RequestBody>                <ORGID>1000</ORGID>                <OWNTASKDESC>登陆</OWNTASKDESC>                <OWN>CEBP</OWN>                <EMAILFLAG></EMAILFLAG>                <OWNREF>172020062342076879</OWNREF>                <BESREF></BESREF>                <ICODE>REQ1001</ICODE>                <MSGS>                    <MSG>    <MSGID>Person01</MSGID>    <DESC>申请人</DESC>    <TYPE>Person</TYPE>    <DATA>        <GENDER></GENDER>        <NAME></NAME>        <ROLE></ROLE>        <DATE>2020-06-23</DATE>        <ADDRESS></ADDRESS>        <COUNTRY></COUNTRY>        <IDS>110101198401010036</IDS>    </DATA>    <VALUETYPE></VALUETYPE>    <VALUE></VALUE>    <TARGET>CEBP-TARGET</TARGET>    <CONFIG>CEBP-config91</CONFIG></MSG>                </MSGS>                <USERID>0000</USERID>                <AUTHFLAG>N</AUTHFLAG>                <SMSFLAG></SMSFLAG>                <TRXREF>172020062342076879</TRXREF>                <AUTHORG>SELF</AUTHORG>                <BRANCHID>1000</BRANCHID>            </RequestBody>        </S05800101BMS1001>    </soapenv:Body></soapenv:Envelope>";
+        int port = 8188;
+        String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                "\n" +
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:cqr=\"www.cqrcb.com.cn\">\n" +
+                "  <soapenv:Header/>\n" +
+                "  <soapenv:Body>\n" +
+                "    <cqr:S006002990000001>\n" +
+                "      <RequestHeader>\n" +
+                "        <VerNo>1.1</VerNo>\n" +
+                "        <ReqSysCd>026001</ReqSysCd>\n" +
+                "        <ReqSecCd>026001</ReqSecCd>\n" +
+                "        <TxnTyp>RQ</TxnTyp>\n" +
+                "        <TxnMod>0</TxnMod>\n" +
+                "        <TxnCd>0</TxnCd>\n" +
+                "        <TxnNme/>\n" +
+                "        <ReqDt>20210308</ReqDt>\n" +
+                "        <ReqTm>2021-03-0816:34:14</ReqTm>\n" +
+                "        <AutoFlag/>\n" +
+                "        <Flag1>0</Flag1>\n" +
+                "        <Flag4>5</Flag4>\n" +
+                "        <ReqSeqNo>W02021030886969117</ReqSeqNo>\n" +
+                "        <ChnlNo>W0</ChnlNo>\n" +
+                "        <BrchNo>0100</BrchNo>\n" +
+                "        <TrmNo>000</TrmNo>\n" +
+                "        <TlrNo/>\n" +
+                "        <HMac>3D3121DE740471C1570C6297FF4AAEEF</HMac>\n" +
+                "        <OldAcctFlag>0</OldAcctFlag>\n" +
+                "        <UUID>07520210308001634148696911700000</UUID>\n" +
+                "      </RequestHeader>\n" +
+                "      <RequestBody>\n" +
+                "        <SndSysNo>71</SndSysNo>\n" +
+                "        <App>短信平台系统</App>\n" +
+                "        <MsgID>PB186969117</MsgID>\n" +
+                "        <MsgRefID>PB186969117</MsgRefID>\n" +
+                "        <WorkDt>20210308</WorkDt>\n" +
+                "        <MsgSndTm>20210308163414</MsgSndTm>\n" +
+                "        <Oper>0690</Oper>\n" +
+                "        <SmsMsg>508715（手机短信验证码，5分钟内有效），请勿将动态密码告知他人并确认交易网址为合法的哈尔滨银行网址。</SmsMsg>\n" +
+                "        <RecdNum/>\n" +
+                "        <request>\n" +
+                "          <row>\n" +
+                "            <SmsNo>15845600189</SmsNo>\n" +
+                "          </row>\n" +
+                "          <row>\n" +
+                "            <SmsNo/>\n" +
+                "          </row>\n" +
+                "        </request>\n" +
+                "      </RequestBody>\n" +
+                "    </cqr:S006002990000001>\n" +
+                "  </soapenv:Body>\n" +
+                "</soapenv:Envelope>";
         SocketClient socketClient = new SocketClient();
         socketClient.sendRequest(xml,ip,port);
     }

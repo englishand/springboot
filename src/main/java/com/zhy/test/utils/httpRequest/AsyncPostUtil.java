@@ -47,4 +47,8 @@ public class AsyncPostUtil {
      *
      * CompletableFuture是JDK8提出的一个支持非阻塞的多功能的Future，同样也是实现了Future接口。
      */
+
+    public static void main(String[] args){
+        AsyncPostUtil postUtil = new AsyncPostUtil();
+    }
 }
