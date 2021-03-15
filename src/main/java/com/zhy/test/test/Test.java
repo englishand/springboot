@@ -172,12 +172,6 @@ public class Test {
                 e.printStackTrace();
             }
         }
-
-        Map map = new HashMap();
-        map.put("c",3);
-        map.put("a","1");
-        map.put("b","2");
-        System.out.println(map.toString());
     }
 
     public void TE() throws RuntimeException{
