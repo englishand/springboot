@@ -150,8 +150,8 @@ public class Test {
         tranDate =tranDate.substring(0, 2).replaceFirst("^0*", "")+"月"+ tranDate.substring(2, 4).replaceFirst("^0*", "")+"日 "+tranDate.substring(4, 6)+":"+tranDate.substring(6, 8)+":"+tranDate.substring(8, 10);
         System.out.println(tranDate);
 
-        String rspFileName = test.getRspFileName("RM0020170330000001.txt");
-        System.out.println(rspFileName);
+//        String rspFileName = test.getRspFileName("RM0020170330000001.txt");
+//        System.out.println(rspFileName);
 
         test.readFile();
 
