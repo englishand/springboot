@@ -1,6 +1,5 @@
 package com.zhy.test.filter;
 
-import com.zhy.test.entity.JwtUser;
 import com.zhy.test.token.JwtTokenProvider;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;

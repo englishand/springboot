@@ -1,10 +1,6 @@
 package com.zhy.test.getObject;
 
-import lombok.Setter;
-
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class User implements Serializable,Cloneable{

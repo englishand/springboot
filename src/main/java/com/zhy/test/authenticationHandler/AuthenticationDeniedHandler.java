@@ -3,7 +3,6 @@ package com.zhy.test.authenticationHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhy.test.utils.ResponseResult;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Service;
 

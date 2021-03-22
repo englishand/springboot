@@ -7,7 +7,6 @@ import com.zhy.test.utils.httpRequest.AsyncPostUtil;
 import com.zhy.test.utils.httpRequest.AsyncPostUtil2;
 import com.zhy.test.utils.httpRequest.HttpPostUtil;
 import com.zhy.test.utils.JsonAndXmlUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Controller

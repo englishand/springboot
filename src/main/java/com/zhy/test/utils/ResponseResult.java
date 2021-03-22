@@ -1,7 +1,6 @@
 package com.zhy.test.utils;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 

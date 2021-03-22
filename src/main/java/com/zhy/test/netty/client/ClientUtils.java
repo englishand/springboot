@@ -1,6 +1,5 @@
 package com.zhy.test.netty.client;
 
-import com.zhy.test.netty.server.ServerChannelHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;

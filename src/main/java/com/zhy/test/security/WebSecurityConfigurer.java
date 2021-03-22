@@ -2,8 +2,6 @@ package com.zhy.test.security;
 
 import com.zhy.test.authenticationHandler.AuthenticationDeniedHandler;
 import com.zhy.test.authenticationHandler.AuthenticationLogoutHandler;
-import com.zhy.test.filter.JwtAuthenticationFilter;
-import com.zhy.test.filter.JwtAuthorizationFilter;
 import com.zhy.test.intercepor.security.MyAccessDecisionManager;
 import com.zhy.test.intercepor.security.MyFilterInvocationSecurityMetadataSource;
 import com.zhy.test.service.Impl.DatabaseUserDetailsService;
@@ -18,7 +16,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;

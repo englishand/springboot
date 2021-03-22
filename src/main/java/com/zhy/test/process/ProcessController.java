@@ -3,13 +3,9 @@ package com.zhy.test.process;
 import com.zhy.test.enableAsync.PoolConfig;
 import com.zhy.test.utils.SystemPropertiesUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 /**
  * 进程控制器
