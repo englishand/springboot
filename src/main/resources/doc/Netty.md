@@ -26,10 +26,11 @@
     1.ChannelPipeline and Handlers
       数据在ChannelPipeline中流动，这些数据每经过一个ChannelHandler并且被它处理。公共接口ChannelHandler:两个子类ChannelInboundHandler和
       ChannelOutboundHandler.一个ChannelPipeline可以把两种handler混合在一起使用，当一个数据流进入ChannelPipeline时，数据会从ChannelPipeline
-      头部开始传给第一个ChannelInboundHandler,当第一个处理完后再传给下一个，一直到管道的尾部。当数据被写出时，它会从管道的尾部开始，先经过‘最后’
-      一个ChannelOutboundHander,等处理完后再传递给前一个handler.
+      头部开始传给第一个ChannelInboundHandler,当第一个处理完后数据会被写出，它会从管道的尾部开始，先经过‘最后’一个ChannelOutboundHander,
+      等处理完后再传递给前一个ChannelOutboundHandler.再传递给第二个ChannelInBoundHandler。
       数据在各个handler之间传递，这需要调用方法中传递的ChannelHandlerContext来操作，在netty的API中提供了两个基类分ChannelOutboundHandlerAdapter
       和ChannelInboundHandlerAdapter.程序中可以继承这两个基类来实现处理数据。
+      同时要继承其方法体：super.channelRead(ChannelHandlerContext ctx,Object msg);这样数据才会流入下一个handler。
       当一个ChannelHandler被加入到ChannelPipeline中，它便获得一个ChannelHandlerContext的引用，而ChannelHandlerContext可以用来读写netty中
       的数据流。因此现在有两种方式来发送数据：一是把数据直接写入channel，二是把数据写入ChannelHandlerContext,区别：写入Channel的话，数据流会从
       channel的头开始传递，而如果把数据写入ChannelHandlerConteaxt的话，数据流会流入管道中的下一个handler。
@@ -93,8 +94,8 @@
                ctx.channel().writeAndFlush(Unpooled.copiedBuffer("hello word1" , Charset.forName("gb2312")));
                super.channelRead(ctx,msg);
            } 
-       结果：两次响应的处理已经打印，并且返回内容已经被分别加上out处理器中的信息                                   
+       结果：两次响应的处理已经打印，并且返回内容已经被分别加上out处理器中的信息     
    五.原码分析  
         
-    1.pipeline.addLastS()
+    1.pipeline.addLast()
       通过SocketChannel.pipeline().addLast()添加handler，就是将处理器添加到末尾(netty内部使用一个链表存储)
