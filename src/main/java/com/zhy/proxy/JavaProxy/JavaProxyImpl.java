@@ -8,4 +8,9 @@ public class JavaProxyImpl implements JavaProxy {
     public void gotoSchool(String name) {
         System.out.println(name+":我要去上学");
     }
+
+    @Override
+    public void gotoHosptol(String name) {
+        System.out.println(name+":我要去旅馆");
+    }
 }

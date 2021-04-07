@@ -2,13 +2,11 @@ package com.zhy.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.zhy.enableAsync.TestPoolConfig;
 import com.zhy.entity.Student;
+import com.zhy.utils.JsonAndXmlUtil;
 import com.zhy.utils.httpRequest.AsyncPostUtil;
 import com.zhy.utils.httpRequest.AsyncPostUtil2;
 import com.zhy.utils.httpRequest.HttpPostUtil;
-import com.zhy.utils.JsonAndXmlUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +35,6 @@ public class AnnotationController {
 
     @Autowired
     protected Student student;
-    @Autowired
-    protected TestPoolConfig testPoolConfig;
 
     @ResponseBody
     @RequestMapping("getValueString/{username}")
@@ -140,7 +136,6 @@ public class AnnotationController {
             result = new HttpPostUtil().post();
             result2 = new AsyncPostUtil2().sendRequest();
             result3 = new AsyncPostUtil().sendPostRequest(400,"UTF-8");
-            testPoolConfig.one();
         } catch (ExecutionException e) {
             logg.info(e.getMessage());
             result3 = e.getMessage();

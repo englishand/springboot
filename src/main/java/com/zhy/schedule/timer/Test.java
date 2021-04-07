@@ -19,8 +19,7 @@ public class Test {
             }
         };
         System.out.println(DateFormatUtils.format(new Date(),"HH:mm:ss"));
-        System.out.println((new Date(System.currentTimeMillis())).getTime());
-        timer.schedule(task,16148258,2*1000);
+        timer.schedule(task,1000,2*1000);
 
 
 

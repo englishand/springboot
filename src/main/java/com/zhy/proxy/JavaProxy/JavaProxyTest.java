@@ -1,16 +1,19 @@
 package com.zhy.proxy.JavaProxy;
 
 import com.zhy.proxy.JavaProxy.interf.JavaProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Proxy;
 
 public class JavaProxyTest {
 
+    private static Logger logger = LoggerFactory.getLogger(JavaProxyTest.class);
+
     public static void main(String[] args) throws Exception{
         JavaProxy javaProxy = new JavaProxyImpl();
 
-        System.out.println(JavaProxyTest.class.getClassLoader());//获取该类的类装载器
-        System.out.println(javaProxy.getClass().getClassLoader());
+        logger.info("两个类加载器是相同的："+(JavaProxyTest.class.getClassLoader()==javaProxy.getClass().getClassLoader()));
 
         JavaProxy newJavaProxy = (JavaProxy) Proxy.newProxyInstance(
                 javaProxy.getClass().getClassLoader(),
@@ -18,6 +21,7 @@ public class JavaProxyTest {
                 new MyInvocationHandler(javaProxy));
 
         newJavaProxy.gotoSchool("渣渣辉");
+        newJavaProxy.gotoHosptol("渣渣辉");
     }
     /**
      * 1.ClassLoader作用：java程序写好以后是以.java（文本文件）的文件存在磁盘上，然后，我们通过(bin/javac.exe)编译命令把.java文件编译成.class文件（字节码文件），

@@ -3,6 +3,7 @@ package com.zhy.core;
 
 import com.zhy.core.util.CoreUtil;
 import com.zhy.entity.Student;
+import com.zhy.schedule.taskExecution.ScheduleConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class AwareTest{
     public void Test(){
         Student student = (Student) CoreUtil.getObject(Student.class);
         System.out.println(student.toString());
+
+        ScheduleConfig scheduleConfig = (ScheduleConfig) CoreUtil.getObject(ScheduleConfig.class);
+        System.out.println(scheduleConfig);
     }
 
     @Test

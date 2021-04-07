@@ -1,8 +1,5 @@
 package com.zhy.core.util;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class CoreUtil {
 
     public static Object getObject(Class tClass){

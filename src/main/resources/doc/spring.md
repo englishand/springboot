@@ -12,3 +12,12 @@
 @RequestBody
     
     1.该注解用来处理content-type不是默认的application/x-www-form-urlcoded编码的内容，比如说：application/json或application/xml等。
+@Configuration
+    
+    1.表明当前类是一个配置类，是方法bean的源
+    2.将@Configuration配置的类的beanDefinitioin属性赋值为full类型的，保证当前类类型 可以转变为cglib类型
+    3.将@Configuration配置的类由普通类型转变为cglib代理类型，后会生成cglib代理对象，通 过代理对象的方法拦截器,
+    　　可以解决类内部方法bean之间发生依赖调用的时候从容器中去获取，避免了多例的出现
+注：
+    
+    当子类加载到spring容器中，父类会自动加载到容器中，不需要配置注解。

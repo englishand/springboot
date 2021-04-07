@@ -1,6 +1,7 @@
 package com.zhy.process;
 
 import com.zhy.enableAsync.PoolConfig;
+import com.zhy.utils.SystemLogUtil;
 import com.zhy.utils.SystemPropertiesUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -13,6 +14,8 @@ import java.io.InputStream;
  */
 @Slf4j
 public class ProcessController{
+
+    private SystemLogUtil logg = SystemLogUtil.getLogger();
 
     /**
      * 新建进程
@@ -40,6 +43,9 @@ public class ProcessController{
             //销毁子进程
             if (process!=null){
                 process.destroy();
+            }
+            if (executor!=null){
+                executor.destroy();
             }
             log.info("进程销毁");
         }
@@ -91,7 +97,7 @@ public class ProcessController{
             command.setOsName("windows");
             command.setChasetName("GBK");
             //其中参数“/c”表示命令执行后关闭DOS立即关闭窗口。
-            command.setCommands(new String[]{"D:/batch.bat","PID-PlaceHolder"});
+            command.setCommands(new String[]{"C:/IdeaProjects/projectone/src/main/resources/batch.bat","PID-PlaceHolder"});
 //            command.setCommands(new String[]{"cmd", "/c" ,"D:/downloads/PCQQ2020.exe"});
         }
         return command;
@@ -158,6 +164,7 @@ public class ProcessController{
                 @Override
                 public void run() {
                     try {
+                        log.info("resolvrErrorStream currentThread:"+Thread.currentThread().getName());
                         resolveErrorStream(process);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -170,6 +177,7 @@ public class ProcessController{
                 @Override
                 public void run() {
                     try {
+                        log.info("resolveInputStream currentThread:"+Thread.currentThread().getName());
                         resolveInputStream(process);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -201,7 +209,7 @@ public class ProcessController{
      *
      * 解决方法：在waitfor之前，单独启动两个额外的线程，分别用于处理InputStream和ErrorStream
      *
-     * 如何使用ProcessBuilder方法,如下(使用解压工具将myjar.jar解压到new文件下)：
+     * 如何使用ProcessBuilder方法,如下(方法业务介绍：使用解压工具将myjar.jar解压到new文件下)：
      * ProcessBuilder pb = new ProcessBuilder(
      *      "C:Program Files/WinRAR/winrar",
      *      "x",
