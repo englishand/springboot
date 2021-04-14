@@ -1,7 +1,9 @@
 package com.zhy.entity;
 
-import java.lang.reflect.Method;
+import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Method;
+@Slf4j
 public class AAA {
 
     private String name;
@@ -17,11 +19,11 @@ public class AAA {
     }
 
     private void loadString(){
-        System.out.println("aaaaaaaaaaaaaaaa");
+        log.info("aaaaaaaaaaaaaaaa");
     }
 
     protected void loadStringAAA(){
-        System.out.println("ccccccccccccccccc");
+        log.info("ccccccccccccccccc");
     }
 
     public void load(){
@@ -32,7 +34,7 @@ public class AAA {
     public static void main(String[] args){
         try {
             Method method = AAA.class.getMethod("setName", String.class);
-            System.out.println(method);
+            log.info(method.toString());
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }

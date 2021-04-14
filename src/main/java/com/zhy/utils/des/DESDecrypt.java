@@ -1,13 +1,14 @@
 package com.zhy.utils.des;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import java.security.Key;
 import java.security.SecureRandom;
-
+@Slf4j
 public class DESDecrypt {
 
     String encroptMode = "ECB"; // 加密模式
@@ -98,10 +99,10 @@ public class DESDecrypt {
 		String cardKey = "sjzx9001";
 		DESEncrypt encrypt = new DESEncrypt();
 		String encryStr = encrypt.desEncrypt("123123");//947297 111111
-		System.out.println("密文："+encryStr);
+		log.info("密文："+encryStr);
 
 		DESDecrypt decrypt = new DESDecrypt();
 		String decryptStr = decrypt.desDecreptCC(cardKey,encryStr);
-		System.out.println("原文："+decryptStr);
+		log.info("原文："+decryptStr);
 	}
 }

@@ -9,6 +9,8 @@ import java.io.*;
 
 /**
  * 通过ftp连接方式对服务器进行连接、文件上传、下载、删除工作。
+ * service vsftpd status :查看当前系统里的vsftpd进程
+ * ps -a|grep vsftp* :如果有返回说明ftp服务已启动
  */
 @Slf4j
 public class FtpTransfer {
@@ -35,6 +37,7 @@ public class FtpTransfer {
                 is = new FileInputStream(new File(sourcePath+File.separator+targetFileName));
                 result = client.storeFile(targetFileName,is);
             }
+            //退出ftp服务器
             client.logout();
         }catch (Exception e){
             log.error("上传文件到ftp服务器异常：{}",e.getMessage());
@@ -147,7 +150,7 @@ public class FtpTransfer {
     }
 
     /**
-     * 删除ftp服务器上文件
+     * 删除ftp服务器上的文件
      * @param fileName
      * @return
      */
@@ -252,7 +255,7 @@ public class FtpTransfer {
     }
 
     /**
-     * 退出ftp服务器
+     * 关闭ftp服务器连接
      */
     public void disConnect(){
 

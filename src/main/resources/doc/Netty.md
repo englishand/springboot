@@ -53,13 +53,13 @@
        RequestChannelHandler1的read方法：
        @Override
            public void channelRead(ChannelHandlerContext ctx , Object msg) throws Exception {
-               System.out.println("请求处理器1");
+               log.info("请求处理器1");
                ctx.writeAndFlush(Unpooled.copiedBuffer("hello word1" , Charset.forName("gb2312")));
                super.channelRead(ctx,msg);
            }
        RequestChannelHandler2的read方法：
        public void channelRead(ChannelHandlerContext ctx , Object msg) throws Exception {
-               System.out.println("请求处理器2");
+               log.info("请求处理器2");
                super.channelRead(ctx,msg);
            }
        
@@ -68,7 +68,7 @@
        public class ResponseChannelHandler1 extends ChannelOutboundHandlerAdapter {
            @Override
            public void write(ChannelHandlerContext ctx , Object msg , ChannelPromise promise) throws Exception {
-               System.out.println("响应处理器1");
+               log.info("响应处理器1");
                ByteBuf byteMsg = (ByteBuf) msg;
                byteMsg.writeBytes("增加请求1的内容".getBytes(Charset.forName("gb2312")));
                super.write(ctx,msg,promise);
@@ -80,7 +80,7 @@
        public class ResponseChannelHandler2 extends ChannelOutboundHandlerAdapter {
            @Override
            public void write(ChannelHandlerContext ctx , Object msg , ChannelPromise promise) throws Exception {
-               System.out.println("响应处理器2");
+               log.info("响应处理器2");
                ByteBuf byteMsg = (ByteBuf) msg;
                byteMsg.writeBytes("增加请求2的内容".getBytes(Charset.forName("gb2312")));
                super.write(ctx,msg,promise);
@@ -90,7 +90,7 @@
        
        然后将in1中的ChannelHandlerContext改为Channel后则控制台和网络调试控制台打印分别如下
        public void channelRead(ChannelHandlerContext ctx , Object msg) throws Exception {
-               System.out.println("请求处理器1");
+               log.info("请求处理器1");
                ctx.channel().writeAndFlush(Unpooled.copiedBuffer("hello word1" , Charset.forName("gb2312")));
                super.channelRead(ctx,msg);
            } 

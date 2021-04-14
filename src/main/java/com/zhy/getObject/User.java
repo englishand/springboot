@@ -64,7 +64,7 @@ public class User implements Serializable,Cloneable{
             oos.writeObject(user);
             u = (User)ois.readObject();
             u = getUserByClass();
-            System.out.println(u.getName());
+            log.info(u.getName());
 
             //测试深浅复制
             User cloneuser = user.clone();//a为深复制，b为浅复制

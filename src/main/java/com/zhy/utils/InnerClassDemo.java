@@ -1,5 +1,7 @@
 package com.zhy.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +9,7 @@ import java.awt.event.ActionListener;
 /**
  * 内部类修改类的属性值
  */
+@Slf4j
 public class InnerClassDemo {
 
     String city = "shanghai";
@@ -21,8 +24,8 @@ public class InnerClassDemo {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("按钮被按下");
-                System.out.println("原来city的值为：" + city);
+                log.info("按钮被按下");
+                log.info("原来city的值为：" + city);
                 city = "beijing";
             }
         });
@@ -32,6 +35,6 @@ public class InnerClassDemo {
         InnerClassDemo a = new InnerClassDemo();
         a.addActionListener();
         a.btn.doClick();
-        System.out.println("现在city的值为："+a.city);
+        log.info("现在city的值为："+a.city);
     }
 }

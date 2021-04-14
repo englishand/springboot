@@ -1,5 +1,8 @@
 package com.zhy.entity;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class BBB extends AAA{
 
     private static String name ="zhy";
@@ -11,7 +14,7 @@ public class BBB extends AAA{
     }
 
     protected void loadStringAAA(){
-        System.out.println("bbbbbbbbbbbbbbbbbbbb");
+        log.info("bbbbbbbbbbbbbbbbbbbb");
         super.loadStringAAA();
     }
 

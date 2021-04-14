@@ -1,5 +1,6 @@
 package com.zhy.utils.httpRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
+@Slf4j
 public class AsyncPostUtil2 {
 
     private static final Logger logg = LoggerFactory.getLogger(AsyncPostUtil2.class);
@@ -52,7 +53,7 @@ public class AsyncPostUtil2 {
                 try {
                     String content = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
                     logg.info("response content is: "+content);
-                    System.out.println("**********调用结束*********************");
+                    log.info("**********调用结束*********************");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

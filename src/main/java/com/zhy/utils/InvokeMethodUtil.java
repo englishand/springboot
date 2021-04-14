@@ -88,7 +88,7 @@ public class InvokeMethodUtil {
         AAA aaa = new AAA();
         BBB bbb = new BBB();
         InvokeMethodUtil.invokeCopy(aaa,bbb);
-        System.out.println(aaa.toString());
+        log.info(aaa.toString());
     }
 
     /**

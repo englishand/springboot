@@ -13,13 +13,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * 配置多线程运行
- * 可以使任务分配给不同的线程执行，例：StaticsTask
  * 基于接口SchedulingConfigurer的动态定时任务
  * 此类方法实现SchedulingConfigurer类，采用多线程方式跑定时任务，所以模拟两个实现类StaticsTask.java和StaticsTask2.java
+ * 配置多线程运行
+ * 可以使任务分配给不同的线程执行，例：StaticsTask
  */
 public abstract class ScheduleConfig implements SchedulingConfigurer {
 
@@ -31,6 +32,7 @@ public abstract class ScheduleConfig implements SchedulingConfigurer {
 
         //参数传入一个size为5的线程池
         taskRegistrar.setScheduler(taskScheduler());
+        logger.info((taskScheduler() instanceof ScheduledExecutorService) +"");
         taskRegistrar.addTriggerTask(
                 ()->{proccessTask();},
                 //设置触发器

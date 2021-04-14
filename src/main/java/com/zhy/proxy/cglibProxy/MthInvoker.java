@@ -1,5 +1,6 @@
 package com.zhy.proxy.cglibProxy;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
@@ -8,6 +9,8 @@ import java.lang.reflect.Method;
 /**
  * 拦截器
  */
+
+@Slf4j
 public class MthInvoker implements MethodInterceptor {
 
     @Override
@@ -19,7 +22,7 @@ public class MthInvoker implements MethodInterceptor {
         //表示要触发父类的方法对象methodProxy:sig1:gotoHome()V
         //                               sig2:CGLIB$gotoHome$0()V
         Object intercept = methodProxy.invokeSuper(o,objects);
-        System.out.println("对目标类进行增强：你可以回家了");
+        log.info("对目标类进行增强：你可以回家了");
         return intercept;
     }
 }

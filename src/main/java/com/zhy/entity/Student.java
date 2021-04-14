@@ -3,6 +3,7 @@ package com.zhy.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ import javax.validation.constraints.Size;
 @Setter
 @Component
 @Accessors(chain = true)
+@Slf4j
 public class Student {
 
     private final Logger monitorLog = LoggerFactory.getLogger("monitorLog");
@@ -79,7 +81,6 @@ public class Student {
      */
     @PostConstruct
     public void init(){
-        System.out.println("111111111111111111");
         Student student = this;
     }
 
@@ -90,6 +91,6 @@ public class Student {
      */
     @PreDestroy
     public void testPreDestroy(){
-        System.out.println("222222222222222222222");
+        log.info("222222222222222222222");
     }
 }

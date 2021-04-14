@@ -48,8 +48,9 @@ public class LoginController {
     }
 
 
-    @RequestMapping("/loginWelcome")
+    @RequestMapping("/welcome")
     public String loginWelcome(String username,String password,HttpServletRequest request){
+        log.info("username:{},password:{}",username,password);
         return "welcome";
     }
 

@@ -67,10 +67,4 @@ public class User implements Serializable {
         return "id:"+this.id+";username:"+this.username+";password:"+this.password+";descript:"+userDescript;
     }
 
-    public static void main(String[] args){
-        Date date = new Date();
-
-        System.out.println(date);
-    }
-
 }

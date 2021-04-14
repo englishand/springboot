@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SingleScheduleTask {
 
-    @Scheduled(cron = "0/1 * 17 * * ?")
+    @Scheduled(cron = "0/1 * 23 * * ?")
     public static void test(){
         log.info("线程id："+Thread.currentThread().getId()+"|"+Thread.currentThread().getName()+"|"+ DateFormatUtils.format(System.currentTimeMillis(),"yyyy-MM-dd HH:mm:ss"));
     }

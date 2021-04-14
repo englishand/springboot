@@ -5,9 +5,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.Charset;
-
+@Slf4j
 public class ServerChannelHandler extends ChannelInboundHandlerAdapter {
 
     private static SystemLogUtil logger  = SystemLogUtil.getLogger();
@@ -30,7 +31,7 @@ public class ServerChannelHandler extends ChannelInboundHandlerAdapter {
                 buf.getBytes(0,array);
 
             received = new String(array,"GBK");
-            System.out.println(received);
+            log.info(received);
             buf.release();
 
             logger.info("返回响应报文："+result,logFile);

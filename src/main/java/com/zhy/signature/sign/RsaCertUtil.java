@@ -2,9 +2,7 @@ package com.zhy.signature.sign;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -24,8 +22,8 @@ public class RsaCertUtil {
      * @param type  证书类型
      * @return  私钥
      */
-    public static PrivateKey getPriKeyPkcs12(String keyFile,String keyAlias,String keypwd,String type){
-        KeyStore keyStore = getKeyStore(keyFile,keypwd,type);
+    public static PrivateKey getPriKeyPkcs12(String keyFile,String keyAlias,String keypwd,String storepass,String type){
+        KeyStore keyStore = getKeyStore(keyFile,storepass,type);
         PrivateKey privateKey = null;
         try {
             privateKey = (PrivateKey) keyStore.getKey(keyAlias,keypwd.toCharArray());
@@ -50,20 +48,20 @@ public class RsaCertUtil {
             if ("JKS".equals(type)){
                 keyStore = KeyStore.getInstance(type);
             }else if ("PKCS12".equals(type)){
-                Security.insertProviderAt(new BouncyCastleProvider(),1);
-                Security.addProvider(new BouncyCastleProvider());
+//                Security.insertProviderAt(new BouncyCastleProvider(),1);
+//                Security.addProvider(new BouncyCastleProvider());
                 keyStore = KeyStore.getInstance(type);
             }
 
-            if (!StringUtils.isEmpty(keyFile)){
-                fis = new FileInputStream(keyFile);
-            }else {
-                fis = RsaCertUtil.class.getClassLoader().getResourceAsStream("jks/4002486073.pfx");
+            if (StringUtils.isEmpty(keyFile)){
+                return null;
             }
+//            fis = new FileInputStream(keyFile);
+            fis = RsaCertUtil.class.getClassLoader().getResourceAsStream(keyFile);
 
             char[] nPassword = null;
             nPassword = null==keypwd||"".equals(keypwd.trim())?null:keypwd.toCharArray();
-            //npassword：用来解锁密码库或者检查密码库数据的完整性
+            //npassword：用来解锁密码库或者检查密码库数据的完整性，因此是密钥库密码
             keyStore.load(fis,nPassword);
             fis.close();
             return keyStore;

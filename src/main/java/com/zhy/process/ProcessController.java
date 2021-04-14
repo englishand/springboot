@@ -117,7 +117,7 @@ public class ProcessController{
             byte[] by = new byte[1024];
 
 //            while ((line=br.readLine())!=null){       //出现乱码问题，用read方法解决
-//                System.out.println(line);
+//                log.info(line);
 //            }
             while (inputStream.read(by) != -1) {
                 log.info(new String(by, "gbk"));

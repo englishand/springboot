@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-//@Component
+@Component
 @Slf4j
 public class StaticsTask extends ScheduleConfig{
 
@@ -19,7 +19,7 @@ public class StaticsTask extends ScheduleConfig{
 
     @Override
     protected String getCron() {
-        return "0/3 * 16 * * ?";
+        return "0/3 * 23 * * ?";
     }
 
 

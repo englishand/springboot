@@ -27,7 +27,6 @@ public class CupSec {
         byte[] shaMsg = ShaUtil.sha256(msg);
         byte[] sign = RsaUtil.signWithSha256((RSAPrivateKey) privateKey,shaMsg);
         result = Base64.encodeBase64String(sign);
-        log.info("base64:"+result);
         return result;
     }
 

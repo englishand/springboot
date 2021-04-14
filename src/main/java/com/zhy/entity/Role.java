@@ -54,7 +54,10 @@ public class Role implements Serializable {
         this.users = users;
     }
 
-    @ManyToMany(mappedBy = "roleList",fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "role_menu",
+            joinColumns = @JoinColumn(name = "role_code",referencedColumnName = "rolecode",updatable = false,insertable = false),
+            inverseJoinColumns = @JoinColumn(name = "menu_code",referencedColumnName = "code",updatable = false,insertable = false))
     public List<Menu> getMenus() {
         return menus;
     }

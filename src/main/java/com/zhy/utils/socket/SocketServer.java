@@ -6,11 +6,12 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ThreadFactory;
 
 @Slf4j
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
-public class SocketServer implements Runnable{
+public class SocketServer {
 
     private static Socket socket = null;//主机与客户机的通信套接字
 
@@ -28,8 +29,9 @@ public class SocketServer implements Runnable{
         }
     }
 
-    @Override
+//    @Override
     public void run() {
+        log.info("当前线程："+ Thread.currentThread().getName());
         try {
             InputStream inputStream = socket.getInputStream();
             int available = 0;
@@ -60,10 +62,10 @@ public class SocketServer implements Runnable{
 
     /**
      * 1.ServerSocket server = new ServerSocket(port,3);//在Server类中，连接请求队列的长度为3
-     *   Client试图与Server进行100连接，当队列中有了3个连接请求时，如果client在请求连接，就会被server拒绝。
+     *   Client试图与Server进行100次连接，当队列中有了3个连接请求时，如果client再请求连接，就会被server拒绝。
      *
      * 2.ServerSocket的accept()方法从连接请求队列中取出一个客户的连接请求，然后创建与客户连接的Socket对象，并返回。如果队列中没有连接请求，
-     *  accept()方法会一直等待，知道接受到连接请求才返回。
+     *  accept()方法会一直等待，直到接受到连接请求才返回。
      *
      * 3.inputStream.available();该方法用于网络通讯，如Socket通讯时，server接收到的字节很有可能比client发送过来的数据字节少，
      *      这是因为网络通信是间断性的，一串字节往往会分批进行发送。当调用该方法得到0时，client可能已经响应了。

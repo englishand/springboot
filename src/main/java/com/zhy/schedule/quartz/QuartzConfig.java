@@ -1,13 +1,20 @@
 package com.zhy.schedule.quartz;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.quartz.JobDataMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.*;
 
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 @Configuration
+@Slf4j
 public class QuartzConfig {
 
     /**
@@ -47,9 +54,11 @@ public class QuartzConfig {
     SimpleTriggerFactoryBean simpleTriggerFactoryBean(){
         SimpleTriggerFactoryBean bean = new SimpleTriggerFactoryBean();
         bean.setJobDetail(methodInvokingJobDetailFactoryBean().getObject());
-        bean.setStartTime(new Date());
+        Date date = new Date();
+        log.info("当前时间为：{}", DateFormatUtils.format(date,"yyyyMMdd HH:mm:ss"));
+        bean.setStartTime(date);
         bean.setStartDelay(2000);
-        bean.setRepeatInterval(2000);
+        bean.setRepeatInterval(3000);
         bean.setRepeatCount(3);
         return bean;
     }
@@ -62,7 +71,7 @@ public class QuartzConfig {
     CronTriggerFactoryBean cronTriggerFactoryBean(){
         CronTriggerFactoryBean bean = new CronTriggerFactoryBean();
         bean.setJobDetail(jobDetailFactoryBean().getObject());
-        bean.setCronExpression("0/2 * 13 * * ?");
+        bean.setCronExpression("0/2 * 23 * * ?");
         return bean;
     }
 
@@ -73,8 +82,12 @@ public class QuartzConfig {
     @Bean
     SchedulerFactoryBean schedulerFactoryBean(){
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
-//        bean.setTriggers(simpleTriggerFactoryBean().getObject()
-//        ,cronTriggerFactoryBean().getObject());
+
+        ThreadFactory factory = new ThreadFactoryBuilder().setNameFormat("quartz-pool-%d").build();
+        Executor executor = Executors.newScheduledThreadPool(5,factory);
+        bean.setTaskExecutor(executor);
+
+        bean.setTriggers(simpleTriggerFactoryBean().getObject() ,cronTriggerFactoryBean().getObject());
         return bean;
     }
 }

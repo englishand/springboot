@@ -49,8 +49,4 @@ public class SystemPropertiesUtil {
         return null;
     }
 
-    public static void main(String[] args){
-        String property = SystemPropertiesUtil.FILE_SEPARATOR;
-        System.out.println(SystemPropertiesUtil.getPropertyInfo(property));
-    }
 }

@@ -11,9 +11,10 @@ import java.net.URL;
 
 public class ConnectionSendPostUtil {
 
-    SystemLogUtil log = new SystemLogUtil();
+    private static SystemLogUtil log = new SystemLogUtil();
     OutputStreamWriter out = null;
     BufferedReader br = null;
+    private static String RECEIVEDLOG = "received.log";
 
     public String sendPost(String path ,String xml) throws Exception{
         try {
@@ -41,7 +42,7 @@ public class ConnectionSendPostUtil {
                 //将返回信息读取到内存中
                 br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"GB18030"));
             }else {
-                //将返回的错误信息读取到内从
+                //将返回的错误信息读取到内存中
                 br = new BufferedReader(new InputStreamReader(conn.getErrorStream(),"GB18030"));
             }
             StringBuffer sb = new StringBuffer();
@@ -123,7 +124,7 @@ public class ConnectionSendPostUtil {
         try {
 
             String result = postUtil.sendPost(path,xml);
-            System.out.println(result);
+            log.info(result,RECEIVEDLOG);
         } catch (Exception e) {
             e.printStackTrace();
         }

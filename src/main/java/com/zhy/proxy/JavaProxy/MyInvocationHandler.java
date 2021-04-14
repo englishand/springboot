@@ -1,11 +1,14 @@
 package com.zhy.proxy.JavaProxy;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 /**
  * InvocationHandler的一个实现，实际上处理代理的逻辑在这里
  */
+@Slf4j
 public class MyInvocationHandler implements InvocationHandler {
 
     private Object post;
@@ -14,7 +17,7 @@ public class MyInvocationHandler implements InvocationHandler {
         this.post = post;
     }
     private void aopMethod(){
-        System.out.println("before method");
+        log.info("before method");
     }
 
     //代理时实际执行的方法，如果要实现原方法，则需要调用method.invoke(post,args)

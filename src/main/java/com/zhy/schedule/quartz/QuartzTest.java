@@ -20,8 +20,7 @@ public class QuartzTest extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println("hello:"+name+","+new Date());
-        log.info("测试使用crontrigger触发器");
+        log.info("测试使用crontrigger触发器"+name+","+new Date());
     }
 
     /**

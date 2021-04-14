@@ -31,7 +31,7 @@ public class GlobalIntercepor extends HandlerInterceptorAdapter {
         log.info("拦截器后处理开始。。。。。。。。。。");
         if (modelAndView!=null){
             modelAndView.addObject("testCode","这是测试Interceptor拦截器");
-            System.out.println("可以对modelAndView进行设置。。。。。。。。。。。。。。。");
+            log.info("可以对modelAndView进行设置。。。。。。。。。。。。。。。");
         }
         log.info("拦截器后处理结束。。。。。。。。。。");
         super.postHandle(request, response, handler, modelAndView);

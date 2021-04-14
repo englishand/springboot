@@ -49,8 +49,6 @@ public class ChannelSftpTransfer {
             log.info("文件上传成功！！，耗时：{}ms",(System.currentTimeMillis()-start));
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            logout();
         }
     }
 
@@ -114,8 +112,6 @@ public class ChannelSftpTransfer {
             log.info("下载文件成功");
         } catch (Exception e) {
             log.error("下载文件失败",e);
-        }finally {
-            logout();
         }
     }
 
@@ -133,8 +129,6 @@ public class ChannelSftpTransfer {
             return sftp.get(downloadFile);
         } catch (Exception e) {
             log.error("下载文件流异常",e);
-        }finally {
-            logout();
         }
         return null;
     }
@@ -155,8 +149,6 @@ public class ChannelSftpTransfer {
             return IOUtils.toByteArray(inputStream);
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            logout();
         }
         return null;
     }
@@ -175,8 +167,6 @@ public class ChannelSftpTransfer {
             sftp.rm(deleteFileName);
         } catch (Exception e) {
             log.error("删除文件失败！！！",e);
-        }finally {
-            logout();
         }
     }
 
@@ -187,16 +177,21 @@ public class ChannelSftpTransfer {
     public void delete(String directory){
         try {
             Vector vector = this.listFiles(directory);
+            sftp.cd(directory);
             for (Object v:vector){
                 ChannelSftp.LsEntry lsEntry = (ChannelSftp.LsEntry)v;
-                sftp.cd(directory);
-                sftp.rm(lsEntry.getFilename());
+                String filename = lsEntry.getFilename();
+                if (isDirExist(directory+"/"+filename)){//如果是目录文件夹
+                    delete(directory+"/"+filename);
+                    sftp.cd("..");
+                    sftp.rmdir(filename);
+                }else {
+                    sftp.rm(filename);
+                }
             }
             log.info("删除文件夹成功");
         } catch (Exception e) {
             log.error("删除文件夹异常!!!",e);
-        }finally {
-            logout();
         }
     }
 
@@ -211,14 +206,17 @@ public class ChannelSftpTransfer {
             if (isDirExist(directory)){
                 Vector<?> vector = sftp.ls(directory);
                 //移除上级目录和根目录："."".."
-                vector.remove(0);
-                vector.remove(0);
+                for (int i=0;i<vector.size();i++){
+                    ChannelSftp.LsEntry lsEntry = (ChannelSftp.LsEntry)vector.get(i);
+                    if (lsEntry.getFilename().equals(".") || lsEntry.getFilename().equals("..")){
+                        vector.remove(i);
+                        i--;
+                    }
+                }
                 return vector;
             }
         }catch (Exception e){
             log.error("获取文件夹信息异常！！！",e);
-        }finally {
-//            logout();
         }
         return null;
     }
@@ -229,14 +227,14 @@ public class ChannelSftpTransfer {
      * @return
      */
     public boolean exeCommand(String[] command){
-        boolean result = false;
+
         InputStream input = null;
         OutputStream output = null;
         try {
 
             //设置sftp通信通道
             channel = (Channel)session.openChannel("shell");
-            channel.connect(1000);
+            channel.connect();
 
             //获取输入输出流
             input = channel.getInputStream();
@@ -248,7 +246,7 @@ public class ChannelSftpTransfer {
                 output.write(shellCommand.getBytes());
                 output.flush();
             }
-            Thread.sleep(10000);
+            Thread.sleep(1000);
             //获取命令执行结果
             if (input.available()>0){
                 byte[] date = new byte[input.available()];
@@ -272,9 +270,8 @@ public class ChannelSftpTransfer {
             }
 
             channel.disconnect();
-            logout();
         }
-        return result;
+        return true;
     }
 
     /**
@@ -292,8 +289,6 @@ public class ChannelSftpTransfer {
             if (e.getMessage().toLowerCase().equals("no such file")){
                 log.error("文件或目录不存在");
             }
-        }finally {
-            logout();
         }
         return isExist;
     }
@@ -309,7 +304,7 @@ public class ChannelSftpTransfer {
             return sftpATTRS.isDir();
         } catch (SftpException e) {
             if (e.getMessage().toLowerCase().equals("no such file")){
-                log.error("文件不存在");
+                log.error("文件目录不存在,可创建该目录");
             }
         }
         return false;
@@ -328,8 +323,6 @@ public class ChannelSftpTransfer {
         } catch (SftpException e) {
             log.error("检查文件夹异常",e);
             return false;
-        }finally {
-            logout();
         }
         return true;
     }
@@ -343,8 +336,12 @@ public class ChannelSftpTransfer {
             File file = new File(path);
             String fs = file.getParent();
             File parentFile = new File(fs);
-            if (!parentFile.exists()){
-                file.mkdirs();
+            if (parentFile.exists()){
+                try {
+                    sftp.mkdir(path);
+                } catch (SftpException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -376,16 +373,13 @@ public class ChannelSftpTransfer {
         }catch (Exception e){
             log.error("创建文件目录失败");
             return false;
-        }finally {
-            logout();
         }
         return true;
     }
 
     /**
      * 建立连接
-     * @param
-     * @return
+     * JSch是ssh2的一个纯Java实现。它允许你连接到一个sshd服务器，使用端口转发，X11转发，文件传输等等。
      */
     public static boolean login(){
         try {
@@ -462,19 +456,24 @@ public class ChannelSftpTransfer {
 //            String[] commonds = commond.split(";");
 //            transfer.exeCommand(commonds);
 
-//            transfer.upload("/appdata/zhy","D:/赵洪友/新电商平台/银联改造/new 2.txt");
+//            transfer.upload("/appdata/zhy/20210412","D:/赵洪友/新电商平台/银联改造/new2.txt");
 
-//            transfer.download("/appdata/zhy","new 2.txt","D:/赵洪友/新电商平台/银联改造/new2.txt");
+//            transfer.download("/appdata/zhy/20210412","new2.txt","D:/赵洪友/新电商平台/银联改造/new2.txt");
 
-//            boolean isExist = transfer.isExist("/appdata/zhy/new 2.txt");
+//            boolean isExist = transfer.isExist("/appdata/zhy/20210412/new2.txt");
 
 //            Vector vector = transfer.listFiles("/appdata/zhy");
+//            for (int i=0;i<vector.size();i++){
+//                log.info(vector.elementAt(i).toString());
+//            }
 
-//            transfer.delete("/20201225/10/46/1/2");
+            transfer.delete("/appdata/zhy/20201225/1007");
 
-            transfer.createDir("/appdata/zhy/20201225-2");
+//            transfer.createDir("/appdata/zhy/20210411");
         } catch (Exception e) {
             log.error(e.getMessage(),e);
+        }finally {
+            transfer.logout();
         }
     }
 }

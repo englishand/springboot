@@ -70,7 +70,7 @@ public class TestPoolConfig {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(Thread.currentThread().getName()+"|"+finalIndex +"|"+System.currentTimeMillis());
+                    log.info(Thread.currentThread().getName()+"|"+finalIndex +"|"+System.currentTimeMillis());
                 }
             });
         }
@@ -85,7 +85,7 @@ public class TestPoolConfig {
         executor.schedule(new Runnable() {
             @Override
             public void run() {
-                System.out.println("");
+                log.info("");
             }
         },2000, TimeUnit.SECONDS);
     }

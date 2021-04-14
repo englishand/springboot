@@ -20,7 +20,7 @@ public class FileUtil {
         String[] arr = null;
         try {
             msg = FileUtils.readFileToString(file);
-//            System.out.println(msg);
+//            log.info(msg);
             arr = msg.split("\\|");
 
             if (null==arr || arr.length<1){
@@ -36,7 +36,14 @@ public class FileUtil {
     public static void main(String[] args){
         // 文件队列
         LinkedBlockingQueue<String> fileQueue = new LinkedBlockingQueue<String>();
+        try {
+            fileQueue.put("asdfasdfasfasdf");
+            System.out.println(fileQueue.toString());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String fileName = fileQueue.poll();
-        System.out.println(fileName);
+        System.out.println(fileQueue.toString());
+        log.info(fileName,"file.log");
     }
 }

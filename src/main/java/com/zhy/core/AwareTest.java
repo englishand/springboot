@@ -4,6 +4,7 @@ package com.zhy.core;
 import com.zhy.core.util.CoreUtil;
 import com.zhy.entity.Student;
 import com.zhy.schedule.taskExecution.ScheduleConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class AwareTest{
 
     @Autowired
@@ -20,15 +22,15 @@ public class AwareTest{
     @Test
     public void Test(){
         Student student = (Student) CoreUtil.getObject(Student.class);
-        System.out.println(student.toString());
+        log.info(student.toString());
 
         ScheduleConfig scheduleConfig = (ScheduleConfig) CoreUtil.getObject(ScheduleConfig.class);
-        System.out.println(scheduleConfig);
+        log.info(scheduleConfig.toString());
     }
 
     @Test
     public void Test2(){
-        System.out.println(this.student.toString());
+        log.info(this.student.toString());
     }
 
 }

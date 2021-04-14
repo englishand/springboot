@@ -49,8 +49,6 @@ public class VerifyCodeController {
         } catch (IOException e) {
             log.info("", e);
         }
-//        ResponseResult result = ResponseResult.successWithData(code);
-//        return result;
     }
 
     @RequestMapping("checkVerify")
@@ -58,7 +56,7 @@ public class VerifyCodeController {
     public ResponseResult checkVerify(String inputCode,HttpServletRequest request){
         ResponseResult result;
         String code = (String) request.getSession().getAttribute("VerifyCode");
-        if(inputCode.equals(code)){
+        if(inputCode.equals(code.toLowerCase())){
             result = ResponseResult.success();
         }else {
             result = ResponseResult.error();
