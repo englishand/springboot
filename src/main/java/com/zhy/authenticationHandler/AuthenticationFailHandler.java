@@ -1,6 +1,5 @@
 package com.zhy.authenticationHandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhy.utils.ResponseResult;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
@@ -12,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @Service("authenticationFailHandler")
 public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHandler {
@@ -25,7 +23,8 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
     public void returnJson(HttpServletRequest request,HttpServletResponse response,AuthenticationException exception)
         throws IOException{
         response.setCharacterEncoding("utf-8");
-        response.setContentType("application/json");
+        response.setHeader("Content-Type","text/html;charset=utf-8");
+
         ResponseResult result;
         if (exception instanceof BadCredentialsException ||
                 exception instanceof UsernameNotFoundException){
@@ -42,10 +41,6 @@ public class AuthenticationFailHandler extends SimpleUrlAuthenticationFailureHan
             result = ResponseResult.errorWithMessage("登录失败!");
         }
 
-        saveException(request,exception);
-        PrintWriter out = response.getWriter();
-        out.write(new ObjectMapper().writeValueAsString(result));
-        out.flush();
-        out.close();
+        response.getWriter().write(result.toString());
     }
 }

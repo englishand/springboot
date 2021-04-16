@@ -1,9 +1,7 @@
 package com.zhy.service.Impl;
 
 import com.zhy.entity.User;
-import com.zhy.exception.securityException.MyUsernameNotFoundException;
 import com.zhy.service.UserRepository;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,12 +34,11 @@ public class DatabaseUserDetailsService implements UserDetailsService {
      * @return
      * @throws UsernameNotFoundException
      */
-    @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user==null){
-            throw new MyUsernameNotFoundException("用户名: "+username+" 不存在");
+            throw new UsernameNotFoundException("用户名: "+username+" 不存在");
         }
         List<String> roleCodeList = userRepository.queryUserOwnedRoleCodes(username);
 

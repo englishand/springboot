@@ -18,6 +18,6 @@ public class StaticsTask2 extends ScheduleConfig{
 
     @Override
     protected String getCron() {
-        return "0/1 * 15 * * ?";
+        return "0/1 * 23 * * ?";
     }
 }

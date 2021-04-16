@@ -25,16 +25,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Spring Security的默认filter链
- * AbstractAuthenticationProcessingFilter的doFilter()方法。判断当前filter是否可以处理当前请求（也就是是否包含用户名密码信息），如果是，
- *      则调用子类UsernamePasswordAuthenticationFilter.attemptAuthentication()方法进行验证。
- * ->UsernamePasswordAuthenticationFilter：认证的filter，经过这些过滤器后SecurityContextHolder中将包含一个完全组装好的Authentication对象，
- *      验证用户名和密码，从而使后续鉴权正常执行。
- * ->ExceptionTranslationFilter：异常处理filter，主要拦截后续过滤器（FilterSecurityInterceptor)操作中抛出的异常（
- *      AccessDeniedException,AuthenticationException）。
- * ->FilterSecurityInterceptor：安全拦截过滤器类，获取当前请求url对应的ConfigAttribute,并调用accessDecisionManager进行访问授权决策。
- */
 @Slf4j
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -102,13 +92,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                     .loginPage("/login/in")//指定自定义登录页面，也可以用页面地址 /login.html
-                    /**
-                     * 表单登录的请求在SpringSecurity中是由UsernamePasswordAuthenticationFilter过滤器来处理的，
-                     * public UsernamePasswordAuthenticationFilter(){
-                     *     super(new AntPathRequestMatcher("/login","post"));
-                     * }
-                     * 当使用自定义的页面，登录action发生了改变，为此需要重新指定登录地址：用loginProcessingUrl("")
-                     */
+                     //当使用自定义的页面，登录action发生了改变，为此需要重新指定登录地址：用loginProcessingUrl("")
                     .loginProcessingUrl("/login/logIn")//设置登录时的请求地址
                     .usernameParameter("username").passwordParameter("password")
                     .failureHandler(failureHandler)
