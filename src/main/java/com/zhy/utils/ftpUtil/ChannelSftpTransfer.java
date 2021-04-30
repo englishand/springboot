@@ -17,7 +17,7 @@ public class ChannelSftpTransfer {
 
     private static String host = "130.1.10.10";
     private static int port = 22;
-    private static String userName = "ywguoqingkai@root@130.1.10.241";
+    private static String userName = "zhaohongyou@root@130.1.10.241";
     private static String password = "Abcd1234";
     private static String privateKey;//密钥文件路径
     private static String passPhrase;//密钥的密码
@@ -467,9 +467,9 @@ public class ChannelSftpTransfer {
 //                log.info(vector.elementAt(i).toString());
 //            }
 
-            transfer.delete("/appdata/zhy/20201225/1007");
+//            transfer.delete("/appdata/zhy/20201225/1007");
 
-//            transfer.createDir("/appdata/zhy/20210411");
+            transfer.createDir("/appdata/zhy/20210429");
         } catch (Exception e) {
             log.error(e.getMessage(),e);
         }finally {

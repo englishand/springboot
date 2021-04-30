@@ -86,5 +86,25 @@ public class Test {
             sb.append("{"+i+","+x+"}|");
         }
         log.info("hashmap表示为{下标，key}：{}",sb.toString());
+
+        log.info(System.getProperty("user.dir").replace("\\","/")+System.getProperty("line.separator")+"测试");
+
+        String str = "1||3";
+        String[] array = str.split("\\|");
+        for (int i=0;i<array.length;i++){
+            log.info(array[i]+"");
+        }
+
+        if (true){
+            System.out.println("asdfas");
+        }
+        else {
+            System.out.println("2222222");
+        }
+
+        int b=1;
+        if (b==1) b += 1;
+        else b+=2;
+        System.out.println(b+"");
     }
 }

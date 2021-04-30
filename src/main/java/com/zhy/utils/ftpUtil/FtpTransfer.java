@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
+import org.apache.commons.net.ftp.FTPSClient;
 
 import java.io.*;
 
@@ -15,10 +16,10 @@ import java.io.*;
 @Slf4j
 public class FtpTransfer {
 
-    private FTPClient client = new FTPClient();
+    private static FTPSClient client = new FTPSClient();
     private static String ftpHost = "130.1.10.10";
     private static int ftpPort = 21;
-    private static String userName = "ywguoqingkai@root@130.1.10.241";
+    private static String userName = "zhaohongyou@root@130.1.10.241";
     private static String password = "Abcd1234";
     private static String workingDirectory = "/appdata/zhy";//操作目录
 
@@ -211,13 +212,17 @@ public class FtpTransfer {
      * @param client ftp客户端
      * @throws Exception
      */
-    public boolean login(FTPClient client) throws Exception{
+    public boolean login(FTPSClient client) throws Exception{
         log.info("Connect to Ftp [{}:{}] with user [{}] and passwd [{}].",
                 ftpHost, ftpPort, userName, password);
         //连接服务器
         try {
             client.connect(ftpHost,ftpPort);
             log.info("connected");
+            //登录服务器
+            if (!client.login(userName,password)){
+                throw new Exception("login ftp server failed");
+            }
             //获取连接返回码
             int reply = client.getReplyCode();
             log.info("FTP server reply is "+ reply);
@@ -228,10 +233,6 @@ public class FtpTransfer {
             }
             //设置连接超时时间
             client.setConnectTimeout(60000);
-            //登录服务器
-            if (!client.login(userName,password)){
-                throw new Exception("login ftp server failed");
-            }
 
             //文件传输模式：主动模式和被动模式，这里使用被动模式
             client.enterLocalPassiveMode();
@@ -242,7 +243,7 @@ public class FtpTransfer {
                 throw new Exception("change workingDirectory failed");
             }
             //设置文件类型,二进制
-            client.setFileType(FTPClient.BINARY_FILE_TYPE);
+            client.setFileType(FTPSClient.BINARY_FILE_TYPE);
             //设置字符编码
             client.setControlEncoding("utf-8");
         }catch (Exception e){
