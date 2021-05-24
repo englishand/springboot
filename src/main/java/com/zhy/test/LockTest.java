@@ -1,5 +1,6 @@
 package com.zhy.test;
 
+import net.sf.cglib.core.DebuggingClassWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,10 +40,12 @@ public class LockTest {
         }
     }
 
-    //通过该方法获取锁时，如果线程正在等待获取锁，则这个线程能响应中断，即中断线程的等待状态,直接获取锁
+    //通过该方法获取锁时，如果线程正在等待获取锁，则这个线程能响应中断，即中断线程的等待状态,不再获取锁
     public void testLockInterruptibly(Thread thread){
         try {
+            System.out.println(thread.getName()+"----"+thread.isInterrupted());
             lock.lockInterruptibly();
+            logger.info(new Date()+" 线程"+thread.getName()+"进行了响应中断---");
             logger.info(new Date()+" 线程" + thread.getName() + " 获取了锁！{testLockInterruptibly}");
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -100,57 +103,48 @@ public class LockTest {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException{
         LockTest lockTest = new LockTest();
-        for (int i=0;i<5;i++){
-            Thread a = new Thread(""+i){
-                @Override
-                public void run() {
-                    lockTest.atomicInteger.incrementAndGet();
+
+        for (int i=4;i<8;i++){
+            Thread d =new Thread(""+i){
+                public void run(){
+                    lockTest.testLock(Thread.currentThread());
                 }
             };
+//            d.start();
         }
 
-    }
+        Thread c = new Thread("3"){
+            public void run(){
+                lockTest.testLock(Thread.currentThread());
+            }
+        };
 
-//    public static void main(String[] args){
-//        LockTest lockTest = new LockTest();
-//
-//        for (int i=4;i<10;i++){
-//            Thread d =new Thread(""+i){
-//                public void run(){
-//                    lockTest.testLock(Thread.currentThread());
-//                }
-//            };
-//            d.start();
-//        }
-//
-//        Thread c = new Thread("3"){
-//            public void run(){
+        Thread a = new Thread("1"){
+            public void run(){
 //                lockTest.testLock(Thread.currentThread());
-//            }
-//        };
-//
-//        Thread a = new Thread("1"){
-//            public void run(){
-////                lockTest.testLock(Thread.currentThread());
 //                lockTest.testTryLock(Thread.currentThread());
-////                lockTest.testTryLock_TimeUnit(Thread.currentThread());
-////                lockTest.testLockInterruptibly(Thread.currentThread());
-//            }
-//        };
-//
-//        Thread b = new Thread("2"){
-//            public void run(){
-//                lockTest.testLock(Thread.currentThread());
-//            }
-//        };
-//
-//
-//        c.start();
-//        a.start();
-//        b.start();
-//    }
+//                lockTest.testTryLock_TimeUnit(Thread.currentThread());
+                lockTest.testLockInterruptibly(Thread.currentThread());
+            }
+        };
+
+        Thread b = new Thread("2"){
+            public void run(){
+                lockTest.testLockInterruptibly(Thread.currentThread());
+            }
+        };
+
+
+        c.start();
+        a.start();
+
+        b.start();
+        b.interrupt();
+//        Thread.sleep(0);
+
+    }
 
 
 }

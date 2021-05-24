@@ -13,7 +13,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-@Configuration
+//@Configuration
 @Slf4j
 public class QuartzConfig {
 
@@ -79,7 +79,7 @@ public class QuartzConfig {
      * 将trigger配置到ScheduleFactory,用于启动定时器（容器启动即触发）
      * @return
      */
-    @Bean
+//    @Bean
     SchedulerFactoryBean schedulerFactoryBean(){
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
 

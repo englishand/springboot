@@ -1,5 +1,6 @@
 package com.zhy.enableAsync;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,13 +31,13 @@ public class PoolConfig {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE,-9);
         date = calendar.getTime();
-        SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf  = new SimpleDateFormat("yyyyMMdd");
         ThreadPoolTaskExecutor hte = new ThreadPoolTaskExecutor();
         hte.setCorePoolSize(10);//核心线程数10：线程池创建时候初始化的线程数
         hte.setMaxPoolSize(16);//最大线程数20：线程池最大的线程数，只有在缓冲队列满了之后才会申请超过核心线程数的线程
         hte.setQueueCapacity(200);//缓冲队列200：用来缓冲执行任务的队列
         hte.setKeepAliveSeconds(60);//允许线程的空闲时间60秒：当超过了核心线程出之外的线程在空闲时间到达之后会被销毁
-        hte.setThreadNamePrefix("taskexecutorTest-"+sdf.format(date)+"-");//线程池名的前缀：设置好了之后可以方便我们定位处理任务所在的线程池
+        hte.setThreadNamePrefix("taskexecutor-"+sdf.format(date)+"-");//线程池名的前缀：设置好了之后可以方便我们定位处理任务所在的线程池
 
         //线程池对拒绝任务的处理策略：这里采用了CallerRunsPolicy策略，
         //线程池没有处理能力的时候，该策略会直接在 execute 方法的调用线程中运行被拒绝的任务；如果执行程序已关闭，则会丢弃该任务
@@ -77,7 +78,8 @@ public class PoolConfig {
      */
     @Bean
     public ScheduledExecutorService scheduleThreadPool(){
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(10);
+        ThreadFactory factory = new ThreadFactoryBuilder().setNameFormat("scheduleThread-pool-%d").build();
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(5,factory);
         return executor;
     }
 
