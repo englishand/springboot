@@ -105,7 +105,5 @@ public class Test {
         int b=1;
         if (b==1) b += 1;
         else b+=2;
-
-
     }
 }
