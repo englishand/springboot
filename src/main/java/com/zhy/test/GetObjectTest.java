@@ -1,4 +1,4 @@
-package com.zhy.getObject;
+package com.zhy.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -12,9 +12,9 @@ import java.io.*;
  * 重写clone()方法,先调用super.clone()进行浅复制，然后在复制那些用到的易变的对象属性，从而达到深复制的效果。
  */
 @Slf4j
-public class User implements Serializable,Cloneable{
+public class GetObjectTest implements Serializable,Cloneable{
 
-    private static Logger logger = LoggerFactory.getLogger(User.class);
+    private static Logger logger = LoggerFactory.getLogger(GetObjectTest.class);
 
     private byte[] a = {1,2,3,4};
     private byte[] b = {5,6,7,8};
@@ -24,10 +24,10 @@ public class User implements Serializable,Cloneable{
     }
 
     //浅复制
-    public User lowClone(){
-        User user = null;
+    public GetObjectTest lowClone(){
+        GetObjectTest user = null;
         try{
-            user = (User)super.clone();//浅复制
+            user = (GetObjectTest)super.clone();//浅复制
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -35,10 +35,10 @@ public class User implements Serializable,Cloneable{
     }
     //深复制
     @Override
-    public User clone(){
-        User user = null;
+    public GetObjectTest clone(){
+        GetObjectTest user = null;
         try {
-            user = (User) super.clone();
+            user = (GetObjectTest) super.clone();
             user.a = this.a.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -46,15 +46,15 @@ public class User implements Serializable,Cloneable{
         return user;
     }
 
-    public static User getUserByClass() throws Exception{
-        Class aClass = Class.forName("com.zhy.getObject.User");
-        return (User)aClass.newInstance();
+    public static GetObjectTest getUserByClass() throws Exception{
+        Class aClass = Class.forName("com.zhy.test.GetObjectTest");
+        return (GetObjectTest)aClass.newInstance();
     }
 
     public static void main(String[] args){
         File file = new File("user.obj");
-        User u = null;
-        User user = new User();
+        GetObjectTest u = null;
+        GetObjectTest user = new GetObjectTest();
         try
         {
             FileOutputStream fos = new FileOutputStream(file);
@@ -62,12 +62,12 @@ public class User implements Serializable,Cloneable{
             FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             oos.writeObject(user);
-            u = (User)ois.readObject();
+            u = (GetObjectTest)ois.readObject();
             u = getUserByClass();
             log.info(u.getName());
 
             //测试深浅复制
-            User cloneuser = user.clone();//a为深复制，b为浅复制
+            GetObjectTest cloneuser = user.clone();//a为深复制，b为浅复制
             logger.info("original.a==cloned.a:"+(user.a==cloneuser.a));
             user.a[0] = 99;
             logger.info("original.a:{},cloned.a:{}",user.a,cloneuser.a);
