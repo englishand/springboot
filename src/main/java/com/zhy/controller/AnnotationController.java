@@ -3,6 +3,7 @@ package com.zhy.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhy.entity.Student;
+import com.zhy.service.Impl.ZhyServiceImpl;
 import com.zhy.utils.JsonAndXmlUtil;
 import com.zhy.utils.httpRequest.AsyncPostUtil;
 import com.zhy.utils.httpRequest.AsyncPostUtil2;
@@ -35,6 +36,8 @@ public class AnnotationController {
 
     @Autowired
     protected Student student;
+    @Autowired
+    private ZhyServiceImpl zhyService;
 
     @ResponseBody
     @RequestMapping("getValueString/{username}")
@@ -153,5 +156,15 @@ public class AnnotationController {
         return js;
     }
 
+    @ResponseBody
+    @RequestMapping("autoConfigure")
+    public JSONObject testAutoConfigure (){
+        JSONObject js = new JSONObject();
+
+        zhyService.testAutoConfiguration();
+
+        js.put("测试springboot自动装配","@Import");
+        return js;
+    }
 
 }

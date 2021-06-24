@@ -105,5 +105,57 @@ public class Test {
         int b=1;
         if (b==1) b += 1;
         else b+=2;
+
+
+        String msgString="1.0DK短信平台系统                  10010000000047202106090000000299772021060900000002997720210609|20210609150805||9000669|DK0020210609000101.txt";
+//               msgString="1.0YB短信平台系统                  1001000000005320210609000000031301202106090000000313012021060906801|20210609155300||9000669|20210609_0000031300.txt";
+//        msgString= "3.0LC丁香花财富平台                " +
+//                "1001000000005620210324083013005061202103240830130050612021032400100";
+        String ccc="1.000??俊骞冲?                  1002000000003320210609000000029977202106090000000299772021060920210609151206|00DK20210609000101|92006";
+        String ddd="1.000鐭\uE15D俊骞冲彴                  1002000000003320210512183339000846202105121833390008462021051220210512183354|00LC20210512000168|90000";
+        System.out.println("ccc:"+ccc.length());
+        System.out.println("ddd:"+ddd.length());
+        String [] msgarr = msgString.split("\\|");
+
+        byte[] headStr = null;
+        try {
+            headStr = msgarr[0].getBytes("GBK");
+            System.out.println(headStr.length);
+            String p2 = subBytes(headStr, 97, headStr.length - 97);
+            System.out.println("p2:"+p2);
+            String svrName = subBytes(headStr, 5, 30);
+            System.out.println("svrName:"+svrName);
+            // 报文编码
+            String conType = subBytes(headStr, 35, 4);
+            System.out.println("conType:"+conType);
+
+            String testByte = "123456789";
+            System.out.println(testByte.getBytes("GBK")+" ;长度是："+testByte.getBytes("GBK").length);
+
+            int a=0 ,aa=0;
+            if (a==aa){
+                System.out.println("测试if的走向");
+            }else if (a==0){
+                System.out.println("测试else if的走向");
+            }
+        }catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static String subBytes(byte[] src, int begin, int count) {
+        byte[] bs = new byte[count];
+        String rst = "";
+        for (int i=begin;i<begin+count; i++)
+        {
+            bs[i-begin] = src[i];
+        }
+        try {
+            rst = new String(bs, "GBK");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return rst.trim();
     }
 }

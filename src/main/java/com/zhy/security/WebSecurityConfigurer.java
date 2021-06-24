@@ -149,9 +149,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         urls.add("/login/error");
         urls.add("/verify/**");
         urls.add("/qr/**");
-        urls.add("/annotation/testAsyncPostUtil");
-        urls.add("/annotation/testRequestBodyWithXml");
-        urls.add("/annotation/getValueString/**");
+        urls.add("/annotation/**");
         urls.add("/user/selectUser");
         return urls;
     }

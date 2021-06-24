@@ -456,7 +456,7 @@ public class ChannelSftpTransfer {
 //            String[] commonds = commond.split(";");
 //            transfer.exeCommand(commonds);
 
-//            transfer.upload("/appdata/zhy/20210412","D:/赵洪友/新电商平台/银联改造/new2.txt");
+            transfer.upload("/appdata/zhy","D:/ideaProjects/dubbo/privider/target/privider-1.0-SNAPSHOT.jar");
 
 //            transfer.download("/appdata/zhy/20210412","new2.txt","D:/赵洪友/新电商平台/银联改造/new2.txt");
 
@@ -469,7 +469,7 @@ public class ChannelSftpTransfer {
 
 //            transfer.delete("/appdata/zhy/20201225/1007");
 
-            transfer.createDir("/appdata/zhy/20210429");
+//            transfer.createDir("/appdata/zhy/20210429");
         } catch (Exception e) {
             log.error(e.getMessage(),e);
         }finally {
