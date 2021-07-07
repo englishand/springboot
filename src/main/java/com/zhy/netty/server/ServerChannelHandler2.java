@@ -16,7 +16,7 @@ public class ServerChannelHandler2 extends ChannelInboundHandlerAdapter {
             received = ((String) msg).replaceAll("\r\n","");
             logger.info("服务端处理器2接受到的数据："+received,logFile);
             String result = "|这是服务处理器2返回的数据|";
-            ctx.channel().writeAndFlush(result);
+            ctx.writeAndFlush(result);
         }
         super.channelRead(ctx,msg);
     }

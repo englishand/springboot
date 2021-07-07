@@ -38,12 +38,12 @@ public class ServerChannelHandler extends ChannelInboundHandlerAdapter {
             byte[] response = (String.format(result, Charset.defaultCharset())).getBytes();
             ByteBuf bb = Unpooled.buffer();
             bb.writeBytes(response);
-            ctx.channel().writeAndFlush(bb);
+            ctx.writeAndFlush(bb);
 
             //或用以下方法发送
 //            ctx.channel().writeAndFlush(Unpooled.copiedBuffer(result,Charset.forName("UTF-8")));
         }
-//        super.channelRead(ctx,msg);//使多个ChannelInboundHandler重复从channel头执行，所以应当注掉
+//        super.channelRead(ctx,msg);//使多个ChannelInboundHandler重复从channel头执行，所以多个inhandler接收到的信息收到多个信息，所以应当注掉
     }
 
     @Override

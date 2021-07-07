@@ -88,7 +88,7 @@
        }
        调试后发现：没有out1和out2
        
-       然后将in1中的ChannelHandlerContext改为Channel后则控制台和网络调试控制台打印分别如下
+       然后将in2中的ChannelHandlerContext改为Channel后则控制台和网络调试控制台打印分别如下
        public void channelRead(ChannelHandlerContext ctx , Object msg) throws Exception {
                log.info("请求处理器1");
                ctx.channel().writeAndFlush(Unpooled.copiedBuffer("hello word1" , Charset.forName("gb2312")));

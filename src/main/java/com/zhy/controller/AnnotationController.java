@@ -2,6 +2,8 @@ package com.zhy.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.zhy.designPattern.ApiEnum;
+import com.zhy.designPattern.ApiFactory;
 import com.zhy.entity.Student;
 import com.zhy.service.Impl.ZhyServiceImpl;
 import com.zhy.utils.JsonAndXmlUtil;
@@ -165,6 +167,18 @@ public class AnnotationController {
 
         js.put("测试springboot自动装配","@Import");
         return js;
+    }
+
+    /**
+     * 测试ApplicationContext.getBeansOfType(class);
+     */
+    @Autowired
+    private ApiFactory apiFactory;
+    @RequestMapping("getBeansOfType")
+    @ResponseBody
+    public String testGetBeansOfType(){
+        Object invoke = apiFactory.getApi(ApiEnum.API_02).invoke(null);
+        return (String) invoke;
     }
 
 }
