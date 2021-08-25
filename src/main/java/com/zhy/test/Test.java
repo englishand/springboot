@@ -2,12 +2,52 @@ package com.zhy.test;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Slf4j
-public class Test {
+public class Test implements Serializable {
+
+    private int age;
+    private transient String name;//测试transient
+    public Test(){}
+    public Test(int age,String name){
+        this.age = age;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Test{"+ "age="+ age+",name='"+name+"\'" +'}';
+    }
+
+    public static class TestTransient{
+        public static void main(String[] args){
+            Test test = new Test(15,"hongyou");
+            System.out.println(test);
+
+            try {
+                //将对象写入磁盘文件(序列化)
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("test.txt"));
+                oos.writeObject(test);
+                oos.close();
+
+                //从磁盘文件读取test对象（反序列化）
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("test.txt"));
+                Test t = (Test) ois.readObject();
+                System.out.println(t);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private static class Node<K,V>{
         int hash;
@@ -40,6 +80,7 @@ public class Test {
         Map m5 = new HashMap();m5.put("age",6);
         Map m6 = new HashMap();m6.put("age",4);
         List list = new ArrayList();
+        List list3 = new LinkedList();
         list.add(m1);
         list.add(m2);
         list.add(m3);list.add(m4);list.add(m5);list.add(m6);list.add(m1);list.add(m2);
@@ -129,20 +170,74 @@ public class Test {
             String conType = subBytes(headStr, 35, 4);
             System.out.println("conType:"+conType);
 
-            String testByte = "123456789";
-            System.out.println(testByte.getBytes("GBK")+" ;长度是："+testByte.getBytes("GBK").length);
-
+            String testByte = "0005060001202107130000037190015030000000000000000000测试电子汇票一                          1219110731366397  00713135541002+00000000000013.00CNY+00000001000847.68025351001045                                               18010000001260844               对方户名                                                              1219110731366397                                                                                                                                                                      ";
+            testByte = "0005060001202105061002196910015113123000000000000000转账测试二                              020019411900010  220506172600001+00000000000040.00CNY+00000001238706.00011008001055                            940049002001941190                                                                       16019900167548137                                                                                                                                                                                                      ";
+            byte[] strMsgs = testByte.getBytes("GBK");
+            System.out.println(strMsgs+" ;长度是："+strMsgs.length);
+            String otherPartyCard = subBytes(strMsgs,222,32).trim();
+            //对方户名
+            String otherPartyAccount = subBytes(strMsgs,254,70).trim();
+            // filter
+            String filter = subBytes(strMsgs, 324, 182).trim();
+            System.out.println("对方账号："+otherPartyCard+";对方户名："+otherPartyAccount+";filler:"+filter+";");
             int a=0 ,aa=0;
             if (a==aa){
                 System.out.println("测试if的走向");
             }else if (a==0){
                 System.out.println("测试else if的走向");
             }
+
+            String tokens = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIwIiwicGFzc3dvcmQiOiIyMTAyYjU5YTc1YWI4NzYxNmI2MmQwYjk0MzI1NjlkMCIsImV4cCI6MTYyNzI2NzE0NiwiaWF0IjoxNjI3MjYzNTQ2LCJhY2NvdW50IjoiYWRtaW4ifQ.OlpB_cGfINAJJlgYbIsBSwUpHj-WxOnUjYMhbpgLzwA";
+            System.out.println("tokens是否是字符序列："+(tokens instanceof CharSequence));
+            System.out.println(isBlank((CharSequence)tokens));
+
+            String phones="16645402347";
+            String phone2 = "16640622698";
+            System.out.println("电话号码校验："+checkPhone(phone2));
+            System.out.println("新校验："+PhoneFormatCheckUtils.isChinaPhoneLegal(phones));
         }catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
+        //引用类型数组，元素内容为对象
+        Test[] a = new Test[]{};
+        String[] c = {"aa","bb",""};
+        c[0] = "ccc";
+        for (int i=0;i<c.length;i++){
+            System.out.println(c[i]);
+        }
+
     }
+    /**
+     * 验证手机号码
+     * @param mobiles
+     * @return
+     */
+    public static boolean isMobileNO(String mobiles){
+        boolean flag = false;
+        try{
+            Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+            Matcher m = p.matcher(mobiles);
+            flag = m.matches();
+        }catch(Exception e){
+            flag = false;
+        }
+        return flag;
+    }
+    public static boolean checkPhone(String phone){
+        String regex = "^(13|14|15|17|18|19)[0-9]{9}$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(phone);
+        return m.matches();
+    }
+    public static boolean isMobile(String mobile) {
+        String regex = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(16[5,6])|(17[0-8])|(18[0-9])|(19[1、5、8、9]))\\d{8}$";
+        Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(mobile);
+        return m.matches();
+    }
+
+
 
     public static String subBytes(byte[] src, int begin, int count) {
         byte[] bs = new byte[count];
