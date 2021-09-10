@@ -1,9 +1,8 @@
 #####Nginx负载均衡策略
     负载均衡用于从“upstream"模块定义的后端服务器列表中选取一台服务器接收用户的请求。
     目前Nginx服务器的upstream模块支持6种方式的分配：
-    参数：fail_timeout、max_fails(设置在fail_timeout参数设置的时间内最大失败次数，如果在这个时间内，所有针对该服务器的请求都失败了，则认为该服务器
-        会被认为是停机了)、fail_time(服务器会被认为停机的时间长度，默认为10s)、backup(标记该服务器为备用服务器。当主服务器停止时，请求会被发送到这
-        里)、down(标记服务器永久停机了)
+    参数：fail_timeout(经过max_fails失败后，服务暂停的时间);max_fails(允许请求最大失败次数);fail_time(服务器会被认为停机的时间长度，默认为10s);
+        backup(标记该服务器为备用服务器。当主服务器停止时，请求会被发送到这里)、down(标记服务器永久停机了)
         max_fails默认为1.
     1.轮询（默认方式）
        每个请求会按照时间顺序逐一分配到不同的后端服务器。
@@ -78,7 +77,9 @@
     重新载入：nginx.exe -s reload
     1.添加虚拟域名，Windows进入C:\Windows\System32\drivers\etc目录下找到hosts文件(Linux：/etc/hosts)，添加需要使用的虚拟域名，指向本机：
         127.0.0.1 www.zxrcl.com
-        127.0.0.1 127.0.0.1 image.zxrcl.com
+        127.0.0.1 image.zxrcl.com
+        (windows下不需要重启电脑，使用命令：ipconfig /displaydns   ipconfig /flushdns)
+        (linux下source 文件名)
     2.修改nginx配置文件nginx.conf
         添加 include vhost/*.conf;
     3.conf目录下，创建vhost文件夹
@@ -127,3 +128,10 @@
         (1)重启：nginx.exe -s reload
        （2）访问www.zxrcl.com.conf
        （3）测试转发目录，访问：image.zxrcl.com
+#####source filename 与 sh filename 及./filename执行脚本的区别#
+     当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别得。
+     ./filename是因为当前目录没有在PATH中，所有”.”是用来表示当前目录的。
+     sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，
+     除非使用export。
+     source filename：这个命令其实只是简单地读取脚本里面的语句依次在当前shell里面执行，没有建立新的子shell。那么脚本里面所有新建、改变变量的语句
+     都会保存在当前shell里面。

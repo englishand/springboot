@@ -31,15 +31,12 @@ public class ServerUtils {
                         sc.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
                         sc.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
 
-
+                        //执行顺序：serverChannelHandler->serverChannelHandler2->serverChannelOutHandler2->serverChannelOutHandler
+                        sc.pipeline().addLast(new ServerChannelOutHandler());
+                        sc.pipeline().addLast(new ServerChannelOutHandler2());
 
                         sc.pipeline().addLast(new ServerChannelHandler());//添加处理器
-
-                        sc.pipeline().addLast(new ServerChannelOutHandler());
                         sc.pipeline().addLast(new ServerChannelHandler2());
-
-
-                        sc.pipeline().addLast(new ServerChannelOutHandler2());
 
                     }
                 })
