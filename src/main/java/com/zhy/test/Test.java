@@ -72,8 +72,7 @@ public class Test implements Serializable {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Map m1 = new HashMap();
-        m1.put("age",3);m1.put("age",7);
+        Map m1 = new HashMap();m1.put("age",3);m1.put("age",7);
         Map m2 = new HashMap();m2.put("age",5);
         Map m3 = new HashMap();m3.put("age",2);
         Map m4 = new HashMap();m4.put("age",1);
@@ -83,7 +82,8 @@ public class Test implements Serializable {
         List list3 = new LinkedList();
         list.add(m1);
         list.add(m2);
-        list.add(m3);list.add(m4);list.add(m5);list.add(m6);list.add(m1);list.add(m2);
+        list.add(m3);list.add(m4);list.add(m5);list.add(m6);list.add(m1);list.add(0,m2);
+        log.info("排序前："+list.toString());
         list.sort(new Comparator<HashMap>() {
             @Override
             public int compare(HashMap o1, HashMap o2) {
@@ -92,14 +92,14 @@ public class Test implements Serializable {
                 return i1.compareTo(i2);
             }
         });
-        log.info(list.toString());
+        log.info("排序后："+list.toString());
 
 
         //也就是说list.size是值实际占用的大小，而其存放元素的容器transient Object[] elementData初始大小是可以通过定义控制的。
         List list1 = new ArrayList(4);
         list1.add(list);
         list1.add("");
-        log.info(list1.size()+"");
+        log.info("list1的元素个数为："+list1.size());
 
         int newCapacity = 6;
         newCapacity = newCapacity+(newCapacity >> 1);
@@ -113,6 +113,11 @@ public class Test implements Serializable {
         boolean result = set.add(1);
         boolean result2 = set.add(1);
         log.info(result+"|"+result2+"|"+set.toString());
+
+        LinkedList linkedList = new LinkedList();
+        linkedList.add("2131");
+        linkedList.addFirst(1);
+        log.info("linkedlist元素为："+linkedList.toString());
 
         StringBuffer sb = new StringBuffer();
         for (int x=0;x<20;x++){

@@ -12,8 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.clients.jedis.Jedis;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
 import java.util.concurrent.*;
 
 @Slf4j
@@ -119,6 +118,10 @@ public class TestPoolConfig {
     public void main5(){
         String key = "username";
         String testStr = "zhy20210910";
+        List list = new ArrayList();
+        jedis.lpush("1","a:222","112","c:44333");
+        String value = jedis.lpop("1");
+        System.out.println(value);
 //        ThreadPoolTaskExecutor executor = poolConfig.executor();
 //        executor.execute(new Runnable() {
 //            @Override
@@ -145,6 +148,8 @@ public class TestPoolConfig {
         lockResult = unLock(key,testStr);
         System.out.println("解锁的状态："+lockResult);
         System.out.println("检测线程是否异步执行");
+
+        jedis.close();
     }
     //加锁
     public static boolean tryLock(String key,String requestId){
