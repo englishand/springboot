@@ -30,7 +30,6 @@ public class ConcurrencyTools {
             for (Map.Entry<String,Integer> item:sheetCount.entrySet()){
                 result += item.getValue();
             }
-            System.out.println(j);
             sheetCount.put("result",result/10);
         }
     }
@@ -40,7 +39,7 @@ public class ConcurrencyTools {
      * 在代码中，有30个线程在执行，但只允许10个并发的执行。其构造方法Semaphore(int permits);接收一个整型的数字，表示可用的许可证数量。
      * 构造方法Semaphore(int permits,boolean pair);其中pair是指公平or非公平策略
      * 其他方法：
-     *      int availablePermits();返回此信号量中当前可用的许可证数,(个人感觉不够准确)
+     *      int availablePermits();返回此信号量中当前可用的许可证数
      *      int getQueueLength();返回正在等待获取许可证的线程数
      *      boolean hasQueuedThreads();是否有线程正在等待获取许可证
      *      void reducePermits(int reduction);减少reduction个许可证，是个protected方法
@@ -71,6 +70,11 @@ public class ConcurrencyTools {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 System.out.println("thread1 finished");
             }
         });
@@ -86,9 +90,17 @@ public class ConcurrencyTools {
                 System.out.println("thread2 finished");
             }
         });
+        Thread thread3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("thread3 finished");
+            }
+        });
         thread1.start();
         thread2.start();
+        thread3.start();
         try {
+            //可以看到当前线程即main线程等待thread1和thread2执行完毕再执行
             thread1.join();
             thread2.join();
             System.out.println("all thread finished");
@@ -107,7 +119,6 @@ public class ConcurrencyTools {
                 public void run() {
                     if (!Thread.currentThread().getName().equals("Thread-2")){
                         System.out.println(new Date()+"---"+Thread.currentThread().getName()+" 执行完成");
-                        c.countDown();//计数器为0时，调用await方法不会阻塞当前线程，直到计数器为0
                     }else {
                         try {
                             Thread.sleep(2000);
@@ -115,8 +126,8 @@ public class ConcurrencyTools {
                             e.printStackTrace();
                         }
                         System.out.println(new Date()+"---"+Thread.currentThread().getName()+" 未执行完成...");
-                        c.countDown();
                     }
+                    c.countDown();//调用await方法阻塞当前线程，直到计数器为0
                 }
             });
             threads[i].start();
@@ -137,17 +148,19 @@ public class ConcurrencyTools {
             threads[i] = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println(new Date()+"---"+Thread.currentThread().getName()+"线程到达屏障");
                     try {
+
+                        int j = Integer.parseInt(Thread.currentThread().getName().substring(7))*1000;
+                        Thread.sleep(j);
+                        System.out.println(new Date()+"---"+Thread.currentThread().getName()+"线程到达屏障");
                         int num = barrier.await();//到达屏障的线程的索引，num-1指到达的第一个线程，0最后到达的一个线程
                         //getParties()返回要求启动此barrier的参与者数量
                         if (num==(barrier.getParties()-1)){
-                            System.out.println("所有线程到达屏障，"+Thread.currentThread().getName()+"被唤醒，此线程是第一个到达屏障");
+                            System.out.println(new Date()+Thread.currentThread().getName()+"此线程是第一个到达屏障");
                         }else if (num==0){
-                            System.out.println("所有线程到达屏障，"+Thread.currentThread().getName()+"被唤醒，此线程是最后一个到达屏障");
-                        }else {
-                            System.out.println("所有线程到达屏障，"+Thread.currentThread().getName()+"被唤醒");
+                            System.out.println(new Date()+Thread.currentThread().getName()+"被唤醒，此线程是最后一个到达屏障,所有线程被唤醒");
                         }
+                        System.out.println(new Date()+"执行线程任务"+Thread.currentThread().getName());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (BrokenBarrierException e) {
@@ -184,7 +197,7 @@ public class ConcurrencyTools {
                         System.out.println(new Date()+Thread.currentThread().getName()+"线程最后一个到达");
                     }
                     count = sheetCount.get("result");
-                    System.out.println(new Date()+"线程"+Thread.currentThread().getName()+"运行结束，最终的计算结果："+sheetCount.get("result"));
+                    System.out.println(new Date()+"线程"+Thread.currentThread().getName()+"运行结束，最终的计算结果："+count);
 
                     //结合CountDownLatch,阻塞当前线程线程和主线程，直到所有线程执行完成
                     c.countDown();
