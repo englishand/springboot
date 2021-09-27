@@ -72,8 +72,7 @@ public class Test implements Serializable {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        Map m1 = new HashMap();
-        m1.put("age",3);m1.put("age",7);
+        Map m1 = new HashMap();m1.put("age",3);m1.put("age",7);
         Map m2 = new HashMap();m2.put("age",5);
         Map m3 = new HashMap();m3.put("age",2);
         Map m4 = new HashMap();m4.put("age",1);
@@ -83,7 +82,8 @@ public class Test implements Serializable {
         List list3 = new LinkedList();
         list.add(m1);
         list.add(m2);
-        list.add(m3);list.add(m4);list.add(m5);list.add(m6);list.add(m1);list.add(m2);
+        list.add(m3);list.add(m4);list.add(m5);list.add(m6);list.add(m1);list.add(0,m2);
+        log.info("排序前："+list.toString());
         list.sort(new Comparator<HashMap>() {
             @Override
             public int compare(HashMap o1, HashMap o2) {
@@ -92,14 +92,14 @@ public class Test implements Serializable {
                 return i1.compareTo(i2);
             }
         });
-        log.info(list.toString());
+        log.info("排序后："+list.toString());
 
 
         //也就是说list.size是值实际占用的大小，而其存放元素的容器transient Object[] elementData初始大小是可以通过定义控制的。
         List list1 = new ArrayList(4);
         list1.add(list);
         list1.add("");
-        log.info(list1.size()+"");
+        log.info("list1的元素个数为："+list1.size());
 
         int newCapacity = 6;
         newCapacity = newCapacity+(newCapacity >> 1);
@@ -113,6 +113,11 @@ public class Test implements Serializable {
         boolean result = set.add(1);
         boolean result2 = set.add(1);
         log.info(result+"|"+result2+"|"+set.toString());
+
+        LinkedList linkedList = new LinkedList();
+        linkedList.add("2131");
+        linkedList.addFirst(1);
+        log.info("linkedlist元素为："+linkedList.toString());
 
         StringBuffer sb = new StringBuffer();
         for (int x=0;x<20;x++){
@@ -172,6 +177,7 @@ public class Test implements Serializable {
 
             String testByte = "0005060001202107130000037190015030000000000000000000测试电子汇票一                          1219110731366397  00713135541002+00000000000013.00CNY+00000001000847.68025351001045                                               18010000001260844               对方户名                                                              1219110731366397                                                                                                                                                                      ";
             testByte = "0005060001202105061002196910015113123000000000000000转账测试二                              020019411900010  220506172600001+00000000000040.00CNY+00000001238706.00011008001055                            940049002001941190                                                                       16019900167548137                                                                                                                                                                                                      ";
+            testByte= "000506000120210917100382971001T27903700000000000000010006088406北京                         1168011107482602 220917111842001+00000000000700.00CNY+00000000014141.75015056001055                            6224254510614893734                                                                                                      16019900019948282                                                                                                                                                                      ";
             byte[] strMsgs = testByte.getBytes("GBK");
             System.out.println(strMsgs+" ;长度是："+strMsgs.length);
             String otherPartyCard = subBytes(strMsgs,222,32).trim();
@@ -199,6 +205,7 @@ public class Test implements Serializable {
             e.printStackTrace();
         }
 
+
         //引用类型数组，元素内容为对象
         Test[] a = new Test[]{};
         String[] c = {"aa","bb",""};
@@ -206,6 +213,12 @@ public class Test implements Serializable {
         for (int i=0;i<c.length;i++){
             System.out.println(c[i]);
         }
+
+        System.out.println(1L==1);
+
+        List list4 = new ArrayList();
+        Map map = new HashMap();
+        System.out.println(map.get("aa"));
 
     }
     /**
@@ -237,7 +250,10 @@ public class Test implements Serializable {
         return m.matches();
     }
 
+    //netty
+    public static void startServer() throws InterruptedException{
 
+    }
 
     public static String subBytes(byte[] src, int begin, int count) {
         byte[] bs = new byte[count];

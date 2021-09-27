@@ -22,7 +22,7 @@ public class LockTest {
     //乐观锁实现方式，多个线程使用同一个atomicInteger
     private AtomicInteger atomicInteger = new AtomicInteger();
 
-    //测试使用lock方法：如果锁已经被其他线程获取到，则等待
+    //测试使用lock方法：如果锁已经被其他线程获取到，则等待；lock()方法忽略中断请求，继续获取锁到成功。
     public void testLock(Thread thread){
         try{
             int j=1;
@@ -40,19 +40,19 @@ public class LockTest {
         }
     }
 
-    //通过该方法获取锁时，如果线程正在等待获取锁，则这个线程能响应中断，即中断线程的等待状态,不再获取锁
+    //通过该方法获取锁时不处理中断状态，直接抛出异常，由上层调用者处理中断。
     public void testLockInterruptibly(Thread thread){
         try {
             System.out.println(thread.getName()+"----"+thread.isInterrupted());
             lock.lockInterruptibly();
-            logger.info(new Date()+" 线程"+thread.getName()+"进行了响应中断---");
             logger.info(new Date()+" 线程" + thread.getName() + " 获取了锁！{testLockInterruptibly}");
             Thread.sleep(5000);
+            lock.unlock();
+            logger.info(new Date()+" 线程" + thread.getName() + " 释放了锁！");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
-            lock.unlock();
-            logger.info(new Date()+" 线程" + thread.getName() + " 释放了锁！");
+            logger.info(new Date()+" 线程" + thread.getName() +"执行完毕！");
         }
     }
 
@@ -137,11 +137,13 @@ public class LockTest {
         };
 
 
-        c.start();
+//        c.start();
+        System.out.println(new Date()+"a1");
         a.start();
-
+        System.out.println(new Date()+"a2");
         b.start();
-        b.interrupt();
+        b.interrupt();//测试ReentrantLock的lockInteruptibly()
+        System.out.println(new Date()+"b2");
 //        Thread.sleep(0);
 
     }
