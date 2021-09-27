@@ -21,7 +21,7 @@ public class  CglibProxyTest {
         //用create方法创建代理类
         CglibSon cglibSon = (CglibSon) enhancer.create();
 
-        cglibSon.gotoHome();
+        cglibSon.gotoHome(null);
     }
 
     /**

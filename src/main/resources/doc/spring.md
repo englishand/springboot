@@ -39,3 +39,7 @@
     @EnableConfigurationProperties(ServerProperties.class)注解，最终找到了ServerProperties类。在全局配置的属性如：server.port等，通过
     @ConfigurationProperties注解，绑定到对应的xxxProperties配置实体类上封装为一个bean,然后再通过@EnableConfigurationProperties注解导入到Spring
     容器中。
+#####springmvc和struts2区别
+    1.应用方便上
+    2.加构方面：每一个Action对应一个Request，是类从面的拦截器；而springMvc是一个方法对应一个request,是方法从面的Servlet；
+#####spring介绍

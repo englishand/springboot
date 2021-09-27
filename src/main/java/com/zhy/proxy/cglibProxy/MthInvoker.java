@@ -5,6 +5,7 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * 拦截器
@@ -21,6 +22,7 @@ public class MthInvoker implements MethodInterceptor {
         //objects:方法参数
         //表示要触发父类的方法对象methodProxy:sig1:gotoHome()V
         //                               sig2:CGLIB$gotoHome$0()V
+        objects = new Object[]{new Date()};
         Object intercept = methodProxy.invokeSuper(o,objects);
         log.info("对目标类进行增强：你可以回家了");
         return intercept;
