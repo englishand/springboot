@@ -216,6 +216,10 @@ public class Test implements Serializable {
 
         System.out.println(1L==1);
 
+        List list4 = new ArrayList();
+        Map map = new HashMap();
+        System.out.println(map.get("aa"));
+
     }
     /**
      * 验证手机号码

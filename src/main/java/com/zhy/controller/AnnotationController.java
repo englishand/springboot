@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
 import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,6 +41,7 @@ public class AnnotationController {
     protected Student student;
     @Autowired
     private ZhyServiceImpl zhyService;
+
 
     @ResponseBody
     @RequestMapping("getValueString/{username}")
@@ -164,8 +166,7 @@ public class AnnotationController {
         JSONObject js = new JSONObject();
 
         zhyService.testAutoConfiguration();
-
-        js.put("测试springboot自动装配","@Import");
+        js.put("测试springboot自动装配以及@ConfigurationProperties","@Import");
         return js;
     }
 
