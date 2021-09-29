@@ -107,8 +107,8 @@ public class TestPoolConfig {
         String key = "username";
         String testStr = "zhy20210910";
         List list = new ArrayList();
-        jedis.lpush("1","a:222","112","c:44333");
-        String value = jedis.lpop("1");
+        jedis.lpush("1a","a:222","112","c:44333");
+        String value = jedis.lpop("1a");
         log.info(value);
 //        ThreadPoolTaskExecutor executor = poolConfig.executor();
 //        executor.execute(new Runnable() {
@@ -130,9 +130,10 @@ public class TestPoolConfig {
 //            }
 //        });
         boolean lockResult = false;
-//        lockResult = tryLock(key,testStr);
-//        log.info("获取锁的状态："+lockResult);
-//        lockResult = 1L==jedis.del(key);
+        lockResult = tryLock(key,testStr);
+        log.info("获取锁的状态："+lockResult);
+        lockResult = 1L==jedis.del(key);
+        log.info("删除缓存数据结果："+lockResult);
         lockResult = unLock(key,testStr);
         log.info("解锁的状态："+lockResult);
         log.info("检测线程是否异步执行");
