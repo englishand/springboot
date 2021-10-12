@@ -47,11 +47,11 @@ public class LockTest {
             lock.lockInterruptibly();
             logger.info(new Date()+" 线程" + thread.getName() + " 获取了锁！{testLockInterruptibly}");
             Thread.sleep(5000);
-            lock.unlock();
-            logger.info(new Date()+" 线程" + thread.getName() + " 释放了锁！");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
+            lock.unlock();
+            logger.info(new Date()+" 线程" + thread.getName() + " 释放了锁！");
             logger.info(new Date()+" 线程" + thread.getName() +"执行完毕！");
         }
     }

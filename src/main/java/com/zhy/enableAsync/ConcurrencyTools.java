@@ -125,7 +125,7 @@ public class ConcurrencyTools {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        System.out.println(new Date()+"---"+Thread.currentThread().getName()+" 未执行完成...");
+                        System.out.println(new Date()+"---"+Thread.currentThread().getName()+" 最后一个线程完成...");
                     }
                     c.countDown();//调用await方法阻塞当前线程，直到计数器为0
                 }
@@ -221,11 +221,11 @@ public class ConcurrencyTools {
         ConcurrencyTools tools = new ConcurrencyTools();
 //        tools.testSemaphore();//测试Semaphore
 //        tools.TestJoin();
-//        tools.testCountDownLatch();
+        tools.testCountDownLatch();
 //        tools.testCyclicBarrier();
 
-        tools.count();
-        System.out.println(new Date()+"---"+tools.count);
+//        tools.count();
+//        System.out.println(new Date()+"---"+tools.count);
 
     }
 
