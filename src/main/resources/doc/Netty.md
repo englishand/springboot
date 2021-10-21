@@ -45,14 +45,14 @@
     1.ChannelPipeline and Handlers
       数据在ChannelPipeline中流动，这些数据每经过一个ChannelHandler并且被它处理。公共接口ChannelHandler:两个子类接口ChannelInboundHandler和
       ChannelOutboundHandler.一个ChannelPipeline可以把两种handler混合在一起使用，当一个数据流进入ChannelPipeline时，数据会从ChannelPipeline
-      头部开始传给第一个ChannelInboundHandler,当第一个处理完后数据会被写出，它会从管道的尾部开始，先经过‘最后’一个ChannelOutboundHander,
-      等处理完后再传递给前一个ChannelOutboundHandler.再传递给第二个ChannelInBoundHandler。
+      头部开始传给第一个ChannelInboundHandler,当第一个处理完后数据会被写出，再传递给第二个ChannelInBoundHandler。它会从管道的尾部开始，先经过
+      ‘最后’一个ChannelOutboundHander,等处理完后再传递给前一个ChannelOutboundHandler.
       数据在各个handler之间传递，这需要调用方法中传递的ChannelHandlerContext来操作, 在netty的API中提供了两个基类分ChannelOutboundHandlerAdapter
       和ChannelInboundHandlerAdapter.程序中可以继承这两个基类来实现处理数据。
       当一个ChannelHandler被加入到ChannelPipeline中，它便获得一个ChannelHandlerContext的引用，而ChannelHandlerContext可以用来读写netty中
       的数据流。因此现在有两种方式来发送数据：一是把数据直接写入channel，二是把数据写入ChannelHandlerContext,区别：写入Channel的话，数据流会从
       channel的头开始传递，而如果把数据写入ChannelHandlerConteaxt的话，数据流会流入管道中的下一个handler。
-      通俗说：ChannelHandlerContext执行写入时使数据在ChannelInboundHandler之间传递.而channel则会传递到所有的outboundHandler.
+      通俗说：ChannelHandlerContext执行写入时使数据在ChannelInboundHandler之间传递.而channel则会直接传递到所有的outboundHandler.
       例：
       public class InitialierHandler extends ChannelInitializer<SocketChannel> {
           @Override

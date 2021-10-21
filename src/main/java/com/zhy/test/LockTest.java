@@ -46,7 +46,7 @@ public class LockTest {
             System.out.println(thread.getName()+"----"+thread.isInterrupted());
             lock.lockInterruptibly();
             logger.info(new Date()+" 线程" + thread.getName() + " 获取了锁！{testLockInterruptibly}");
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
@@ -126,12 +126,27 @@ public class LockTest {
 //                lockTest.testLock(Thread.currentThread());
 //                lockTest.testTryLock(Thread.currentThread());
 //                lockTest.testTryLock_TimeUnit(Thread.currentThread());
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 lockTest.testLockInterruptibly(Thread.currentThread());
             }
         };
 
         Thread b = new Thread("2"){
             public void run(){
+                lockTest.testLockInterruptibly(Thread.currentThread());
+            }
+        };
+        Thread e = new Thread("3"){
+            public void run(){
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException interruptedException) {
+//                    interruptedException.printStackTrace();
+//                }
                 lockTest.testLockInterruptibly(Thread.currentThread());
             }
         };
@@ -142,8 +157,9 @@ public class LockTest {
         a.start();
         System.out.println(new Date()+"a2");
         b.start();
-        b.interrupt();//测试ReentrantLock的lockInteruptibly()
+//        b.interrupt();//测试ReentrantLock的lockInteruptibly()
         System.out.println(new Date()+"b2");
+        e.start();
 //        Thread.sleep(0);
 
     }

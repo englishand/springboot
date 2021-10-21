@@ -28,8 +28,8 @@ public class ServerUtils {
                 .childHandler(new ChannelInitializer<SocketChannel>() {//第3.设置子通道即SocketChannel的处理器。处理读写事件。ChannelInitializer是给通道初始化
                     @Override
                     protected void initChannel(SocketChannel sc) throws Exception {
-                        sc.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
-                        sc.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
+                        sc.pipeline().addLast(new StringDecoder(Charset.forName("GBK")));
+                        sc.pipeline().addLast(new StringEncoder(Charset.forName("GBK")));
 
                         //执行顺序：serverChannelHandler->serverChannelHandler2->serverChannelOutHandler2->serverChannelOutHandler
                         sc.pipeline().addLast(new ServerChannelOutHandler());
