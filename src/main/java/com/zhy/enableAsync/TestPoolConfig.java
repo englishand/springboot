@@ -101,7 +101,7 @@ public class TestPoolConfig {
 
     //测试redis分布式锁
     private static final long SUCCESS = 1L;
-    private static Jedis jedis = new Jedis("127.0.0.1");
+    private static Jedis jedis = new Jedis("192.168.110.182",6379);
     @Test
     public void one5(){
         String key = "username";
