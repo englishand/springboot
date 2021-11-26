@@ -11,18 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
+@Service("userServiceImpl")
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
     @Autowired
     private UserMapper userDao;
-
-
-    @Override
-    public int insert(User user) {
-        return userDao.insert(user);
-    }
 
     @Override
     public List<Role> selectByUserId(String userId) {

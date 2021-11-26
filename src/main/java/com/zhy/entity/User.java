@@ -18,7 +18,7 @@ public class User implements Serializable {
     private String userDescript;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_name",referencedColumnName = "username",updatable = false,insertable = false),
+            joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id",updatable = false,insertable = false),
             inverseJoinColumns = @JoinColumn(name = "role_code",referencedColumnName = "rolecode",updatable = false,insertable = false))
     private List<Role> roles;
 

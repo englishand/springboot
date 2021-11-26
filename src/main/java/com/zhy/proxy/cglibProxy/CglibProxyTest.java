@@ -30,7 +30,7 @@ public class  CglibProxyTest {
      * 2.cgLib是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码来生成子类来处理。
      *      1）：如果目标实现了接口，默认情况下会采用Jdk的动态代理实现Aop
      *      2): 如果目标实现了接口，可以强制使用cglib实现aop
-     *      3): 如果目标没有实现接口，必须使用cglib来实现aop。spring会在jdk和cgLib之间自动切换
+     *      3): 如果目标没有实现接口，必须使用cglib来实现aop。SpringAOP会在jdk和cgLib之间自动切换
      *      4）：强制使用方法：添加cglib库，spring_home/cglib/*.jar,并在spring配置文件中加入<aop:aspectj-autoproxy proxy-target-class="true"/>
      *
      * Jdk动态代理和cglib生成字节码的区别：

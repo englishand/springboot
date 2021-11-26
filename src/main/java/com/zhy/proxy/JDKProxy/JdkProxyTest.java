@@ -1,27 +1,34 @@
-package com.zhy.proxy.JavaProxy;
+package com.zhy.proxy.JDKProxy;
 
-import com.zhy.proxy.JavaProxy.interf.JavaProxy;
+import com.zhy.proxy.JDKProxy.interf.JdkProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Proxy;
 
-public class JavaProxyTest {
+public class JdkProxyTest {
 
-    private static Logger logger = LoggerFactory.getLogger(JavaProxyTest.class);
+    private static Logger logger = LoggerFactory.getLogger(JdkProxyTest.class);
 
     public static void main(String[] args) throws Exception{
-        JavaProxy javaProxy = new JavaProxyImpl();
+        JdkProxy javaProxy = new JdkProxyImpl("user_test");
 
-        logger.info("两个类加载器是相同的："+(JavaProxyTest.class.getClassLoader()==javaProxy.getClass().getClassLoader()));
+        logger.info("两个类加载器是相同的："+(JdkProxyTest.class.getClassLoader()==javaProxy.getClass().getClassLoader()));
 
-        JavaProxy newJavaProxy = (JavaProxy) Proxy.newProxyInstance(
+        //生成代理对象
+        JdkProxy newJavaProxy = (JdkProxy) Proxy.newProxyInstance(
                 javaProxy.getClass().getClassLoader(),
                 javaProxy.getClass().getInterfaces(),
                 new MyInvocationHandler(javaProxy));
 
         newJavaProxy.gotoSchool("渣渣辉");
         newJavaProxy.gotoHosptol("渣渣辉");
+
+
+        Object back = newJavaProxy.reBack("zzh");
+
+        System.out.println(newJavaProxy.getClass());
+        System.out.println(back.toString());
     }
     /**
      * 1.ClassLoader作用：java程序写好以后是以.java（文本文件）的文件存在磁盘上，然后，我们通过(bin/javac.exe)编译命令把.java文件编译成.class文件（字节码文件），

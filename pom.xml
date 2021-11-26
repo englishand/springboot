@@ -250,6 +250,30 @@
             <artifactId>druid</artifactId>
             <version>1.1.21</version>
         </dependency>
+
+        <!--java配置Kafka开始（老版本0.8.0），2.10是scale版本-->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+        <!--Java配置Kafka结束-->
+
+        <!--Spring配置及Kafka开始-->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <!--spring配置Kafka结束-->
+
     </dependencies>
 
 </project>

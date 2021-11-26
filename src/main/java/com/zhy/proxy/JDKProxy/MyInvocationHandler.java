@@ -1,4 +1,4 @@
-package com.zhy.proxy.JavaProxy;
+package com.zhy.proxy.JDKProxy;
 
 import lombok.extern.slf4j.Slf4j;
 
