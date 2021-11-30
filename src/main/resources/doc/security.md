@@ -1,5 +1,4 @@
-spring security过滤器
-
+#####spring security过滤器
     1.WebAsyncManagerIntegrationFilter:（异步方式）提供了对securityContext和WebAsyncManager的集成。方式是通过
       SecurityContextCallableProcessingInterceptor的beforeConcurrentHanding(NativeWebRequest,Callable)方法来将SecurityContext设置到Callable
       上。其实就是把SecurityContext设置到异步线程中，使其也能获取到用户上下文认证信息。
@@ -32,3 +31,4 @@ spring security过滤器
        （1）调用FilterSecurityInterceptor.invoke()方法执行过滤器
        （2）调用AbstractSecurityInterceptor.beforeInvocation()方法
        （3）调用AccessDecisionManager.decide()方法决策判断是否有该权限。
+   #####JWT 
