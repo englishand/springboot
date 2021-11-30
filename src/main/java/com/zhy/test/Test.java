@@ -220,6 +220,8 @@ public class Test implements Serializable {
         Map map = new HashMap();
         System.out.println(map.get("aa"));
 
+        String time = "";
+
     }
     /**
      * 验证手机号码
