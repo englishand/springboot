@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface MenuService  extends JpaRepository<User,String> {
 
-    @Query(value = "select m,r from Menu m inner join m.roleList r")
+    @Query(value = "select m,r from Menu m inner join m.roleList r where m.status=1")
     List<Menu> getAllMenu();
 }

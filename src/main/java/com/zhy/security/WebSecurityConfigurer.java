@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,14 +26,15 @@ import java.util.List;
 
 @Slf4j
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @Qualifier("databaseUserDetailsService")
     private DatabaseUserDetailsService userDetailsService;
     @Autowired
-    @Qualifier("authenticationSuccuessHandler")
+    @Qualifier("authenticationSuccessHandler")
     private AuthenticationSuccessHandler successHandler;
     @Autowired
     @Qualifier("authenticationFailHandler")
@@ -61,6 +61,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(getUrls());
     }
+
 
     /**
      * 安全过滤器链配置
@@ -144,6 +145,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private List<String> getUrlList(){
         List<String> urls = new ArrayList<>();
         urls.add("/login/in");
+        urls.add("/login/loginIn");
         urls.add("/**/*.js");
         urls.add("/**/*.css");
         urls.add("/login/error");

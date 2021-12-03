@@ -16,5 +16,7 @@ public interface UserService extends BaseService<User>{
 
     int updateById(String userId);
 
+    int updateLockedByUsername(String username);
+
     int insert(User user);
 }

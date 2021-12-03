@@ -220,8 +220,10 @@ public class Test implements Serializable {
         Map map = new HashMap();
         System.out.println(map.get("aa"));
 
-        String time = "";
-
+        for (int i=0;i<3;i++){
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            System.out.println("uuid: "+uuid);
+        }
     }
     /**
      * 验证手机号码

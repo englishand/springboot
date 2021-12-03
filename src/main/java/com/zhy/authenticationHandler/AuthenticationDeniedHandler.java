@@ -19,12 +19,14 @@ import java.io.PrintWriter;
 public class AuthenticationDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.setContentType("application/json;charset=utf-8");
-        PrintWriter out = response.getWriter();
-        ResponseResult error = ResponseResult.errorWithMessage("权限验证不足");
-        out.write(new ObjectMapper().writeValueAsString(error));
-        out.flush();
-        out.close();
+//        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//        response.setContentType("application/json;charset=utf-8");
+//        PrintWriter out = response.getWriter();
+//        ResponseResult error = ResponseResult.errorWithMessage("权限验证不足");
+//        out.write(new ObjectMapper().writeValueAsString(error));
+//        out.flush();
+//        out.close();
+        String contextPath = request.getContextPath();
+        response.sendRedirect(contextPath+"/login/error");
     }
 }

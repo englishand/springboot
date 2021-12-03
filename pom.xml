@@ -139,6 +139,13 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
         </dependency>
+        <!--api限流，这里用来限制用户登录错误次数限制-->
+        <dependency>
+            <groupId>es.moki.ratelimitj</groupId>
+            <artifactId>ratelimitj-inmemory</artifactId>
+            <version>0.4.1</version>
+        </dependency>
+
 
         <!--datasources dependency-->
         <dependency>

@@ -100,4 +100,6 @@ public interface UserMapper extends BaseDao<User> {
      * @mbg.generated
      */
     int updateByPrimaryKey(User record);
+
+    int updateLockedByUsername(String username);
 }

@@ -2,8 +2,8 @@ package com.zhy.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.zhy.designPattern.ApiEnum;
-import com.zhy.designPattern.ApiFactory;
+import com.zhy.getBeansOfType.ApiEnum;
+import com.zhy.getBeansOfType.ApiFactory;
 import com.zhy.entity.Student;
 import com.zhy.service.Impl.ZhyServiceImpl;
 import com.zhy.utils.JsonAndXmlUtil;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

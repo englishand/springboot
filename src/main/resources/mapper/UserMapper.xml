@@ -253,4 +253,8 @@
       user_desc = #{userDescript,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
+  <update id="updateLockedByUsername" parameterType="com.zhy.entity.User">
+    update user set non_locked = 0 where username = #{username,jdbcType=VARCHAR};
+  </update>
 </mapper>

@@ -1,7 +1,7 @@
-package com.zhy.designPattern.impl;
+package com.zhy.getBeansOfType.impl;
 
-import com.zhy.designPattern.ApiEnum;
-import com.zhy.designPattern.ApiService;
+import com.zhy.getBeansOfType.ApiEnum;
+import com.zhy.getBeansOfType.ApiService;
 import org.springframework.stereotype.Service;
 
 @Service

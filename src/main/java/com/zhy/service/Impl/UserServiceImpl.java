@@ -42,6 +42,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return 0;
     }
 
+    @Override
+    public int updateLockedByUsername(String username) {
+        return userDao.updateLockedByUsername(username);
+    }
+
 
     @Override
     protected BaseDao getBaseDao() {

@@ -1,4 +1,4 @@
-package com.zhy.designPattern;
+package com.zhy.getBeansOfType;
 
 /**
  * 枚举定义接口信息

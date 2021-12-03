@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Service("authenticationSuccuessHandler")
+@Service("authenticationSuccessHandler")
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Autowired
@@ -25,20 +25,23 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         RequestCache requestCache = new HttpSessionRequestCache();
         SavedRequest savedRequest = requestCache.getRequest(request,response);
         logger.info("User: "+request.getParameter("username")+ ":login successfully");
-        if (savedRequest != null) {
-            String redirectUrl = savedRequest.getRedirectUrl();
-            if (redirectUrl!=null && !redirectUrl.contains("logOut")){
-                getRedirectStrategy().sendRedirect(request,response,redirectUrl);
-            }else {
-                //在这里通过request封装username,通过重定向返回到/login/loginIn,获取不到封装值，因此采用Cache方式存储
-//                request.setAttribute("username",request.getParameter("username"));
-                cacheManagerFactory.getUserManager().addToCachea("username",request.getParameter("username"));
-                getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
-            }
-        }else {
-            getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
-        }
-        return;
+//        if (savedRequest != null) {
+//            String redirectUrl = savedRequest.getRedirectUrl();
+//            if (redirectUrl!=null && !redirectUrl.contains("logOut")){
+//                getRedirectStrategy().sendRedirect(request,response,redirectUrl);
+//            }else {
+//                //在这里通过request封装username,通过重定向返回到/login/loginIn,获取不到封装值，因此采用Cache方式存储
+////                request.setAttribute("username",request.getParameter("username"));
+//                cacheManagerFactory.getUserManager().addToCachea("username",request.getParameter("username"));
+//                getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
+//            }
+//        }else {
+//            getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
+//        }
+//        return;
+
+        cacheManagerFactory.getUserManager().addToCachea("username",request.getParameter("username"));
+        getRedirectStrategy().sendRedirect(request,response,"/login/loginIn");
     }
 
 }

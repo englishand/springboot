@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  *  当前对象的loadUserByUsername方法。
  *  通过以上过滤器
  */
-@Service
+@Service("databaseUserDetailsService")
 public class DatabaseUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -35,18 +36,19 @@ public class DatabaseUserDetailsService implements UserDetailsService {
      * @throws UsernameNotFoundException
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
-        if (user==null){
-            throw new UsernameNotFoundException("用户名: "+username+" 不存在");
-        }
+
         List<String> roleCodeList = userRepository.queryUserOwnedRoleCodes(username);
 
         List<GrantedAuthority> authorities =
                 roleCodeList.stream().map(e -> new SimpleGrantedAuthority(e)).collect(Collectors.toList());
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
-                user.getUsername(),user.getPassword(),authorities
-        );
+                user.getUsername(),user.getPassword(),authorities);
+
+
         return userDetails;
     }
+
+
 }

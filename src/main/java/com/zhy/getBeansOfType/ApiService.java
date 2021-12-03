@@ -1,4 +1,4 @@
-package com.zhy.designPattern;
+package com.zhy.getBeansOfType;
 
 public interface ApiService {
 

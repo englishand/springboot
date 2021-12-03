@@ -26,6 +26,8 @@ public class Menu implements Serializable {
     private String menuCode;
     @Column(name = "url")
     private String url;
+    @Column(name = "status")
+    private int status;
 
     /**
      * fetch = FetchType.EAGER：加载树形结构，使用关闭懒加载。否则取出一层数据后，会关闭session,再取下一层时报错：session is closed

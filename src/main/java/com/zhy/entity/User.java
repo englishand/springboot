@@ -1,12 +1,17 @@
 package com.zhy.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name="user")
-public class User implements Serializable {
+public class User implements Serializable , UserDetails {
 
     @Id
     @Column(name = "id")
@@ -16,6 +21,20 @@ public class User implements Serializable {
     private String password;
     @Column(name = "user_desc")
     private String userDescript;
+    @Column(name = "status")
+    private int status;
+    private Date createtime;
+    private Date updatetime;
+
+    @Transient
+    boolean accountNonExpired;//是否没过期
+    @Column(name = "nonLocked")
+    boolean accountNonLocked;//是否没被锁定
+    @Transient
+    boolean credentailsNonExpired;//是否没过期
+    @Column(name = "enabled")
+    boolean enabled;//账号是否禁用
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id",updatable = false,insertable = false),
@@ -34,8 +53,33 @@ public class User implements Serializable {
         return username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     public String getPassword() {
@@ -54,6 +98,14 @@ public class User implements Serializable {
         this.userDescript = userDescript;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -66,4 +118,39 @@ public class User implements Serializable {
         return "id:"+this.id+";username:"+this.username+";password:"+this.password+";descript:"+userDescript;
     }
 
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentailsNonExpired() {
+        return credentailsNonExpired;
+    }
+
+    public void setCredentailsNonExpired(boolean credentailsNonExpired) {
+        this.credentailsNonExpired = credentailsNonExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Date getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Date updatetime) {
+        this.updatetime = updatetime;
+    }
 }
