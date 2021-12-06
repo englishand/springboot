@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class LoginController {
     }
 
     @RequestMapping("/loginIn")
-    public String loginIn(ModelAndView modelAndView,HttpServletRequest request){
+    public String loginIn(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response){
         Map map = modelAndView.getModel();
         log.info("modelAndView:{}",map);
         String username = request.getParameter("username");
@@ -39,6 +40,8 @@ public class LoginController {
         }catch (Exception e){
             log.error(e.getMessage());
         }
+        String token  = response.getHeader("token");
+        log.info("controller token: "+token);
         return "welcome";
     }
 

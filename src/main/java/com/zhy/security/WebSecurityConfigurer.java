@@ -4,6 +4,7 @@ import com.zhy.authenticationHandler.AuthenticationDeniedHandler;
 import com.zhy.authenticationHandler.AuthenticationLogoutHandler;
 import com.zhy.intercepor.security.MyAccessDecisionManager;
 import com.zhy.intercepor.security.MyFilterInvocationSecurityMetadataSource;
+import com.zhy.jwt.JwtAuthenticationTokenFilter;
 import com.zhy.service.Impl.DatabaseUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +54,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     private MyAccessDecisionManager myAccessDecisionManager;//权限决策器
     @Autowired
     private AuthenticationLogoutHandler authenticationLogoutHandler;
+    @Autowired
+    private JwtAuthenticationTokenFilter tokenFilter;
 
     /**
      * 核心过滤器配置：主要用来对静态资源的配置
@@ -85,11 +90,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                     }
                 })
 //                .and()
-//                    .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-//                    .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+//                    .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class)
 //                    //不需要session
 //                    .sessionManagement()
 //                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                    .sessionFixation().none()
                 .and()
                 .formLogin()
                     .loginPage("/login/in")//指定自定义登录页面，也可以用页面地址 /login.html

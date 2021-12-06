@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.UUID;
 
 @Service("toTransactionalImpl")
@@ -39,7 +40,7 @@ public class ToTransactionalImpl {
         //测试toTrans事务代理方式：isAopProxy[true] | isCglib[true] | isJdk[false]
     }
 
-    public void transactionalExample(User user, Role role){
+    public void transactionalExample(User user, List<Role> role){
         String uuid = UUID.randomUUID().toString();
         user.setUserDescript("测试事务");
         if (StringUtils.isEmpty(user.getId())){

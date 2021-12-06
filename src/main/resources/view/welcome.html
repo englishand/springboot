@@ -36,5 +36,23 @@
 
 <input th:value="${abc}">
 <p id="llll" th:text="${testCode}"></p>
+
 </body>
+<script type="text/javascript">
+
+    var token;
+    token = get("token");
+
+    //登录完成，根据返回值设置token
+    set("token",${token})
+    //退出登录
+    set("token",null);
+
+    function set(type,value) {
+        localStorage.setItem(type,value);
+    }
+    function get(type) {
+        return localStorage.getItem(type);
+    }
+</script>
 </html>

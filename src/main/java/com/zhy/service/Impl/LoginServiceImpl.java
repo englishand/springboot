@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service("loginServiceImpl")
@@ -63,11 +65,12 @@ public class LoginServiceImpl implements LoginService {
         //测试toTransactional事务代理方式：isAopProxy[true] | isCglib[true] | isJdk[false]
 
         User user = new User();
-        Role role = new Role();
+        List<Role> role = new ArrayList<>();
         log.info("测试security中AuthenticationSuccessHandler的请求重定向封装问题：{}",username);
         if (StringUtils.isEmpty(username)){
-            username = (String)cacheManagerFactory.getUserManager().getFromCache("username");
+            user = (User)cacheManagerFactory.getUserManager().getFromCache("username");
             user.setUsername(username+"测试事务");
+            role = user.getRoles();
         }
         toTransactional.transactionalExample(user,role);
 

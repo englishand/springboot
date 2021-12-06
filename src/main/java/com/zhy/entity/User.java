@@ -1,12 +1,14 @@
 package com.zhy.entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -25,6 +27,8 @@ public class User implements Serializable , UserDetails {
     private int status;
     private Date createtime;
     private Date updatetime;
+    @Column(name = "enabled")
+    boolean enabled;//账号是否禁用
 
     @Transient
     boolean accountNonExpired;//是否没过期
@@ -32,14 +36,27 @@ public class User implements Serializable , UserDetails {
     boolean accountNonLocked;//是否没被锁定
     @Transient
     boolean credentailsNonExpired;//是否没过期
-    @Column(name = "enabled")
-    boolean enabled;//账号是否禁用
+    @Transient
+    public Collection<? extends GrantedAuthority> authorities;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id",updatable = false,insertable = false),
             inverseJoinColumns = @JoinColumn(name = "role_code",referencedColumnName = "rolecode",updatable = false,insertable = false))
     private List<Role> roles;
+
+    /**
+     * 用User生成JwtUser
+     * @param user
+     */
+    public User(){
+    }
+    public User (User user){
+        id = user.getId();
+        username = user.getUsername();
+        password = user.getPassword();
+        authorities = Collections.singleton(new SimpleGrantedAuthority(user.getRoles().toString()));
+    }
 
     public String getId() {
         return id;
@@ -79,7 +96,11 @@ public class User implements Serializable , UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     public String getPassword() {
