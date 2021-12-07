@@ -1,4 +1,4 @@
-package com.zhy.intercepor;
+package com.zhy.security.interceptor;
 
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

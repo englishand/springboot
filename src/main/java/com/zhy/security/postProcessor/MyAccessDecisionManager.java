@@ -1,11 +1,12 @@
-package com.zhy.intercepor.security;
+package com.zhy.security.postProcessor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,9 @@ import java.util.Iterator;
  */
 @Component
 public class MyAccessDecisionManager implements AccessDecisionManager {
+
+    private Logger logger = LoggerFactory.getLogger(MyAccessDecisionManager.class);
+
     /**
      * @Author: Galen
      * @Description: 取当前用户的权限与这次请求的这个url需要的权限作对比，决定是否放行
@@ -49,7 +53,8 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
             //当前用户所具有的权限
             Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
             for (GrantedAuthority authority : authorities) {
-                if (authority.getAuthority().equals(needRole)) {
+                logger.info("当前登录用户所持有的角色有: "+authority.getAuthority());
+                if (authority.getAuthority().contains(needRole)) {
                     return;
                 }
             }

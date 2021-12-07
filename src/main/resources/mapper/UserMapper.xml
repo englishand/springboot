@@ -249,12 +249,24 @@
     -->
     update user
     set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      user_desc = #{userDescript,jdbcType=VARCHAR}
+        password = #{password,jdbcType=VARCHAR},
+        user_desc = #{userDescript,jdbcType=VARCHAR},
+        age = #{age,jdbcType=INTEGER},
+        status = #{status,jdbcType=INTEGER},
+        enabled = #{enabled,jdbcType=INTEGER},
+        non_locked = #{accountNonLocked,jdbcType=INTEGER},
+        acc_non_expired = #{accountNonExpired,jdbcType=INTEGER},
+        cred_non_expired = #{credentailsNonExpired,jdbcType=INTEGER},
+        updatetime = now()
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
   <update id="updateLockedByUsername" parameterType="com.zhy.entity.User">
     update user set non_locked = 0 where username = #{username,jdbcType=VARCHAR};
+  </update>
+
+  <update id="updateLockedById" parameterType="map">
+    update user set non_locked = #{nonlocked,jdbcType=INTEGER},updatetime = now()
+    where id = #{id,jdbcType=VARCHAR};
   </update>
 </mapper>

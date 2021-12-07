@@ -1,4 +1,4 @@
-package com.zhy.service;
+package com.zhy.security.service;
 
 import com.zhy.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

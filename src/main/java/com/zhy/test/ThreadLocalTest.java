@@ -1,4 +1,4 @@
-package com.zhy.threadlocal;
+package com.zhy.test;
 
 import com.zhy.entity.User;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import java.util.List;
  * 在某一时刻只能被一个线程访问，实现多线程通讯时获得数据共享。而ThreadLocal为每一个线程提供了变量的副本，使每个线程在某一时间访问到的不是同一个对象。
  */
 @Slf4j
-public class Dao implements Runnable{
+public class ThreadLocalTest implements Runnable{
 
     //使用threadlocal保存User变量
     static ThreadLocal<User> userThreadLocal = new ThreadLocal<User>();
@@ -70,7 +70,7 @@ public class Dao implements Runnable{
 
         for (int i=0;i<2;i++){
 //            Thread thread = new Dao();
-            Thread thread = new Thread(new Dao());
+            Thread thread = new Thread(new ThreadLocalTest());
             thread.start();
 
 

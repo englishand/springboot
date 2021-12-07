@@ -38,13 +38,18 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public int updateById(String userId) {
-        return 0;
+    public int updateById(User user) {
+        return userDao.updateByPrimaryKey(user);
     }
 
     @Override
     public int updateLockedByUsername(String username) {
         return userDao.updateLockedByUsername(username);
+    }
+
+    @Override
+    public int updatNonLockedById(String id, int nonlocked) {
+        return userDao.updateLockedById(id,nonlocked);
     }
 
 

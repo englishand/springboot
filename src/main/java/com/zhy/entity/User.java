@@ -21,6 +21,7 @@ public class User implements Serializable , UserDetails {
     @Column(name = "username")
     private String username;
     private String password;
+    private int age;
     @Column(name = "user_desc")
     private String userDescript;
     @Column(name = "status")
@@ -29,13 +30,12 @@ public class User implements Serializable , UserDetails {
     private Date updatetime;
     @Column(name = "enabled")
     boolean enabled;//账号是否禁用
-
-    @Transient
-    boolean accountNonExpired;//是否没过期
-    @Column(name = "nonLocked")
+    @Column(name = "acc_non_expired")
+    boolean accountNonExpired ;//是否没过期
+    @Column(name = "non_locked")
     boolean accountNonLocked;//是否没被锁定
-    @Transient
-    boolean credentailsNonExpired;//是否没过期
+    @Column(name = "cred_non_expired")
+    boolean credentailsNonExpired ;//是否没过期
     @Transient
     public Collection<? extends GrantedAuthority> authorities;
 
@@ -45,10 +45,6 @@ public class User implements Serializable , UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_code",referencedColumnName = "rolecode",updatable = false,insertable = false))
     private List<Role> roles;
 
-    /**
-     * 用User生成JwtUser
-     * @param user
-     */
     public User(){
     }
     public User (User user){
@@ -72,7 +68,7 @@ public class User implements Serializable , UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return this.accountNonExpired;
     }
 
     @Override
@@ -82,12 +78,12 @@ public class User implements Serializable , UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return this.credentailsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
     }
 
     public void setUsername(String username) {
@@ -136,7 +132,9 @@ public class User implements Serializable , UserDetails {
     }
 
     public String toString(){
-        return "id:"+this.id+";username:"+this.username+";password:"+this.password+";descript:"+userDescript;
+        return new String(String.format("id[%s],username[%s],password[%s],descript[%s],createTime[%tT],updateTime[%tT],status[%s]," +
+                        "enabled[%s],accountNonExpired[%s],accountNonLocked[%s],credentailsNonExpired[%s]",
+                id,username,password,userDescript,createtime,updatetime,status,enabled,accountNonExpired,accountNonLocked,credentailsNonExpired));
     }
 
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -173,5 +171,13 @@ public class User implements Serializable , UserDetails {
 
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

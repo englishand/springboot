@@ -8,7 +8,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&characterEncodeing=utf-8&serverTimezone=GMT%2B8
+    url: jdbc:mysql://127.0.0.1:3306/security?useUnicode=true&characterEncodeing=gbk&serverTimezone=GMT%2B8
     username: root
     password: root
   jpa:
@@ -71,6 +71,7 @@ soap:
 logging:
   config: classpath:logback.xml
   level:
+    com.zhy.mapping: debug
     org.hibernate.SQL: debug
     org.hibernate.engine.QueryParameters: debug
     org.hibernate.engine.query.HQLQueryPlan: debug

@@ -1,4 +1,4 @@
-package com.zhy.jwt;
+package com.zhy.security.jwt;
 
 import com.zhy.entity.User;
 import io.jsonwebtoken.Claims;

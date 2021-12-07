@@ -1,4 +1,4 @@
-package com.zhy.intercepor;
+package com.zhy.security.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.ModelAndView;

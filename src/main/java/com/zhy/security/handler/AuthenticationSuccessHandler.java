@@ -1,13 +1,10 @@
-package com.zhy.authenticationHandler;
+package com.zhy.security.handler;
 
 import com.zhy.cache.CacheManagerFactory;
-import com.zhy.entity.User;
-import com.zhy.jwt.JwtTokenUtils;
-import com.zhy.service.UserRepository;
+import com.zhy.security.jwt.JwtTokenUtils;
+import com.zhy.security.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -18,8 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 
 @Service("authenticationSuccessHandler")
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {

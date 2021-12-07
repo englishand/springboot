@@ -224,6 +224,23 @@ public class Test implements Serializable {
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
             System.out.println("uuid: "+uuid);
         }
+
+        Date date1 = new Date();
+        Map map1 = new HashMap();
+        map1.put("aaaaa",date1);
+        try {
+            Date old = (Date) map1.get("aaaaa");
+            System.out.println(date1.toString()+"|"+old);
+            Thread.sleep(2*60*1000);
+            Date date2 = new Date();
+
+            System.out.println(date2.toString());
+            boolean isTimeOut = (date2.getTime()-old.getTime())/(60*1000)>2;
+            System.out.println("isTimeOut:"+isTimeOut);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
     /**
      * 验证手机号码

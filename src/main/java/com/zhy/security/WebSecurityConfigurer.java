@@ -1,11 +1,11 @@
 package com.zhy.security;
 
-import com.zhy.authenticationHandler.AuthenticationDeniedHandler;
-import com.zhy.authenticationHandler.AuthenticationLogoutHandler;
-import com.zhy.intercepor.security.MyAccessDecisionManager;
-import com.zhy.intercepor.security.MyFilterInvocationSecurityMetadataSource;
-import com.zhy.jwt.JwtAuthenticationTokenFilter;
-import com.zhy.service.Impl.DatabaseUserDetailsService;
+import com.zhy.security.handler.AuthenticationDeniedHandler;
+import com.zhy.security.handler.AuthenticationLogoutHandler;
+import com.zhy.security.postProcessor.MyAccessDecisionManager;
+import com.zhy.security.postProcessor.MyFilterInvocationSecurityMetadataSource;
+import com.zhy.security.jwt.JwtAuthenticationTokenFilter;
+import com.zhy.security.service.DatabaseUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,13 +16,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.List;

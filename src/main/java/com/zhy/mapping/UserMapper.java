@@ -102,4 +102,6 @@ public interface UserMapper extends BaseDao<User> {
     int updateByPrimaryKey(User record);
 
     int updateLockedByUsername(String username);
+
+    int updateLockedById(String id,int nonlocked);
 }

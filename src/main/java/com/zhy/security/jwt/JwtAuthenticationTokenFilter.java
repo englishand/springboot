@@ -1,8 +1,7 @@
-package com.zhy.jwt;
+package com.zhy.security.jwt;
 
 import com.zhy.cache.CacheManagerFactory;
 import com.zhy.entity.User;
-import com.zhy.service.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
