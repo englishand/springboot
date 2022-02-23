@@ -141,13 +141,13 @@ public class AnnotationController {
         try {
             result = new HttpPostUtil().post();
             result2 = new AsyncPostUtil2().sendRequest();
-            result3 = new AsyncPostUtil().sendPostRequest(400,"UTF-8");
-        } catch (ExecutionException e) {
-            logg.info(e.getMessage());
-            result3 = e.getMessage();
-        } catch (InterruptedException e) {
-            logg.info("线程中断");
-            result3 = "线程中断";
+//            result3 = new AsyncPostUtil().sendPostRequest(400,"UTF-8");
+//        } catch (ExecutionException e) {
+//            logg.info(e.getMessage());
+//            result3 = e.getMessage();
+//        } catch (InterruptedException e) {
+//            logg.info("线程中断");
+//            result3 = "线程中断";
         } catch (Exception e){
 
         }
